@@ -141,7 +141,7 @@ form button {
     padding: 0 1rem;
 }
 
-@media only screen and (max-width: 420px) {
+@media only screen and (max-width: 450px) {
     /* Navigation */
     ul {
         flex-direction: column;
