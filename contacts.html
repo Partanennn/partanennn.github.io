@@ -12,6 +12,7 @@
 </head>
 
 <body>
+
   <main>
     <img src="images/logo.png" id="logo" alt="Ville Valokuvaaja logo" />
 
@@ -19,26 +20,36 @@
     <nav>
       <ul>
         <li>
-          <a class="active" href="index.html">Etusivu</a>
+          <a href="index.html">Etusivu</a>
         </li>
         <li>
           <a href="services.html">Palvelut</a>
         </li>
         <li>
-          <a href="contacts.html">Yhteystiedot</a>
+          <a class="active" href="contacts.html">Yhteystiedot</a>
         </li>
       </ul>
     </nav>
 
-    <div class="title">
-      <h1>Kuvauspalveluja</h1>
+    <!-- Information -->
+    <div class="information">
+      <img alt="Valokuvaaja" src="images/photographer.png" id="photographer" />
+      <div class="information-text">
+        <h3>Ville Valokuvaaja</h3>
+        <p>Ville Valokuvaaja on Pirkanmaalla asuva ammattikuvaaja joka rakastaa tallentaa hetkiä kamerallaan. Lähetä
+          yhteydenottopyyntö niin suunnitellaan sinulle sopiva paketti!</p>
+      </div>
     </div>
 
-    <!-- Front page images -->
-    <div id="image-wrapper">
-      <img class="frontpage-image" src="images/wedding-1.jpg" alt="Hääkuva alttari" />
-      <img class="frontpage-image" src="images/wedding-2.jpg" alt="Hääkuva poseeraus" />
-      <img class="frontpage-image" src="images/event-1.jpg" alt="juoksutapahtuma" />
+    <!-- Contact Information -->
+    <div class="contact-information">
+      <h3>Ota yhteyttä</h3>
+      <form>
+        <input type="text" id="name" name="name" placeholder="Nimi" required>
+        <input type="email" id="email" name="email" placeholder="Email" required>
+        <textarea id="message" name="message" placeholder="Viesti" rows="4" required></textarea>
+        <button type="submit">Lähetä viesti</button>
+      </form>
     </div>
   </main>
 
