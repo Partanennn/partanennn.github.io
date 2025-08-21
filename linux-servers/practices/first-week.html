@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <title>Harjoitus 1</title>
+</head>
+
+<body>
+  <div id="left"></div>
+  <div id="center">
+    <main>
+      <h1>Oma Linux</h1>
+
+      <h2>Tehtävänanto</h2>
+      <ul>
+        <li>x) Lue ja tiivistä (Muutama ranskalainen viiva kustakin artikkelista
+          riittää. Tässä alakohdassa ei tarvitse
+          tehdä testejä tietokoneella)</li>
+        <li>a) Asenna Linux virtuaalikoneeseen. (Tee raporttia varten uusi virtuaalikone, vaikka olisit asentanut sen
+          aiemmin)</li>
+      </ul>
+
+      <h2>x) Tiivistelmä raportin kirjoittamisesta</h2>
+
+      <h3>Toistettava</h3>
+      <ul>
+        <li>Sama tulos, jos raportin antaa toiselle opiskelijalle joka käyttää samaa ympäristöä</li>
+        <li>Ympäristö pitää kuvata mahdollisimman tarkasti</li>
+      </ul>
+
+      <h3>Täsmällinen</h3>
+      <ul>
+        <li>Kirjaa ylös käytetyt komennot, kellonajat, lopputulos</li>
+        <li>On myös hyvä raportoida odottamattomista tuloksista</li>
+        <li>Muista lisätä täsmällinen vikailmoitus</li>
+        <li>Mennyt aikamuoto, imperfekti. "Painoin nappia", "Vedin piuhan", "Kirjoitin komennon"</li>
+      </ul>
+
+      <h3>Helppolukuinen</h3>
+      <ul>
+        <li>Väliotsikot</li>
+        <li>Tarkista oikeinkirjoitus</li>
+        <li>Valinnainen tiivistelmä raportin alkuun</li>
+      </ul>
+
+      <h3>Viittaa lähteisiin</h3>
+      <ul>
+        <li>Hyvä ja akateeminen tapa vaatii</li>
+        <li>Esimerkkejä:</li>
+        <ul>
+          <li>Koistinen, Maija 2003: Apachen asennus, harjoitus 3. Kotitehtäväraportti.
+            http://myy.helia.fi/~a123/linux/h-3.html</li>
+          <li>Teittinen, Urpo 2006-03-27. Suullinen tiedonanto.</li>
+          <li>Mynttinen ym. 1997: Practical Infection Vectors for Production Servers.</li>
+          <li>Karvinen, Tero: Oppitunnit 2006-05-18, Linux tutustuminen
+            -kurssi(www.iki.fi/karvinen/linux_tutustuminen.html).</li>
+        </ul>
+      </ul>
+
+      <h3>Pahoja mokia</h3>
+      <ul>
+        <li>Kertoo testeistä joita ei ole tehnyt</li>
+        <li>Plagiointi</li>
+        <li>Kuvien luvaton kopiointi</li>
+      </ul>
+
+      <h2>a) Linuxin asennus</h2>
+
+      <h4>Host laitteisto</h4>
+      <ul>
+        <li>Prosessori: AMD Ryzen 9 5900x 12-Core</li>
+        <li>Keskusmuisti: 32GB DDR4</li>
+        <li>Näytönohjain: NVIDIA GeForce RTX 3080</li>
+        <li>OS: Windows 11 Pro 23H2</li>
+      </ul>
+      <p class="text">Aloitin tehtävän kello 17:18.</p>
+      <p class="text">Ensimmäiseksi latasin Virtual Box-sovelluksen 7.2.0 version Virtual Boxin virtalliselta sivulta.
+      </p>
+      <p class="text">Aloitin uuden virtuaalikoneen tekemisen painamalla <b>New</b> vasemmasta yläreunasta</p>
+      <img src="images/First/VirtualBox1.png" width="700px" />
+
+      <p class="text">Seuraavaksi latasin ISO kuvan Heinosen github ohjeiden mukaan.</p>
+      <p class="text">Annoin virtuaalikoneelle nimeksi linux-palvelimet ja valitsin latauskansiosta ISO kuvaksi Heinosen
+        ehdottaman. Huomasin, että luennolla käytetyssä esimerkissä VirtualBox oli hieman erinäköinen. Suurin ero on
+        uuden virtuaalikoneen luomis ikkunassa oleva <i>"Proceed with Unattended Installation"</i> checkbox. Heinosen
+        ohjeissa checkboxissa lukee <i>"Skip Unattended Installation</i>, joka tarkoittaa päinvastaista operaatiota.
+        Omassa virtual boxissasni en myöskään voinut muokata virtuaalikoneen OS, OS distribution tai OS Version
+        asetuksia jos valitsin checkboxin, ja OS versioksi lukittuisi 32-bittinen versio.
+      </p>
+      <img src="images/First/New_virtual_Machine.png" width="700px" />
+
+      <p class="text">Seuraavalla sivulla valitaan virtuaalikoneen resurssit. Valitsin keskusmuistin määräksi 4
+        gigatavua, prosessorien määräksi 2 sekä massamuistiksi 20 gigatavua. Valitsin myös EFI käyttöönoton.</p>
+      <img src="images/First/VirtualBox_specify_hardware.png" width="700px" />
+
+      <p class="text">Summary ikkunassa näkyy valitut asetukset. <i>Finish</i> napin painamisen jälkeen virtuaalikone
+        luodaan.</p>
+      <img src="images/First/VirtualBox_Summary.png" width="700px" />
+
+      <p class="text">Luotu virtuaalikone näkyy nyt Virtual Boxissa. Käynnistin sen painamalla vihreää <i>Start</i>
+        nappia.</p>
+      <img src="images/First/VirtualBox_machine_ready.png" width="700px" />
+
+      <p class="text">Asennus ikkunasta valitsen Start installer, koska haluan tehdä koko asennuksen.</p>
+      <img src="images/First/Linux1.png" width="700px" />
+
+      <p class="text">Asennus lähtee käyntiin. Valitsin kieleksi <i>English</i>, alueeksi Finland ja locale asetukseksi
+        valitsen <i>United States</i>, koska Suomea ei listalta löydy. Näppäimistöksi valitsen <i>Finnish</i>.</p>
+      <img src="images/First/Linux2.png" width="700px" />
+
+      <p class="text">Host nimeksi valitsin debian, jota asennusohjelma ehdottaa oletuksena. Asetin myös salasanan Root
+        käyttäjälle. <i>Full name</i>:ksi asetin Aleksi Partanen ja usernamek:ksi laitoin aleksi, jolle annoin myös
+        salasanan.</p>
+      <img src="images/First/Linux3.png" width="700px" />
+      <img src="images/First/Linux4.png" width="700px" />
+
+      <p class="text">Seuraavaksi on luvassa levyn määrittäminen. Valitsen tällä kertaa <i>Guided - use entire
+          disk</i>vaihtoehdon. Jatkan valitsemalla SCS13 (0,0,0) (sda) partitionin. Haluan myös kaikki tiedostot yhdelle
+        partitionille. Nyt järjestelmä asennettiin virtuaalikoneelle.</p>
+      <img src="images/First/Linux5.png" width="700px" />
+      <img src="images/First/Linux6.png" width="700px" />
+
+      <p class="text">Kun lataus oli valmis, painoin <i>Continue</i>, jonka jälkeen virtuaalikone käynnisti itsensä
+        uudestaan. </p>
+      <img src="images/First/Linux7.png" width="700px" />
+
+      <p class="text">Uudelleen käynnistyksen jälkeen aukesi kirjautumis ikkuna. Kirjauduin <i>root</i>-käyttäjälle,.
+        Sisäänkirjautumisen jälkeen vielä kokeilin selaimella internet yhteyttä ja se toimi. Kello 19:08 linux on
+        asennettu ja toimintakunnosas.</p>
+      <img src="images/First/Linux8.png" width="700px" />
+
+      <h2>Tietoa</h2>
+      <p class="text">ätä dokumenttia saa kopioida ja muokata GNU General Public License (versio 2 tai uudempi)
+        mukaisesti.</p>
+      <p class="text"><a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a></p>
+
+      <h2>Lähteet</h2>
+      <ul>
+        <li>
+          Heinonen, Johanna 2025. How to Install Linux to Virtualbox?
+          <a
+            href="https://github.com/johannaheinonen/johanna-test-repo/blob/main/linux-20082025.md">https://github.com/johannaheinonen/johanna-test-repo/blob/main/linux-20082025.md</a>
+        </li>
+      </ul>
+    </main>
+
+    <footer>
+      <p><a href="../../index.html">Etusivu</a></p>
+      <p>Aleksi Partanen &#169;2025</p>
+    </footer>
+  </div>
+  <div id="right"></div>
+</body>
+
+</html>

@@ -3,9 +3,45 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+        'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 body {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    height: 100vh;
+}
+
+footer {
+    border-top: 1px solid #101010;
     display: flex;
     flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+ol {
+    text-align: left;
+}
+
+ul {
+    list-style-type: disc;
+    text-align: left;
+}
+
+#center {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     text-align: center;
+}
+
+.text {
+    text-align: left;
 }
