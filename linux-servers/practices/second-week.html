@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <title>Harjoitus 2</title>
+</head>
+
+<body>
+  <div id="left"></div>
+  <div id="center">
+    <main>
+      <h1>Oma Linux</h1>
+
+      <h2>Tehtävänanto</h2>
+      <ul>
+        <li>x) Lue ja tiivistä (Muutama ranskalainen viiva riittää. Tässä alakohdassa ei tarvitse tehdä testejä
+          tietokoneella. Lisää jokin oma kysymys, idea tai huomio)
+          <i>Karvinen 2020</i>: Command Line Basics Revisited (nämä komennot ja hakemistot kannattaa myös opiskella
+          ulkoa ja
+          harjoitella automaatiotasolle)
+        <li>a) Micro. Asenna micro-editori</li>
+        <li>b) Apt. Asenna kolme itsellesi uutta komentoriviohjelmaa. Kokeile kutakin ohjelmaa sen pääasiallisessa
+          käyttötarkoituksessa. Ota ruutukaappaus. Kaikki terminaaliohjelmat kelpaavat, TUI (text user interface) ja CLI
+          (command line interface). Osaatko tehdä apt-get komennon, joka asentaa nämä kolme ohjelmaa kerralla?</li>
+        <li>c) FHS. Esittele kansiot, jotka on listattu "Command Line Basics Revisited" kappaleessa "Important
+          directories". Näytä kuvaava esimerkki kunkin tärkeän kansion sisältämästä tiedostosta tai kansiosta. Jos
+          kyseessä on tiedosto, näytä siitä kuvaava esimerkkirivi. Työskentele komentokehotteessa ja näytä komennot,
+          joilla etsit esimerkit.</li>
+        <li>d) The Friendly M. Näytä 2-3 kuvaavaa esimerkkiä grep-komennon käytöstä. Ohjeita löytyy 'man grep' ja
+          tietysti verkosta.</li>
+        <li>e) Pipe. Näytä esimerkki putkista (pipes, "|").</li>
+        <li>f) Rauta. Listaa testaamasi koneen rauta (‘sudo lshw -short -sanitize’). Asenna lshw tarvittaessa. Selitä ja
+          analysoi listaus.</li>
+        <li>g) Vapaaehtoinen: Valitse muutama rivi lokeista. Tulkitse ja analysoi.</li>
+        <li>h) Vapaaehtoinen: Asenna jokin plugin micro-editorille ja kokeile sitä. Vaikkapa palettero, cheat tai runit.
+        </li>
+      </ul>
+
+      <h4>Host laitteisto</h4>
+      <ul>
+        <li>Prosessori: AMD Ryzen 9 5900x 12-Core</li>
+        <li>Keskusmuisti: 32GB DDR4</li>
+        <li>Näytönohjain: NVIDIA GeForce RTX 3080</li>
+        <li>OS: Windows 11 Pro 23H2</li>
+      </ul>
+
+      <h2>x) Tiivistelmä Command Line Basics Revisited</h2>
+
+      <h3>Liikkuminen ja ympärille katselu</h3>
+      <ul>
+        <li>pwd - Tulostaa työskentelyhakemiston polun</li>
+        <li>ls - Listaa tiedostot työskentely polusta</li>
+        <li>cd - Vaihtaa hakemiston</li>
+        <li>less - Näyttää tiedoston sisällön sivuittain. Minkä tahansa tulosteen voi lukea sivuittain "putkittamalla"
+          ulostulon lessiin(|less).</li>
+      </ul>
+
+      <h3>Tiedostojen käsittely</h3>
+      <ul>
+        <li>nano - Avaa tiedoston tai luo uuden. CTRL-x y Enter tallentaa tiedoston ja sulkee tekstieditorin.</li>
+        <li>mkdir UUSIHAKEMISTO - Luo uuden hakemiston.</li>
+        <li>mv VANHAHAKEMISTO UUSIHAKEMISTO - Siirtää tai uudelleen nimeää tiedoston tai hakemiston. Tiedostoja voi
+          siirtää hakemistoon tällä
+          komennolla.</li>
+        <li>cp -r ALKUPERÄINEN UUSIHAKEMISTO - Kopioi hakemiston(tai tiedoston) ja sen sisällön.</li>
+        <li>rmdir VANHAHAKEMISTO - Poistaa tyhjän hakemiston.</li>
+        <li>rm TIEDOSTO - Poistaa tiedoston.</li>
+        <li>rm -r HAKEMISTO - Poistaa hakemiston ja sen sisällön.</li>
+      </ul>
+
+      <h3>SSH Etäohjaus</h3>
+      <ul>
+        <li>ssh käyttäjänimi@palvelin.osoite - Yhdistää käyttäjän <i>käyttäjänimi</i> etäpalvelimeen
+          <i>palvelin.osoite</i> SSH:n kautta.
+        </li>
+        <li>exit - Sulkee SSH-yhteyden.</li>
+        <li>scp KANSIO käyttäjänimi@palvelin.osoite:OmanKoneenOsoite/kansioOmaltaKoneelta - Kopioi turvallisesti
+          hakemiston etäkoneelle omalta koneelta.</li>
+        <li>history - Näyttää komennot, joita on aiemmin käytetty. Voi hakea ctrl-R</li>
+      </ul>
+
+      <h3>Tärkeitä hakemistoja</h3>
+      <table>
+        <thead>
+          <th>Hakemisto</th>
+          <th>Kuvaus</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>/</td>
+            <td>Root hakemisto joka toimii koko tiedostojärjestelmän ylimpänä hakemistona.</td>
+          </tr>
+          <tr>
+            <td>/home/</td>
+            <td>Käyttäjien hakemistot</td>
+          </tr>
+          <tr>
+            <td>/home/aleksi</td>
+            <td>Ainoa hakemisto, jonne käyttäjä <i>aleksi</i> voi tallentaa pysyvästi tiedostoja</td>
+          </tr>
+          <tr>
+            <td>/etc/</td>
+            <td>Järjestelmän asetukset</td>
+          </tr>
+          <tr>
+            <td>/media/</td>
+            <td>Liitetyt laitteet, USB, CDROM</td>
+          </tr>
+          <tr>
+            <td>/var/log</td>
+            <td>Järjestelmän logeja, /syslog, /auth.log, /apache2/error.log</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>a) Micro. Asenna micro-editori</h2>
+      <p>19:24 aloitan micro-editorin asennuksen. Ajan komennon <i>curl https://getmic.ro | bash</i> root/ hakemistossa
+        ja sinne ilmestyy <i>micro</i> kansio. Ajan micron <i>./micro</i> komennolla. Aukeaa tiedoston editointiin
+        tarkoitetun näköinen ruutu. Alareunassa lukee <i>Ctrl-g: help</i>, joten painan Ctrl-g, jotta ymmärtäisin mitä
+        komentoja microeditorilla voi käyttää. <i>Ctrl-e</i> aukaisee komentokehotteen. Perus näppäinkomennot saa
+        näkyviin kun käyttää komentoa <i>help defaultkeys</i>. <i>Ctrl-q</i> sulkee tabin/ikkunan komentokehotteesta.
+        Ctrl-s tallentaa tiedoston. Jos ei ole aukaissut tiedostoa, microeditori kysyy tiedoston nimeä.</p>
+      <img src="./images/second/micro.png" width="700" />
+      <img src="./images/second/micro2.png" width="700" />
+
+      <h2>b) Apt. Asenna kolme itsellesi uutta komentoriviohjelmaa</h2>
+      <p>19:38 aloitan </p>
+
+      <h2>Tietoa</h2>
+      <p class=" text"> Tätä dokumenttia saa kopioida ja muokata GNU General Public License (versio 2 tai uudempi)
+        mukaisesti.</p>
+      <p class="text"><a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a></p>
+
+      <h2>Lähteet</h2>
+      <ul>
+        <li>
+          Karvinen, Tero 2020. Command Line Basics Revisited
+          <a
+            href="https://terokarvinen.com/2020/command-line-basics-revisited/?fromSearch=command%20line%20basics%20revisited">https://terokarvinen.com/2020/command-line-basics-revisited/?fromSearch=command%20line%20basics%20revisited</a>
+        </li>
+      </ul>
+    </main>
+
+    <footer>
+      <p><a href="../index.html">Linux Harjoitukset</a></p>
+      <p><a href="../../index.html">Etusivu</a></p>
+      <p>Aleksi Partanen &#169;2025</p>
+    </footer>
+  </div>
+  <div id="right"></div>
+</body>
+
+</html>
