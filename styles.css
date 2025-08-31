@@ -26,12 +26,13 @@ main {
     gap: 30px;
 }
 
-ol {
+ul {
     text-align: left;
 }
 
-ul {
-    text-align: left;
+li.deeper {
+    margin-left: 30px;
+    list-style-type: circle;
 }
 
 #center {
