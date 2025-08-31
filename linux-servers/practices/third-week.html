@@ -19,68 +19,115 @@
   </div>
   <div id="center">
     <main>
-      <h1>Oma Linux</h1>
+      <h1>Harjoitus 3: Hello Web Server</h1>
 
-      <h2>Tehtävänanto, <i>Karvinen 2025</i></h2>
+      <h2>Lue ja tiivistä (Muutama ranskalainen viiva riittää. Tässä
+        alakohdassa ei tarvitse tehdä testejä tietokoneella)</h2>
+
+      <h3>Name Based Virtual Hosts on Apache<i>The Apache Software
+          Foundation, 2023</i></h3>
       <ul>
-        <li>
-          x) Lue ja tiivistä (Muutama ranskalainen viiva riittää. Tässä
-          alakohdassa ei tarvitse tehdä testejä tietokoneella. Lisää jokin oma
-          kysymys, idea tai huomio) <i>Karvinen 2020</i>: Command Line Basics
-          Revisited (nämä komennot ja hakemistot kannattaa myös opiskella
-          ulkoa ja harjoitella automaatiotasolle)
+        <li>IP pohjainen virtuaalipalvelin käyttää IP osoitetta valitessaan oikean virtuaalisen palvelimen jota palvella
         </li>
-
-        <li>a) Micro. Asenna micro-editori</li>
-        <li>
-          b) Apt. Asenna kolme itsellesi uutta komentoriviohjelmaa. Kokeile
-          kutakin ohjelmaa sen pääasiallisessa käyttötarkoituksessa. Ota
-          ruutukaappaus. Kaikki terminaaliohjelmat kelpaavat, TUI (text user
-          interface) ja CLI (command line interface). Osaatko tehdä apt-get
-          komennon, joka asentaa nämä kolme ohjelmaa kerralla?
-        </li>
-        <li>
-          c) FHS. Esittele kansiot, jotka on listattu "Command Line Basics
-          Revisited" kappaleessa "Important directories". Näytä kuvaava
-          esimerkki kunkin tärkeän kansion sisältämästä tiedostosta tai
-          kansiosta. Jos kyseessä on tiedosto, näytä siitä kuvaava
-          esimerkkirivi. Työskentele komentokehotteessa ja näytä komennot,
-          joilla etsit esimerkit.
-        </li>
-        <li>
-          d) The Friendly M. Näytä 2-3 kuvaavaa esimerkkiä grep-komennon
-          käytöstä. Ohjeita löytyy 'man grep' ja tietysti verkosta.
-        </li>
-        <li>e) Pipe. Näytä esimerkki putkista (pipes, "|").</li>
-        <li>
-          f) Rauta. Listaa testaamasi koneen rauta (‘sudo lshw -short
-          -sanitize’). Asenna lshw tarvittaessa. Selitä ja analysoi listaus.
-        </li>
-        <li>
-          g) Vapaaehtoinen: Valitse muutama rivi lokeista. Tulkitse ja
-          analysoi.
-        </li>
-        <li>
-          h) Vapaaehtoinen: Asenna jokin plugin micro-editorille ja kokeile
-          sitä. Vaikkapa palettero, cheat tai runit.
+        <li>Nimi pohjaisessa palvelin luottaa että käyttäjä antaa oikean hostnamen osana HTTP headereitä.</li>
+        <li>VirtualHost lohko tarvitsee vähintään ServerName ja DocumentRoot direktiivit. ServerAlias on valinnainen
         </li>
       </ul>
 
-      <h2>Tietoa</h2>
-      <p class="text">
-        Tätä dokumenttia saa kopioida ja muokata GNU General Public License
-        (versio 2 tai uudempi) mukaisesti.
+      <h3>Name Based Virtual Hosts on Apache Multiple Websites to Single IP Address, <i>Karvinen, 2018</i></h3>
+      <ul>
+        <li>Apache käyttää Nimi pohjaista virtuaalipalvelinta useiden verkkosivustojen isännöimiseen yhdellä
+          IP-osoitteella.</li>
+        <li></li>
+      </ul>
+
+      <h3>Weppipalvelimen teko</h3>
+      <p><b>a)</b> Aloitin asentamalla apachen virtuaalikoneeseen. Tämän jälkeen seurasin Name Based Virtual Hosts on
+        Apache -
+        Multiple Websites to Single IP Address ohjeita ja tein oman apache palvelimen. Lisäsin aluksi localhostin
+        vastaamaan vain "Default" kuten ohjeissakin. Sen lisäksi lisäsin auto.example.com sivun, joka vastaa
+        dokumentilla osoitteesta /root/publicsites/auto.example.com. Lisäsin osoitteen myös /etc/hosts tiedostoon.</p>
+      <img src="images/Third/web-server.png" width="700px" />
+      <img src="images/Third/web-server2.png" width="700px" />
+      <img src="images/Third/web-server3.png" width="700px" />
+
+      <p>Törmäsin myöhemmin kuitenkin ongelmaan koitessani avata selaimessa auto.example.com ja koittaessani curl
+        komennolla tulostaa auto.example.com </p>
+      <img src="images/Third/auto-error.png" width="700px" />
+      <img src="images/Third/auto-error2.png" width="700px" />
+
+      <p>Pienen googlaamisen jälkeen huomasin, ettei <i>/root</i> hakemistolla ole oikeuksia kuin vain hakemiston
+        omistavalla käyttäjällä. Lisäsin hakemistolle luku ja suoritus oikeudet muille kuin hakemiston omistajalle ja
+        ryhmälle komennolla <i>chmod o+rx root</i> jonka
+        jälkeen sivusto näkyi oikein terminaalissa sekä selaimessa.</p>
+      <img src="images/Third/auto-error3.png" width="700px" />
+      <img src="images/Third/auto-error4.png" width="700px" />
+      <p><i>/var/log/apache2/error.log</i> näyttää myös tämmöistä erroria, jonka huomasin vastsa myöhemmin</p>
+      <img src="images/Third/auto-error5.png" width="700px" />
+
+      <h3><b>b)</b> Loki rivien analysointia</h3>
+      <p>Ensimmäinen osa <i>127.0.0.1</i> kertoo asiakasyhteyden, josta pyyntö on tullut. Ensimmäinen <i>-</i> kertoo
+        etäkäyttäjän tunnuksen, jota ei usein käytetä. Toinen <i>-</i> kertoo HTTP-autentikoinnin käyttäjätunnuksen.
+        Molemmat näyttävät <i>-</i> jos niitä ei ole asetettu. Seuraavaksi [] sulkeiden välissä näytetään aika jolloin
+        pyyntö on vastaanotettu. Muoto on <i>dd/mmm/yyyy:hh:mm:ss</i> ja lopussa vielä UTC aika. Näytetty aika on
+        paikallisessa ajassa, ei UTC+0 ajassa. Seuraavaksi "" merkkien välissä näytetään puudettu metodi, resurssi sekä
+        käytetty HTTP versio. seuraava 3 merkkinen numero kertoo palvelimen HTTP vastuaskoodin. 200-299 on onnistunut,
+        400-499 virhe asiakkaan pyynnössä ja 500-599 virhe palvelimen puolella. Seuraavana on datan koko tavuina, joka
+        lähetetään asiakkaalle. "" merkkien välissä on osoite josta käyttäjä tuli sivulle. Tässä tapauksessa näytetään
+        vain <i>-</i>. Lopuksi näytetään stringi, jossa kerrotaan asiakkaan selaimen sekä käyttöjärjestelmän tietoja.
+        Näemme, että käytin Mozillan 5. versiota, Linux 64 bittistä järjestelmää, Firefoxin versiota 128.0</p>
+      <img src="images/Third/b1.png" width="700px" />
+
+      <h3><b>c)</b> Etusivu uusiksi</h3>
+      <p>Aloitin poistamalla tekemäni auto.example.com sivut. Poistin auto.example.com sivun /etc/hosts
+        tiedostosta ja lisäsin hattu.example.com sivun osoitteeseen 127.0.0.1. Näin hattu.example.com sekä localhost
+        osoittavat samaan paikkaan.</p>
+      <img src="images/Third/c4.png" width="700px" />
+      <p>Tein virtual hostin konfiguraatio tiedoston <i>/etc/apache2/hattu.example.com.conf</i> ja tein sinne alla
+        olevassa kuvassa olevat asetukset. ServerName on hattu.example.com, ServerAlias on localhost(käyttäjä pääsee
+        tälle sivulle myös syöttämällä localhost), sivuston dokumentit löytyvät
+        <i>/root/publicsites/hattu.example.com</i> hakemistosta sekä hakemiston indexi tiedosto on hattuexamplecom.html,
+        joka on täytynyt asettaa erikseen, koska apache ei löydä indexi tiedostoa, jos se on jokin muu kuin index.html.
       </p>
-      <p class="text">
-        <a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a>
-      </p>
+      <img src="images/Third/c5.png" width="700px" />
+      <p>Oikeudet sivuston indeksi tiedostolle.</p>
+      <img src="images/Third/c1.png" width="700px" />
+      <p>Sivusto selaimella sekä terminaalissa</p>
+      <img src="images/Third/c6.png" width="700px" />
+      <img src="images/Third/c7.png" width="700px" />
+      <img src="images/Third/c8.png" width="700px" />
+
+      <h3><b>e)</b> Validi html5 sivu</h3>
+      <img src="images/Third/e2.png" width="700px" />
+      <img src="images/Third/e1.png" width="700px" />
+
+      <p><b>f)</b> curl -l uudelleenohjaa käyttäjän uuteen osoitteeseen, jos osoite johon käyttäjä yrittää päästä on
+        siirtynyt toiseen osoitteeseen. Pelkkä curl komento antaa 3xx alkuisen virhekoodin, jos tätä lippua ei ole
+        kutsussa, ja osoite on muuttanut toiseen osoitteeseen. Alla esimerkki hattu.example.com vastauksesta</p>
+      <img src="images/Third/f1.png" width="700px" />
+
+      <h2>Tehtävänanto</h2>
+      <a href="https://terokarvinen.com/linux-palvelimet/#h3-hello-web-server">h3 Hello Web Server, Karvinen 2025</a>
 
       <h2>Lähteet</h2>
       <ul>
         <li>
           Karvinen, Tero 2025. <i>Linux Palvelimet</i>
           <a
-            href="https://terokarvinen.com/linux-palvelimet/#h2-komentaja-pingviini">https://terokarvinen.com/linux-palvelimet/#h2-komentaja-pingviini</a>
+            href="https://terokarvinen.com/linux-palvelimet/#h3-hello-web-server">https://terokarvinen.com/linux-palvelimet/#h3-hello-web-server</a>
+        </li>
+        <li>Karvinen, Tero 2018. <i>Name Based Virtual Hosts on Apache – Multiple Websites to Single IP Address</i>
+          <a
+            href="https://terokarvinen.com/2018/04/10/name-based-virtual-hosts-on-apache-multiple-websites-to-single-ip-address/">https://terokarvinen.com/2018/04/10/name-based-virtual-hosts-on-apache-multiple-websites-to-single-ip-address/</a>
+        </li>
+        <li>
+          The Apache Software Foundation, 2023.<i>Name-based Virtual Host Support</i>
+          <a
+            href="https://httpd.apache.org/docs/2.4/vhosts/name-based.html">https://httpd.apache.org/docs/2.4/vhosts/name-based.html</a>
+        </li>
+        <li>
+          curl, luettu 31.8.2025. <i>curl man page</i>
+          <a href="https://curl.se/docs/manpage.html">https://curl.se/docs/manpage.html</a>
         </li>
       </ul>
     </main>
