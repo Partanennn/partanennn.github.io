@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <title>Harjoitus 5</title>
+</head>
+
+<body>
+  <div id="left">
+    <ul>
+      <li>Linux Harjoitukset</li>
+      <li><a href="first-week.html">Harjoitus 1 raportti</a></li>
+      <li><a href="second-week.html">Harjoitus 2 raportti</a></li>
+      <li><a href="third-week.html">Harjoitus 3 raportti</a></li>
+      <li><a href="fourth-week.html">Harjoitus 4 raportti</a></li>
+      <li><a href="fifth-week.html">Harjoitus 5 raportti</a></li>
+    </ul>
+  </div>
+  <div id="center">
+    <main>
+      <h1>Harjoitus 5: Nimekäs</h1>
+
+      <h2>a) Nimi</h2>
+
+      <p>Pitää hommata julkinen domain nimi osoittamaan omaan virtuaalikoneeseen. En tarvitse domain nimeä omaan
+        käyttöön joten lähden etsimään mahdollisimman halpaa palveluntarjoajaa. Namecheap valikoituu tarjoajaksi. Etsin
+        <i>aleksipartanen</i> domainia ja etsin halvimman mahdollisen. Domain <i>aleksipartanen.space</i> maksaa vain
+        0.83 euroa vuodeksi, joten otan sen. Tarjolla on monia eri palveluja, joita voisi ottaa oston yhteyteen, mutta
+        nyt ei ole tarvetta kuin vain domain nimelle.
+      </p>
+      <img src="images/Fifth/hinta.png" alt="Price for domain name" class="image" />
+
+      <p>Otetaan kassalla vielä domain privacy suojaus päälle ilmaiseksi.</p>
+      <img src="images/Fifth/hinta2.png" alt="Domain name basket" class="image" />
+
+      <p>Rekisteröidyin Namecheapin palveluun. Nimen ja osoitteen lisääämisen jälkeen pitää lisätä kortin tiedot.
+        Loppuhinnaksi nimelle vuoden ajaksi tuli 1e</p>
+      <img src="images/Fifth/kortti.png" alt="Card details" class="image" />
+
+      <p>Seuraavaksi laitetaankin osoite osoittamaan omaan koneeseen. Namecheapin Domain List näkymästä valitaan
+        aleksipartanen.space ja Advanced DNS. HOST RECORDS osiossa nähdään että siinä on turha CNAME tietue. Poistan sen
+        ja lisään oman A Record kohdan, joka osoittaa virtuaalipalvelimelle. Host kohtaan laitetaan www, joka tarkoittaa
+        www.aleksipartanen.space osoitetta. @ host taas tarkoittaa pelkkää domain osoitetta, tässä tapauksessa
+        aleksipartanen.space. TTL ajaksi laitan 5 minuuttia, jotta muutokset näkyvät nopeasti.
+      </p>
+      <img src="images/Fifth/domain-asetukset.png" alt="DNS settings" class="image" />
+
+      <p>Webbisivu näkyy nyt oikein.</p>
+      <img src="images/Fifth/website.png" alt="Website" class="image" />
+
+      <h2>b) Alidomain</h2>
+
+      <p>Tehdään kaksi uutta alidomainia. Tehdään alidomainit yksi.aleksipartanen.space ja kaksi.aleksipartanen.space.
+        Aloitetaan lisäämällä alidomainit Namecheapiin. Aloitan menemällä namecheapin dashboardille. Namecheapillä on
+        hyvät omat ohjeet alidomainin tekemiseen, joita seuraan (Namecheap 24.10.2024). Sieltä
+        painan Manage nappia aleksipartanen.space domainin kohdalta. Aukeaa domainin hallintasivu, josta valitsen
+        Advanced DNS valikon. Lisään kaksi uutta A tietuetta, jonka Host arvoiksi annan yksi ja kaksi.</p>
+      <img src="images/Fifth/subdomain.png" alt="subdomain names" class="image" />
+      <img src="images/Fifth/subdomainyksi.png" alt="subdomain names" class="image" />
+
+      <h2>Tehtävänanto</h2>
+      <span>
+        <a href="https://terokarvinen.com/linux-palvelimet/#h5-nimekas">h5 Nimekäs</a> (Karvinen 2025)
+      </span>
+
+      <h2>Lähteet</h2>
+      <ul>
+        <li>
+          Karvinen, T. 2025. Linux Palvelimet. Tero Karvinen. Luettavissa:
+          <a
+            href="https://terokarvinen.com/linux-palvelimet/#h5-nimekas">https://terokarvinen.com/linux-palvelimet/#h5-nimekas</a>.
+          Luettu: 18.9.2025.
+        </li>
+        <li>
+          Namecheap, 24.10.2024. How ot Create a Subdomain for my Domain. Namecheap. Luettavissa:
+          <a
+            href="https://www.namecheap.com/support/knowledgebase/article.aspx/9776/2237/how-to-create-a-subdomain-for-my-domain/">https://www.namecheap.com/support/knowledgebase/article.aspx/9776/2237/how-to-create-a-subdomain-for-my-domain/</a>
+          Luettu: 18.9.2025
+        </li>
+      </ul>
+    </main>
+
+    <footer>
+      <p><a href="../index.html">Linux Harjoitukset</a></p>
+      <p><a href="../../index.html">Etusivu</a></p>
+      <p>Aleksi Partanen &#169;2025</p>
+    </footer>
+  </div>
+  <div id="right"></div>
+</body>
+
+</html>

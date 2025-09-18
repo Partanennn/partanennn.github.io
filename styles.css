@@ -42,6 +42,10 @@ li.deeper {
     text-align: center;
 }
 
+.image {
+    width: 700px;
+}
+
 .text {
     text-align: left;
 }
