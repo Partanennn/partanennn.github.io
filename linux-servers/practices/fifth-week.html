@@ -64,6 +64,56 @@
       <img src="images/Fifth/subdomainyksi.png" alt="subdomain names" class="image" />
       <img src="images/Fifth/subdomainkaksi.png" alt="subdomain names" class="image" />
 
+      <h2>c) Tutki DNS tietoja.</h2>
+
+      <p>Ensimmäisenä lataan dnsutils(Johnson 7.2.2011) paketin komennolla <i>sudo apt-get install dnsutils</i>.
+        Asentaminen onnistuu ilman ongelmia. Seuraavaksi käytän dnsutils paketin mukana tullutta <i>dig</i>(Linux man
+        page) komentoa, käytän komennossa -t lippua, joka kertoo dns tyypin, jota halutaan etsiä. Jos halutaan etsiä
+        jokainen dns tieto, käytetään ANY arvoa -t lipun kanssa. Komento jota käytän on <i>dig google.com -t ANY</i>.
+      </p>
+      <img src="images/Fifth/dig.png" alt="dig command results" class="image" />
+
+      <p>Tuloksesta käy ilmi, että google.com domainilla on AAAA, NS, HTTPS, MX, SOA, A, NS, TXT ja CAA tietueet
+        päällä.
+      </p>
+      <p>AAAA tietue pitää sisällään IPv6 osoitteen domainille (Cloudflare, DNS records). Google.com osoitteelle tämä
+        arvoja on 4.</p>
+      <p>A tietue pitää sisällään IPv4 osoitteen domainille (Cloudflare, DNS records). Google.com osoitteella näitä on 6
+        kappaletta.</p>
+      <p>TXT tietue pitää sisällään teksti arvoja (Cloudflare, DNS records). Yleensä näitä käytetään sähköpostien
+        turvallisuuteen liittyen, ja googlella näyttääkin olevan mm. applen, facebookin ja docusign palveluiden
+        julkisia vahvistus avaimia.</p>
+      <p>
+        SOA tyyppi kertoo monta asiaa. Ensimmäinen osoite vastauksessa on MNAME, joka kertoo ensisijaisen
+        nimipalvelimen (Cloudflare, What is a DNS SOA record?), joka on tässä tapauksessa ns1.google.com. Toinen osoite
+        on ylläpitäjän sähköposti
+        osoite vaikkei se ole
+        sähköposti osoitteen normaalissa muodossa. dns-admin.google.com tarkoittaa, että ylläpitäjän sähköposti osoite
+        on dns1-admin@google.com (Cloudflare, What is a DNS SOA record?). Seuraava arvo on SERIAL, alueellinen
+        sarjanumero. Kun tämä arvo muuttuu,
+        toissijaiset
+        nimipalvelimet tietävät päivittää heidän tietonsa (Cloudflare, What is a DNS SOA record?). Seuraava luku on
+        REFRESH, tässä tapauksessa 900
+        sekunttia, joka tarkoittaa aikaa
+        sekunneissa, jolloin toissijaiset palvelimet pyytävät ensisijaiselta palvelimelta uuttaa SOA tietuetta
+        (Cloudflare, What is a DNS SOA record?). Seuraava
+        arvo on RETRY, joka kertoo montako sekunttia palvelimen pitäisi odottaa ennen kuin se pyytää arvoja uudestaan
+        ensisijaiselta nimipalvelimelta vastaamattoman pyynnön jälkeen (Cloudflare, What is a DNS SOA record?), tässä
+        tapauksessa 900 sekunttia.
+        Toiseksi
+        viimeisenä on EXPIRE, joka kertoo milloin toissijainen palvelin lopettaa vastaamasta alueen pyyntöihin, jos se
+        ei saa vastausta ensisijaiselta palvelimelta (Cloudflare, What is a DNS SOA record?). Google.com toissijainen
+        nimipalvelin lopettaa vastaamasta alueen
+        pyyntöihin 1800 sekunnin jälkeen, eli 30 minuutin jälkeen. Viimeisenä arvona on TTL, Time To Live,
+        joka kertoo
+        kuinka kauaksi aikaa jokaista tietuetta pidetään välimuistissa, cachessa (Cloudflare, What is a DNS SOA
+        record?). Google.com tämä arvo on 60
+        sekunttia.
+      </p>
+
+      <h3>Oman domainin DNS tiedot</h3>
+      <p></p>
+
       <h2>Tehtävänanto</h2>
       <span>
         <a href="https://terokarvinen.com/linux-palvelimet/#h5-nimekas">h5 Nimekäs</a> (Karvinen 2025)
@@ -72,15 +122,39 @@
       <h2>Lähteet</h2>
       <ul>
         <li>
+          Cloudflare. What is a DNS SOA record?. Luettavissa: <a
+            href="https://www.cloudflare.com/learning/dns/dns-records/dns-soa-record/">https://www.cloudflare.com/learning/dns/dns-records/dns-soa-record/</a>.
+          Luettu: 21.9.2025
+        </li>
+        <li>
+          CLoudflare. DNS records. Luettavissa: <a
+            href="https://www.cloudflare.com/learning/dns/dns-records/">https://www.cloudflare.com/learning/dns/dns-records/</a>.
+          Luettu: 21.9.2025
+        </li>
+        <li>
+          Cloudflare Docs. Time to Live (TTL). Luettavissa: <a
+            href="https://developers.cloudflare.com/dns/manage-dns-records/reference/ttl/">https://developers.cloudflare.com/dns/manage-dns-records/reference/ttl/</a>.
+          Luettu: 21.9.2025
+        </li>
+        <li>
+          Johnson E., 7.2.2011. How do I install dig? Reddit postaus @erik-johnson. Luettavissa: <a
+            href="https://askubuntu.com/questions/25098/how-do-i-install-dig">https://askubuntu.com/questions/25098/how-do-i-install-dig</a>.
+          Luettu: 21.9.2025
+        </li>
+        <li>
           Karvinen, T. 2025. Linux Palvelimet. Tero Karvinen. Luettavissa:
           <a
             href="https://terokarvinen.com/linux-palvelimet/#h5-nimekas">https://terokarvinen.com/linux-palvelimet/#h5-nimekas</a>.
           Luettu: 18.9.2025.
         </li>
         <li>
-          Namecheap, 24.10.2024. How ot Create a Subdomain for my Domain. Namecheap. Luettavissa:
+          Linux man page. Dig. Luettavissa: <a
+            href="https://linux.die.net/man/1/dig">https://linux.die.net/man/1/dig</a>. Luettu: 21.9.2025
+        </li>
+        <li>
+          Namecheap, 24.10.2024. How to Create a Subdomain for my Domain. Namecheap. Luettavissa:
           <a
-            href="https://www.namecheap.com/support/knowledgebase/article.aspx/9776/2237/how-to-create-a-subdomain-for-my-domain/">https://www.namecheap.com/support/knowledgebase/article.aspx/9776/2237/how-to-create-a-subdomain-for-my-domain/</a>
+            href="https://www.namecheap.com/support/knowledgebase/article.aspx/9776/2237/how-to-create-a-subdomain-for-my-domain/">https://www.namecheap.com/support/knowledgebase/article.aspx/9776/2237/how-to-create-a-subdomain-for-my-domain/</a>.
           Luettu: 18.9.2025
         </li>
       </ul>
