@@ -69,11 +69,19 @@
       <p>Ensimmäisenä lataan dnsutils(Johnson 7.2.2011) paketin komennolla <i>sudo apt-get install dnsutils</i>.
         Asentaminen onnistuu ilman ongelmia. Seuraavaksi käytän dnsutils paketin mukana tullutta <i>dig</i>(Linux man
         page) komentoa, käytän komennossa -t lippua, joka kertoo dns tyypin, jota halutaan etsiä. Jos halutaan etsiä
-        jokainen dns tieto, käytetään ANY arvoa -t lipun kanssa. Komento jota käytän on <i>dig google.com -t ANY</i>.
+        jokainen dns tieto, käytetään ANY arvoa -t lipun kanssa. Komento jota käytän on <i>dig @8.8.8.8 google.com -t
+          ANY</i>.
       </p>
-      <img src="images/Fifth/dig.png" alt="dig command results" class="image" />
 
-      <p>Tuloksesta käy ilmi, että google.com domainilla on AAAA, NS, HTTPS, MX, SOA, A, NS, TXT ja CAA tietueet
+      <img src="images/Fifth/dig2.png" alt="dig command results" class="image" />
+      <p>Omasta domainistani ei löydy hirveästi tietoa <i>dig</i> komennolla. Käytin komentoa ilman IPv4 osoitetta,
+        koska
+        palvelimeni IPv4 osoitteella ei saatu siihen yhteyttä. Ainoa tietue, jonka näkee dig komennolla, on A tietue
+        joka kertoo osoitteen, johon domain nimi osoittaa.</p>
+
+      <img src="images/Fifth/dig.png" alt="dig command results" class="image" />
+      <p>Googlen domainista löytyy rutkasti enemmän tietoa. Tuloksesta käy ilmi, että google.com domainilla on AAAA, NS,
+        HTTPS, MX, SOA, A, NS, TXT ja CAA tietueet
         päällä.
       </p>
       <p>AAAA tietue pitää sisällään IPv6 osoitteen domainille (Cloudflare, DNS records). Google.com osoitteelle tämä
@@ -83,6 +91,12 @@
       <p>TXT tietue pitää sisällään teksti arvoja (Cloudflare, DNS records). Yleensä näitä käytetään sähköpostien
         turvallisuuteen liittyen, ja googlella näyttääkin olevan mm. applen, facebookin ja docusign palveluiden
         julkisia vahvistus avaimia.</p>
+      <p>NS tietue pitää sisällään nimipalvelimen, joka pitää sisällään nimipalvelin arvot (Cloudflare, DNS records).
+        Esimerkki tapauksessa niitä on useita, mm. ns2.google.com.
+      </p>
+      <p>CAA tietue pitää sisällään tiedon, että mitkä sertifikaatti viranomaiset voivat antaa sertifikaatteja
+        kyseiselle domainille (Cloudflare, DNS records). Esimerkissä arvo on kyseinen viranomainen on <i>pki.goog.</i>
+      </p>
       <p>
         SOA tyyppi kertoo monta asiaa. Ensimmäinen osoite vastauksessa on MNAME, joka kertoo ensisijaisen
         nimipalvelimen (Cloudflare, What is a DNS SOA record?), joka on tässä tapauksessa ns1.google.com. Toinen osoite
@@ -111,8 +125,11 @@
         sekunttia.
       </p>
 
-      <h3>Oman domainin DNS tiedot</h3>
-      <p></p>
+      <h3>Host komento</h3>
+      <img src="images/Fifth/host.png" alt="host command results" class="image" />
+      <p>Host komento näyttää domainin IPv4, IPv6 sekä sähköposti osoitteen. Omalla domainillani on useampi sähköposti
+        osoite, jotka todennäköisesti tehdään Namecheapin puolesta automaattisesti jokaiselle domain nimelle. Googlella
+        sen sijaan on vain yksi. Omalla domainillani ei ole IPv6 osoitetta asetettuna.</p>
 
       <h2>Tehtävänanto</h2>
       <span>
