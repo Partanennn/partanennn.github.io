@@ -59,7 +59,7 @@
           Kirjautumisen jälkeen Billing sivulla näkyi $100 Promotions kohdassa.
           Sivustolle kirjautuminen kävi helposti.
         </p>
-        <img src="images/Fourth/image.png" alt="Linode billing" width="700px" />
+        <img src="images/Fourth/image.png" alt="Linode billing" />
 
         <p>
           Seuraavaksi halusin luoda virtuaalipalvelimen. Vasemmasta sivupalkista
@@ -73,7 +73,6 @@
         <img
           src="images/Fourth/linode-creation.png"
           alt="linode virtual server creation"
-          width="700px"
         />
 
         <p>
@@ -82,11 +81,7 @@
           yläkulmassa luki <i>Provisioning</i> ja odotin että se muuttui muotoon
           Running.
         </p>
-        <img
-          src="images/Fourth/linode.png"
-          alt="linode virtual server"
-          width="700px"
-        />
+        <img src="images/Fourth/linode.png" alt="linode virtual server" />
 
         <h3>
           b) Tee alkutoimet virtuaalipalvelimella, Tulimuuri päälle, root-tunnus
@@ -94,22 +89,14 @@
         </h3>
 
         <p>Otin yhteyden palvelimeen powershell:lla käyttäen ssh:ta.</p>
-        <img
-          src="images/Fourth/ssh-connection.png"
-          alt="ssh connection"
-          width="700px"
-        />
+        <img src="images/Fourth/ssh-connection.png" alt="ssh connection" />
 
         <p>
           Asensin palvelimelle palomuuri sovelluksen <i>ufw</i> komennolla
           <i>sudo apt-get install ufw</i>. Tämän jälkeen avasin ssh portin 22
           sekä 80 ja laitoin palomuurin päälle komenolla <i>sudo ufw enable</i>.
         </p>
-        <img
-          src="images/Fourth/open-ports.png"
-          alt="ufw commands"
-          width="700px"
-        />
+        <img src="images/Fourth/open-ports.png" alt="ufw commands" />
 
         <p>
           Lisäsin uuden käyttäjän palvelimelle. Käytin komentoa
@@ -117,11 +104,7 @@
           komennolla <i>sudo adduser aleksi sudo</i> ja kokeilin kirjautua
           palvelimelle tunnuksella. Kirjautuminen onnistui.
         </p>
-        <img
-          src="images/Fourth/ssh-aleksi.png"
-          alt="Aleksi SSH connection"
-          width="700px"
-        />
+        <img src="images/Fourth/ssh-aleksi.png" alt="Aleksi SSH connection" />
 
         <p>
           Tässä vaiheessa lisäsin kotikoneeni julkisen SSH avaimen käyttäjäni
@@ -132,16 +115,8 @@
           Laitan sekä PermitRootLogin että PasswordAuthentication asetukset pois
           päältä.
         </p>
-        <img
-          src="images/Fourth/ssh-config1.png"
-          alt="SSH Configurations"
-          width="700px"
-        />
-        <img
-          src="images/Fourth/ssh-config2.png"
-          alt="SSH Configurations"
-          width="700px"
-        />
+        <img src="images/Fourth/ssh-config1.png" alt="SSH Configurations" />
+        <img src="images/Fourth/ssh-config2.png" alt="SSH Configurations" />
 
         <p>
           Nyt yrittäessäni kirjautua sisään root käyttäjällä, saan alla näkyvän
@@ -149,11 +124,7 @@
           aleksi käyttäjällä. Päivitän vielä lopuksi ohjelmat palvelimelta
           komennooilla update, upgrade ja dist-upgrade.
         </p>
-        <img
-          src="images/Fourth/root-denied.png"
-          alt="SSH root denied"
-          width="700px"
-        />
+        <img src="images/Fourth/root-denied.png" alt="SSH root denied" />
 
         <h3>c) Asenna weppipalvelin</h3>
         <p>
@@ -167,7 +138,6 @@
         <img
           src="images/Fourth/web-server.png"
           alt="Apache custom default page"
-          width="700px"
         />
 
         <h2>Tehtävänanto</h2>

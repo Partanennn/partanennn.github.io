@@ -70,17 +70,17 @@
           dokumentilla osoitteesta /root/publicsites/auto.example.com. Lisäsin
           osoitteen myös /etc/hosts tiedostoon.
         </p>
-        <img src="images/Third/web-server.png" width="700px" />
-        <img src="images/Third/web-server2.png" width="700px" />
-        <img src="images/Third/web-server3.png" width="700px" />
+        <img src="images/Third/web-server.png" />
+        <img src="images/Third/web-server2.png" />
+        <img src="images/Third/web-server3.png" />
 
         <p>
           Törmäsin myöhemmin kuitenkin ongelmaan koitessani avata selaimessa
           auto.example.com ja koittaessani curl komennolla tulostaa
           auto.example.com
         </p>
-        <img src="images/Third/auto-error.png" width="700px" />
-        <img src="images/Third/auto-error2.png" width="700px" />
+        <img src="images/Third/auto-error.png" />
+        <img src="images/Third/auto-error2.png" />
 
         <p>
           Pienen googlaamisen jälkeen huomasin, ettei <i>/root</i> hakemistolla
@@ -89,13 +89,13 @@
           omistajalle ja ryhmälle komennolla <i>chmod o+rx root</i> jonka
           jälkeen sivusto näkyi oikein terminaalissa sekä selaimessa.
         </p>
-        <img src="images/Third/auto-error3.png" width="700px" />
-        <img src="images/Third/auto-error4.png" width="700px" />
+        <img src="images/Third/auto-error3.png" />
+        <img src="images/Third/auto-error4.png" />
         <p>
           <i>/var/log/apache2/error.log</i> näyttää myös tämmöistä erroria,
           jonka huomasin vastsa myöhemmin
         </p>
-        <img src="images/Third/auto-error5.png" width="700px" />
+        <img src="images/Third/auto-error5.png" />
 
         <h3><b>b)</b> Loki rivien analysointia</h3>
         <p>
@@ -117,7 +117,7 @@
           tietoja. Näemme, että käytin Mozillan 5. versiota, Linux 64 bittistä
           järjestelmää, Firefoxin versiota 128.0
         </p>
-        <img src="images/Third/b1.png" width="700px" />
+        <img src="images/Third/b1.png" />
 
         <h3><b>c)</b> Etusivu uusiksi</h3>
         <p>
@@ -126,7 +126,7 @@
           hattu.example.com sivun osoitteeseen 127.0.0.1. Näin hattu.example.com
           sekä localhost osoittavat samaan paikkaan.
         </p>
-        <img src="images/Third/c4.png" width="700px" />
+        <img src="images/Third/c4.png" />
         <p>
           Tein virtual hostin konfiguraatio tiedoston
           <i>/etc/apache2/hattu.example.com.conf</i> ja tein sinne alla olevassa
@@ -138,17 +138,17 @@
           asettaa erikseen, koska apache ei löydä indexi tiedostoa, jos se on
           jokin muu kuin index.html.
         </p>
-        <img src="images/Third/c5.png" width="700px" />
+        <img src="images/Third/c5.png" />
         <p>Oikeudet sivuston indeksi tiedostolle.</p>
-        <img src="images/Third/c1.png" width="700px" />
+        <img src="images/Third/c1.png" />
         <p>Sivusto selaimella sekä terminaalissa</p>
-        <img src="images/Third/c6.png" width="700px" />
-        <img src="images/Third/c7.png" width="700px" />
-        <img src="images/Third/c8.png" width="700px" />
+        <img src="images/Third/c6.png" />
+        <img src="images/Third/c7.png" />
+        <img src="images/Third/c8.png" />
 
         <h3><b>e)</b> Validi html5 sivu</h3>
-        <img src="images/Third/e2.png" width="700px" />
-        <img src="images/Third/e1.png" width="700px" />
+        <img src="images/Third/e2.png" />
+        <img src="images/Third/e1.png" />
 
         <p>
           <b>f)</b> curl -l uudelleenohjaa käyttäjän uuteen osoitteeseen, jos
@@ -157,7 +157,7 @@
           tätä lippua ei ole kutsussa, ja osoite on muuttanut toiseen
           osoitteeseen. Alla esimerkki hattu.example.com vastauksesta
         </p>
-        <img src="images/Third/f1.png" width="700px" />
+        <img src="images/Third/f1.png" />
 
         <h2>Tehtävänanto</h2>
         <a href="https://terokarvinen.com/linux-palvelimet/#h3-hello-web-server"
