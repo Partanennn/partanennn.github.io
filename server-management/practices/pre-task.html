@@ -81,7 +81,10 @@
           Asennus onnistui ja Debian toimii normaalisti. Lisäsin
           <i>aleksi</i> käyttäjän sudoers ryhmään. Päivitin Debianin komennolla
           <i>sudo apt-get update</i>. Latasin myös <i>tree</i>, <i>ssh</i> ja
-          <i>vim</i>, jotta työskentely helpottuu tulevaisuudessa.
+          <i>vim</i>, jotta työskentely helpottuu tulevaisuudessa. Asensin myös
+          Guest Additionit (Karvinen 2021), että kopiointi host koneen ja
+          virtuaalikoneen välillä onnistuu, ja että virtuaalikoneen työpöydän
+          resoluutio on suurempi.
         </p>
         <img src="../images/first/vm-booted.png" alt="Virtual Machine booted" />
 
@@ -90,6 +93,88 @@
           Vuokrataan virtuaalinen yksityispalvelin. Aion käyttää UpCloudia tällä
           kertaa, koska Linux palvelimet kurssilla käytin Linode palvelua.
         </p>
+        <p>
+          Aloitetaan tekemällä tunnukset Upcloud palveluun. Se onnistui helposti
+          ja pankkikortti piti liittää tiliin. Sain 500 euroa käyttöön
+          ensimmäiseksi kuukaudeksi jotta pääsen kokeilemaan asioita. Haluan
+          kuitenkin ottaa käyttöön vain sellaisen VPS palvelun, joka ei ole
+          hirveän kallis ja riittää kurssin käyttötarpeeseen. Päätin valita
+          Upcloudin 1cpu/2GB ram/20GB version, joka maksaa 6e kuukaudessa.
+          Todennäköisesti 3e versiokin olisi riittänyt ja mietin myös premium
+          puolen 5e/kk versiota.
+        </p>
+
+        <img src="../images/first/vps-plan.png" />
+
+        <p>
+          Käyttöjärjestelmäksi valitsin Debian 13 version, jota käytetään
+          kurssilla.
+        </p>
+
+        <img src="../images/first/vps-os.png" />
+
+        <p>
+          Sisäänkirjautumis metodiksi valitsin SSH avaimella kirjautumisen ja
+          lisäsinkin host koneen julkisen avaimen palvelimelle palvelimen teon
+          yhteydessä. Myöhemmin lisäsin vielä virtuaalikoneen SSH avaimen myös
+          Upcloudin VPS palvelimelle.
+        </p>
+
+        <img src="../images/first/vps-login-method.png" />
+        <img src="../images/first/vps-ssh-keys.png" />
+
+        <p>
+          Tässä näkyy lopputulos kun palvelin on päällä ja yhteys saatu host
+          koneelta siihen.
+        </p>
+
+        <img src="../images/first/vps-final.png" />
+        <img src="../images/first/vps-connection-with-host-machine.png" />
+
+        <h2>c) Alkutoimet</h2>
+
+        <p>
+          Tehdään sudo käyttäjä virtuaali palvelimelle. Teen nämä asiat
+          ottamalla yhteyttä omalla koneella olevaltani virtuaalikoneelta. Tein
+          <i>aleksi</i> käyttäjän <i>root</i> käyttäjällä virtuaali
+          palvelimelle.
+        </p>
+
+        <img
+          src="../images/first/starters-user-creation.png"
+          alt="Sudo user creation"
+        />
+
+        <p>
+          Jouduin tekemään kotihakemiston <i>aleksi</i> käyttäjälle myöhemmin,
+          koska käyttäjää luodessa käyttänyt -d flagia.
+        </p>
+
+        <img src="../images/first/starters-home-directory.png" />
+
+        <p>
+          Kopioin vielä ssh avaimet root käyttäjältä aleksi käyttäjälle, jotta
+          voin jatkossa ottaa yhteyden myös aleksi käyttäjälle koneilta.
+          Tiedoston omistajaksi piti vielä muokata <i>chmod</i> komennolla
+          <i>aleksi</i> käyttäjä. Tämän jälkeen ssh yhteys toimii myös aleksi
+          käyttäjälle.
+        </p>
+
+        <img src="../images/first/starters-ssh-copy.png" />
+
+        <p>
+          Päivitetään tässä vaiheessa ohjelmat ja asennetaan palomuuri (ufw).
+          Palomuuriin tehdään reikä ssh:lle porttiin 22, jonka jälkeen laitetaan
+          palomuuri päälle. Aiemmasta kokemuksesta muistan ettei palomuuria
+          kannata laittaa päälle ennenkuin portti 22 on aukaistu.
+        </p>
+
+        <img src="../images/first/starters-update.png" />
+        <img src="../images/first/starters-ufw-ssh.png" />
+
+        <h2>d) Weppipalvelin</h2>
+
+        <p>Asennetaan Nginx.</p>
 
         <h2>Lähteet</h2>
         <ul>
@@ -105,6 +190,13 @@
               href="https://partanennn.github.io/linux-servers/practices/fifth-week.html"
               >https://partanennn.github.io/linux-servers/practices/fifth-week.html</a
             >. Luettu: 23.10.2026
+          </li>
+          <li>
+            Karvinen, Tero 2021. Install Debian on Virtualbox. Luettavissa:
+            <a
+              href="https://terokarvinen.com/2021/install-debian-on-virtualbox/"
+              >https://terokarvinen.com/2021/install-debian-on-virtualbox/</a
+            >. Luettu: 25.10.2026
           </li>
         </ul>
 
