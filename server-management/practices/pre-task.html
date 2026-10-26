@@ -154,7 +154,7 @@
 
         <p>
           Kopioin vielä ssh avaimet root käyttäjältä aleksi käyttäjälle, jotta
-          voin jatkossa ottaa yhteyden myös aleksi käyttäjälle koneilta.
+          voin jatkossa ottaa yhteyden myös aleksi käyttäjälle koneiltani.
           Tiedoston omistajaksi piti vielä muokata <i>chmod</i> komennolla
           <i>aleksi</i> käyttäjä. Tämän jälkeen ssh yhteys toimii myös aleksi
           käyttäjälle.
@@ -174,7 +174,25 @@
 
         <h2>d) Weppipalvelin</h2>
 
-        <p>Asennetaan Nginx.</p>
+        <p>
+          Asennetaan Nginx. Se onnistuukin helposti komennolla
+          <i>sudo apt-get install nginx</i>. Sen jälkeen voidaankin varkistaa
+          nginx tila komennolla <i>sudo systemctl status nginx</i>. Nginx
+          taisikin olla jo asentamisen jälkeen automaattisesti päällä eikä start
+          komentoa olisi tarvinnut antaa.
+        </p>
+
+        <img src="../images/first/webserver-nginx-install.png" />
+
+        <p>
+          Nyt voimme myös testata näkyykö nginx oletus webbisivu osoitteessa
+          <i>http://localhost:80</i>, ja näkyyhän se.
+        </p>
+
+        <img
+          src="../images/first/webserver-nginx-running.png"
+          alt="Nginx default web site"
+        />
 
         <h2>Lähteet</h2>
         <ul>
