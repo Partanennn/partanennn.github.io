@@ -1,202 +1,294 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../styles.css" />
+    <title>Harjoitus 5</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="../../styles.css" />
-  <title>Harjoitus 5</title>
-</head>
-
-<body>
-  <div id="left">
-    <ul>
-      <li>Linux Harjoitukset</li>
-      <li><a href="first-week.html">Harjoitus 1 raportti</a></li>
-      <li><a href="second-week.html">Harjoitus 2 raportti</a></li>
-      <li><a href="third-week.html">Harjoitus 3 raportti</a></li>
-      <li><a href="fourth-week.html">Harjoitus 4 raportti</a></li>
-      <li><a href="fifth-week.html">Harjoitus 5 raportti</a></li>
-      <li><a href="sixth-week.html">Harjoitus 6 raportti</a></li>
-      <li><a href="seventh-week.html">Harjoitus 7 raportti</a></li>
-    </ul>
-  </div>
-  <div id="center">
-    <main>
-      <h2>Lokaalin tietokoneen tiedot</h2>
-      <p><b>GPU:</b> Nvidia RTX 3070</p>
-      <p><b>CPU:</b> AMD Ryzen 9 5900X 12-Core</p>
-      <p><b>RAM:</b> 32GB</p>
-      <p><b>OS:</b> Windows 11 23H2</p>
-
-      <h2>Virtuaalipalvelimen tiedot</h2>
-      <p><b>CPU:</b> 1 Core</p>
-      <p><b>RAM:</b> 1GB</p>
-      <p><b>OS:</b> Debian 12</p>
-
-      <h1>Harjoitus 5: Nimekäs</h1>
-
-      <h2>a) Nimi</h2>
-
-      <p>Pitää hankkia julkinen domain nimi osoittamaan omaan virtuaalikoneeseen. En tarvitse domain nimeä omaan
-        käyttöön joten lähden etsimään mahdollisimman halpaa palveluntarjoajaa. Namecheap valikoituu tarjoajaksi. Etsin
-        <i>aleksipartanen</i> domainia ja etsin halvimman mahdollisen. Domain <i>aleksipartanen.space</i> maksaa vain
-        0.83 euroa vuodeksi, joten otan sen. Tarjolla on monia eri palveluja, joita voisi ottaa oston yhteyteen, mutta
-        nyt ei ole tarvetta kuin vain domain nimelle.
-      </p>
-      <img src="images/Fifth/hinta.png" alt="Price for domain name" class="image" />
-
-      <p>Otetaan kassalla vielä domain privacy suojaus päälle ilmaiseksi.</p>
-      <img src="images/Fifth/hinta2.png" alt="Domain name basket" class="image" />
-
-      <p>Rekisteröidyin Namecheapin palveluun. Nimen ja osoitteen lisääämisen jälkeen pitää lisätä kortin tiedot.
-        Loppuhinnaksi nimelle vuoden ajaksi tuli 1e</p>
-      <img src="images/Fifth/kortti.png" alt="Card details" class="image" />
-
-      <p>Seuraavaksi laitetaankin osoite osoittamaan omaan koneeseen. Namecheapin Domain List näkymästä valitaan
-        aleksipartanen.space ja Advanced DNS. HOST RECORDS osiossa nähdään että siinä on turha CNAME tietue. Poistan sen
-        ja lisään oman A Record kohdan, joka osoittaa virtuaalipalvelimelle. Host kohtaan laitetaan www, joka tarkoittaa
-        www.aleksipartanen.space osoitetta. @ host taas tarkoittaa pelkkää domain osoitetta, tässä tapauksessa
-        aleksipartanen.space. TTL ajaksi laitan 5 minuuttia, jotta muutokset näkyvät nopeasti.
-      </p>
-      <img src="images/Fifth/domain-asetukset.png" alt="DNS settings" class="image" />
-
-      <p>Webbisivu näkyy nyt oikein.</p>
-      <img src="images/Fifth/website.png" alt="Website" class="image" />
-
-      <h2>b) Alidomain</h2>
-
-      <p>Tehdään kaksi uutta alidomainia. Tehdään alidomainit yksi.aleksipartanen.space ja kaksi.aleksipartanen.space.
-        Aloitetaan lisäämällä alidomainit Namecheapiin. Aloitan menemällä namecheapin dashboardille. Namecheapillä on
-        hyvät omat ohjeet alidomainin tekemiseen, joita seuraan (Namecheap 24.10.2024). Sieltä
-        painan Manage nappia aleksipartanen.space domainin kohdalta. Aukeaa domainin hallintasivu, josta valitsen
-        Advanced DNS valikon. Lisään kaksi uutta A tietuetta, jonka Host arvoiksi annan yksi ja kaksi Value kohtaan
-        laitan jokaisen osoittamaan virtuaalikoneeni IPv4 osoitteeseen. Odotan jonkin
-        aikaa ja molemmat sivut näkyvät oikein internettiin.</p>
-      <img src="images/Fifth/subdomain.png" alt="subdomain names" class="image" />
-      <img src="images/Fifth/subdomainyksi.png" alt="subdomain names" class="image" />
-      <img src="images/Fifth/subdomainkaksi.png" alt="subdomain names" class="image" />
-
-      <h2>c) Tutki DNS tietoja.</h2>
-
-      <p>Ensimmäisenä lataan dnsutils(Johnson 7.2.2011) paketin komennolla <i>sudo apt-get install dnsutils</i>.
-        Asentaminen onnistuu ilman ongelmia. Seuraavaksi käytän dnsutils paketin mukana tullutta <i>dig</i>(Linux man
-        page) komentoa, käytän komennossa -t lippua, joka kertoo dns tyypin, jota halutaan etsiä. Jos halutaan etsiä
-        jokainen dns tieto, käytetään ANY arvoa -t lipun kanssa. Komento jota käytän on <i>dig @8.8.8.8 google.com -t
-          ANY</i>.
-      </p>
-
-      <img src="images/Fifth/dig2.png" alt="dig command results" class="image" />
-      <p>Omasta domainistani ei löydy hirveästi tietoa <i>dig</i> komennolla. Käytin komentoa ilman IPv4 osoitetta,
-        koska
-        palvelimeni IPv4 osoitteella ei saatu siihen yhteyttä. Ainoa tietue, jonka näkee dig komennolla, on A tietue
-        joka kertoo osoitteen, johon domain nimi osoittaa.</p>
-
-      <img src="images/Fifth/dig.png" alt="dig command results" class="image" />
-      <p>Googlen domainista löytyy rutkasti enemmän tietoa. Tuloksesta käy ilmi, että google.com domainilla on AAAA, NS,
-        HTTPS, MX, SOA, A, NS, TXT ja CAA tietueet
-        päällä.
-      </p>
-      <p>AAAA tietue pitää sisällään IPv6 osoitteen domainille (Cloudflare, DNS records). Google.com osoitteelle tämä
-        arvoja on 4.</p>
-      <p>A tietue pitää sisällään IPv4 osoitteen domainille (Cloudflare, DNS records). Google.com osoitteella näitä on 6
-        kappaletta.</p>
-      <p>TXT tietue pitää sisällään teksti arvoja (Cloudflare, DNS records). Yleensä näitä käytetään sähköpostien
-        turvallisuuteen liittyen, ja googlella näyttääkin olevan mm. applen, facebookin ja docusign palveluiden
-        julkisia vahvistus avaimia.</p>
-      <p>NS tietue pitää sisällään nimipalvelimen, joka pitää sisällään nimipalvelin arvot (Cloudflare, DNS records).
-        Esimerkki tapauksessa niitä on useita, mm. ns2.google.com.
-      </p>
-      <p>CAA tietue pitää sisällään tiedon, että mitkä sertifikaatti viranomaiset voivat antaa sertifikaatteja
-        kyseiselle domainille (Cloudflare, DNS records). Esimerkissä arvo on kyseinen viranomainen on <i>pki.goog.</i>
-      </p>
-      <p>
-        SOA tyyppi kertoo monta asiaa. Ensimmäinen osoite vastauksessa on MNAME, joka kertoo ensisijaisen
-        nimipalvelimen (Cloudflare, What is a DNS SOA record?), joka on tässä tapauksessa ns1.google.com. Toinen osoite
-        on ylläpitäjän sähköposti
-        osoite vaikkei se ole
-        sähköposti osoitteen normaalissa muodossa. dns-admin.google.com tarkoittaa, että ylläpitäjän sähköposti osoite
-        on dns1-admin@google.com (Cloudflare, What is a DNS SOA record?). Seuraava arvo on SERIAL, alueellinen
-        sarjanumero. Kun tämä arvo muuttuu,
-        toissijaiset
-        nimipalvelimet tietävät päivittää heidän tietonsa (Cloudflare, What is a DNS SOA record?). Seuraava luku on
-        REFRESH, tässä tapauksessa 900
-        sekunttia, joka tarkoittaa aikaa
-        sekunneissa, jolloin toissijaiset palvelimet pyytävät ensisijaiselta palvelimelta uuttaa SOA tietuetta
-        (Cloudflare, What is a DNS SOA record?). Seuraava
-        arvo on RETRY, joka kertoo montako sekunttia palvelimen pitäisi odottaa ennen kuin se pyytää arvoja uudestaan
-        ensisijaiselta nimipalvelimelta vastaamattoman pyynnön jälkeen (Cloudflare, What is a DNS SOA record?), tässä
-        tapauksessa 900 sekunttia.
-        Toiseksi
-        viimeisenä on EXPIRE, joka kertoo milloin toissijainen palvelin lopettaa vastaamasta alueen pyyntöihin, jos se
-        ei saa vastausta ensisijaiselta palvelimelta (Cloudflare, What is a DNS SOA record?). Google.com toissijainen
-        nimipalvelin lopettaa vastaamasta alueen
-        pyyntöihin 1800 sekunnin jälkeen, eli 30 minuutin jälkeen. Viimeisenä arvona on TTL, Time To Live,
-        joka kertoo
-        kuinka kauaksi aikaa jokaista tietuetta pidetään välimuistissa, cachessa (Cloudflare, What is a DNS SOA
-        record?). Google.com tämä arvo on 60
-        sekunttia.
-      </p>
-
-      <h3>Host komento</h3>
-      <img src="images/Fifth/host.png" alt="host command results" class="image" />
-      <p>Host komento näyttää domainin IPv4, IPv6 sekä sähköposti osoitteen. Omalla domainillani on useampi sähköposti
-        osoite, jotka todennäköisesti tehdään Namecheapin puolesta automaattisesti jokaiselle domain nimelle. Googlella
-        sen sijaan on vain yksi. Omalla domainillani ei ole IPv6 osoitetta asetettuna.</p>
-
-      <h2>Tehtävänanto</h2>
-      <span>
-        <a href="https://terokarvinen.com/linux-palvelimet/#h5-nimekas">h5 Nimekäs</a> (Karvinen 2025)
-      </span>
-
-      <h2>Lähteet</h2>
+  <body>
+    <div id="left">
       <ul>
-        <li>
-          Cloudflare. What is a DNS SOA record?. Luettavissa: <a
-            href="https://www.cloudflare.com/learning/dns/dns-records/dns-soa-record/">https://www.cloudflare.com/learning/dns/dns-records/dns-soa-record/</a>.
-          Luettu: 21.9.2025
-        </li>
-        <li>
-          CLoudflare. DNS records. Luettavissa: <a
-            href="https://www.cloudflare.com/learning/dns/dns-records/">https://www.cloudflare.com/learning/dns/dns-records/</a>.
-          Luettu: 21.9.2025
-        </li>
-        <li>
-          Cloudflare Docs. Time to Live (TTL). Luettavissa: <a
-            href="https://developers.cloudflare.com/dns/manage-dns-records/reference/ttl/">https://developers.cloudflare.com/dns/manage-dns-records/reference/ttl/</a>.
-          Luettu: 21.9.2025
-        </li>
-        <li>
-          Johnson E., 7.2.2011. How do I install dig? Reddit postaus @erik-johnson. Luettavissa: <a
-            href="https://askubuntu.com/questions/25098/how-do-i-install-dig">https://askubuntu.com/questions/25098/how-do-i-install-dig</a>.
-          Luettu: 21.9.2025
-        </li>
-        <li>
-          Karvinen, T. 2025. Linux Palvelimet. Tero Karvinen. Luettavissa:
-          <a
-            href="https://terokarvinen.com/linux-palvelimet/#h5-nimekas">https://terokarvinen.com/linux-palvelimet/#h5-nimekas</a>.
-          Luettu: 18.9.2025.
-        </li>
-        <li>
-          Linux man page. Dig. Luettavissa: <a
-            href="https://linux.die.net/man/1/dig">https://linux.die.net/man/1/dig</a>. Luettu: 21.9.2025
-        </li>
-        <li>
-          Namecheap, 24.10.2024. How to Create a Subdomain for my Domain. Namecheap. Luettavissa:
-          <a
-            href="https://www.namecheap.com/support/knowledgebase/article.aspx/9776/2237/how-to-create-a-subdomain-for-my-domain/">https://www.namecheap.com/support/knowledgebase/article.aspx/9776/2237/how-to-create-a-subdomain-for-my-domain/</a>.
-          Luettu: 18.9.2025
-        </li>
+        <li>Linux Harjoitukset</li>
+        <li><a href="first-week.html">Harjoitus 1 raportti</a></li>
+        <li><a href="second-week.html">Harjoitus 2 raportti</a></li>
+        <li><a href="third-week.html">Harjoitus 3 raportti</a></li>
+        <li><a href="fourth-week.html">Harjoitus 4 raportti</a></li>
+        <li><a href="fifth-week.html">Harjoitus 5 raportti</a></li>
+        <li><a href="sixth-week.html">Harjoitus 6 raportti</a></li>
+        <li><a href="seventh-week.html">Harjoitus 7 raportti</a></li>
       </ul>
-    </main>
+    </div>
+    <div id="center">
+      <main>
+        <h2>Lokaalin tietokoneen tiedot</h2>
+        <p><b>GPU:</b> Nvidia RTX 3070</p>
+        <p><b>CPU:</b> AMD Ryzen 9 5900X 12-Core</p>
+        <p><b>RAM:</b> 32GB</p>
+        <p><b>OS:</b> Windows 11 23H2</p>
 
-    <footer>
-      <p><a href="../index.html">Linux Harjoitukset</a></p>
-      <p><a href="../../index.html">Etusivu</a></p>
-      <p>Aleksi Partanen &#169;2025</p>
-    </footer>
-  </div>
-  <div id="right"></div>
-</body>
+        <h2>Virtuaalipalvelimen tiedot</h2>
+        <p><b>CPU:</b> 1 Core</p>
+        <p><b>RAM:</b> 1GB</p>
+        <p><b>OS:</b> Debian 12</p>
 
+        <h1>Harjoitus 5: Nimekäs</h1>
+
+        <h2>a) Nimi</h2>
+
+        <p>
+          Pitää hankkia julkinen domain nimi osoittamaan omaan
+          virtuaalikoneeseen. En tarvitse domain nimeä omaan käyttöön joten
+          lähden etsimään mahdollisimman halpaa palveluntarjoajaa. Namecheap
+          valikoituu tarjoajaksi. Etsin <i>aleksipartanen</i> domainia ja etsin
+          halvimman mahdollisen. Domain <i>aleksipartanen.space</i> maksaa vain
+          0.83 euroa vuodeksi, joten otan sen. Tarjolla on monia eri palveluja,
+          joita voisi ottaa oston yhteyteen, mutta nyt ei ole tarvetta kuin vain
+          domain nimelle.
+        </p>
+        <img
+          src="images/Fifth/hinta.png"
+          alt="Price for domain name"
+          class="image"
+        />
+
+        <p>Otetaan kassalla vielä domain privacy suojaus päälle ilmaiseksi.</p>
+        <img
+          src="images/Fifth/hinta2.png"
+          alt="Domain name basket"
+          class="image"
+        />
+
+        <p>
+          Rekisteröidyin Namecheapin palveluun. Nimen ja osoitteen lisääämisen
+          jälkeen pitää lisätä kortin tiedot. Loppuhinnaksi nimelle vuoden
+          ajaksi tuli 1e
+        </p>
+        <img src="images/Fifth/kortti.png" alt="Card details" class="image" />
+
+        <p>
+          Seuraavaksi laitetaankin osoite osoittamaan omaan koneeseen.
+          Namecheapin Domain List näkymästä valitaan aleksipartanen.space ja
+          Advanced DNS. HOST RECORDS osiossa nähdään että siinä on turha CNAME
+          tietue. Poistan sen ja lisään oman A Record kohdan, joka osoittaa
+          virtuaalipalvelimelle. Host kohtaan laitetaan www, joka tarkoittaa
+          www.aleksipartanen.space osoitetta. @ host taas tarkoittaa pelkkää
+          domain osoitetta, tässä tapauksessa aleksipartanen.space. TTL ajaksi
+          laitan 5 minuuttia, jotta muutokset näkyvät nopeasti.
+        </p>
+        <img
+          src="images/Fifth/domain-asetukset.png"
+          alt="DNS settings"
+          class="image"
+        />
+
+        <p>Webbisivu näkyy nyt oikein.</p>
+        <img src="images/Fifth/website.png" alt="Website" class="image" />
+
+        <h2>b) Alidomain</h2>
+
+        <p>
+          Tehdään kaksi uutta alidomainia. Tehdään alidomainit
+          yksi.aleksipartanen.space ja kaksi.aleksipartanen.space. Aloitetaan
+          lisäämällä alidomainit Namecheapiin. Aloitan menemällä namecheapin
+          dashboardille. Namecheapillä on hyvät omat ohjeet alidomainin
+          tekemiseen, joita seuraan (Namecheap 24.10.2024). Sieltä painan Manage
+          nappia aleksipartanen.space domainin kohdalta. Aukeaa domainin
+          hallintasivu, josta valitsen Advanced DNS valikon. Lisään kaksi uutta
+          A tietuetta, jonka Host arvoiksi annan yksi ja kaksi Value kohtaan
+          laitan jokaisen osoittamaan virtuaalikoneeni IPv4 osoitteeseen. Odotan
+          jonkin aikaa ja molemmat sivut näkyvät oikein internettiin.
+        </p>
+        <img
+          src="images/Fifth/subdomain.png"
+          alt="subdomain names"
+          class="image"
+        />
+        <img
+          src="images/Fifth/subdomainyksi.png"
+          alt="subdomain names"
+          class="image"
+        />
+        <img
+          src="images/Fifth/subdomainkaksi.png"
+          alt="subdomain names"
+          class="image"
+        />
+
+        <h2>c) Tutki DNS tietoja.</h2>
+
+        <p>
+          Ensimmäisenä lataan dnsutils(Johnson 7.2.2011) paketin komennolla
+          <i>sudo apt-get install dnsutils</i>. Asentaminen onnistuu ilman
+          ongelmia. Seuraavaksi käytän dnsutils paketin mukana tullutta
+          <i>dig</i>(Linux man page) komentoa, käytän komennossa -t lippua, joka
+          kertoo dns tyypin, jota halutaan etsiä. Jos halutaan etsiä jokainen
+          dns tieto, käytetään ANY arvoa -t lipun kanssa. Komento jota käytän on
+          <i>dig @8.8.8.8 google.com -t ANY</i>.
+        </p>
+
+        <img
+          src="images/Fifth/dig2.png"
+          alt="dig command results"
+          class="image"
+        />
+        <p>
+          Omasta domainistani ei löydy hirveästi tietoa <i>dig</i> komennolla.
+          Käytin komentoa ilman IPv4 osoitetta, koska palvelimeni IPv4
+          osoitteella ei saatu siihen yhteyttä. Ainoa tietue, jonka näkee dig
+          komennolla, on A tietue joka kertoo osoitteen, johon domain nimi
+          osoittaa.
+        </p>
+
+        <img
+          src="images/Fifth/dig.png"
+          alt="dig command results"
+          class="image"
+        />
+        <p>
+          Googlen domainista löytyy rutkasti enemmän tietoa. Tuloksesta käy
+          ilmi, että google.com domainilla on AAAA, NS, HTTPS, MX, SOA, A, NS,
+          TXT ja CAA tietueet päällä.
+        </p>
+        <p>
+          AAAA tietue pitää sisällään IPv6 osoitteen domainille (Cloudflare, DNS
+          records). Google.com osoitteelle tämä arvoja on 4.
+        </p>
+        <p>
+          A tietue pitää sisällään IPv4 osoitteen domainille (Cloudflare, DNS
+          records). Google.com osoitteella näitä on 6 kappaletta.
+        </p>
+        <p>
+          TXT tietue pitää sisällään teksti arvoja (Cloudflare, DNS records).
+          Yleensä näitä käytetään sähköpostien turvallisuuteen liittyen, ja
+          googlella näyttääkin olevan mm. applen, facebookin ja docusign
+          palveluiden julkisia vahvistus avaimia.
+        </p>
+        <p>
+          NS tietue pitää sisällään nimipalvelimen, joka pitää sisällään
+          nimipalvelin arvot (Cloudflare, DNS records). Esimerkki tapauksessa
+          niitä on useita, mm. ns2.google.com.
+        </p>
+        <p>
+          CAA tietue pitää sisällään tiedon, että mitkä sertifikaatti
+          viranomaiset voivat antaa sertifikaatteja kyseiselle domainille
+          (Cloudflare, DNS records). Esimerkissä arvo on kyseinen viranomainen
+          on <i>pki.goog.</i>
+        </p>
+        <p>
+          SOA tyyppi kertoo monta asiaa. Ensimmäinen osoite vastauksessa on
+          MNAME, joka kertoo ensisijaisen nimipalvelimen (Cloudflare, What is a
+          DNS SOA record?), joka on tässä tapauksessa ns1.google.com. Toinen
+          osoite on ylläpitäjän sähköposti osoite vaikkei se ole sähköposti
+          osoitteen normaalissa muodossa. dns-admin.google.com tarkoittaa, että
+          ylläpitäjän sähköposti osoite on dns1-admin@google.com (Cloudflare,
+          What is a DNS SOA record?). Seuraava arvo on SERIAL, alueellinen
+          sarjanumero. Kun tämä arvo muuttuu, toissijaiset nimipalvelimet
+          tietävät päivittää heidän tietonsa (Cloudflare, What is a DNS SOA
+          record?). Seuraava luku on REFRESH, tässä tapauksessa 900 sekunttia,
+          joka tarkoittaa aikaa sekunneissa, jolloin toissijaiset palvelimet
+          pyytävät ensisijaiselta palvelimelta uuttaa SOA tietuetta (Cloudflare,
+          What is a DNS SOA record?). Seuraava arvo on RETRY, joka kertoo
+          montako sekunttia palvelimen pitäisi odottaa ennen kuin se pyytää
+          arvoja uudestaan ensisijaiselta nimipalvelimelta vastaamattoman
+          pyynnön jälkeen (Cloudflare, What is a DNS SOA record?), tässä
+          tapauksessa 900 sekunttia. Toiseksi viimeisenä on EXPIRE, joka kertoo
+          milloin toissijainen palvelin lopettaa vastaamasta alueen pyyntöihin,
+          jos se ei saa vastausta ensisijaiselta palvelimelta (Cloudflare, What
+          is a DNS SOA record?). Google.com toissijainen nimipalvelin lopettaa
+          vastaamasta alueen pyyntöihin 1800 sekunnin jälkeen, eli 30 minuutin
+          jälkeen. Viimeisenä arvona on TTL, Time To Live, joka kertoo kuinka
+          kauaksi aikaa jokaista tietuetta pidetään välimuistissa, cachessa
+          (Cloudflare, What is a DNS SOA record?). Google.com tämä arvo on 60
+          sekunttia.
+        </p>
+
+        <h3>Host komento</h3>
+        <img
+          src="images/Fifth/host.png"
+          alt="host command results"
+          class="image"
+        />
+        <p>
+          Host komento näyttää domainin IPv4, IPv6 sekä sähköposti osoitteen.
+          Omalla domainillani on useampi sähköposti osoite, jotka
+          todennäköisesti tehdään Namecheapin puolesta automaattisesti
+          jokaiselle domain nimelle. Googlella sen sijaan on vain yksi. Omalla
+          domainillani ei ole IPv6 osoitetta asetettuna.
+        </p>
+
+        <h2>Tehtävänanto</h2>
+        <span>
+          <a href="https://terokarvinen.com/linux-palvelimet/#h5-nimekas"
+            >h5 Nimekäs</a
+          >
+          (Karvinen 2025)
+        </span>
+
+        <h2>Lähteet</h2>
+        <ul>
+          <li>
+            Cloudflare. What is a DNS SOA record?. Luettavissa:
+            <a
+              href="https://www.cloudflare.com/learning/dns/dns-records/dns-soa-record/"
+              >https://www.cloudflare.com/learning/dns/dns-records/dns-soa-record/</a
+            >. Luettu: 21.9.2025
+          </li>
+          <li>
+            CLoudflare. DNS records. Luettavissa:
+            <a href="https://www.cloudflare.com/learning/dns/dns-records/"
+              >https://www.cloudflare.com/learning/dns/dns-records/</a
+            >. Luettu: 21.9.2025
+          </li>
+          <li>
+            Cloudflare Docs. Time to Live (TTL). Luettavissa:
+            <a
+              href="https://developers.cloudflare.com/dns/manage-dns-records/reference/ttl/"
+              >https://developers.cloudflare.com/dns/manage-dns-records/reference/ttl/</a
+            >. Luettu: 21.9.2025
+          </li>
+          <li>
+            Johnson E., 7.2.2011. How do I install dig? Reddit postaus
+            @erik-johnson. Luettavissa:
+            <a href="https://askubuntu.com/questions/25098/how-do-i-install-dig"
+              >https://askubuntu.com/questions/25098/how-do-i-install-dig</a
+            >. Luettu: 21.9.2025
+          </li>
+          <li>
+            Karvinen, T. 2025. Linux Palvelimet. Tero Karvinen. Luettavissa:
+            <a href="https://terokarvinen.com/linux-palvelimet/#h5-nimekas"
+              >https://terokarvinen.com/linux-palvelimet/#h5-nimekas</a
+            >. Luettu: 18.9.2025.
+          </li>
+          <li>
+            Linux man page. Dig. Luettavissa:
+            <a href="https://linux.die.net/man/1/dig"
+              >https://linux.die.net/man/1/dig</a
+            >. Luettu: 21.9.2025
+          </li>
+          <li>
+            Namecheap, 24.10.2024. How to Create a Subdomain for my Domain.
+            Namecheap. Luettavissa:
+            <a
+              href="https://www.namecheap.com/support/knowledgebase/article.aspx/9776/2237/how-to-create-a-subdomain-for-my-domain/"
+              >https://www.namecheap.com/support/knowledgebase/article.aspx/9776/2237/how-to-create-a-subdomain-for-my-domain/</a
+            >. Luettu: 18.9.2025
+          </li>
+        </ul>
+      </main>
+
+      <footer>
+        <p><a href="../index.html">Linux Harjoitukset</a></p>
+        <p>
+          <a href="../../server-management/index.html"
+            >Palvelinten hallinta harjoitukset</a
+          >
+        </p>
+        <p><a href="../../index.html">Etusivu</a></p>
+        <p>Aleksi Partanen &#169;2025</p>
+      </footer>
+    </div>
+    <div id="right"></div>
+  </body>
 </html>
