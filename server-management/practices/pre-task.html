@@ -12,6 +12,7 @@
       <ul>
         <li>Palvelinten hallinta harjoitukset</li>
         <li><a href="pre-task.html">Harjoitus 0 raportti</a></li>
+        <li><a href="first-week.html">Harjoitus 1 raportti</a></li>
       </ul>
     </div>
     <div id="center">
@@ -45,7 +46,7 @@
           <li>Domain nimi laitettiin osoittamaan VPS:ään</li>
         </ul>
 
-        <h2>a) Paikallista</h2>
+        <h2 id="paikallista">a) Paikallista</h2>
         <p>
           Asennetaan Debian 13 paikalliselle koneelle virtuaalikoneeksi. Käytän
           Oraclen VirtualBoxia. Käytän Debain (64-bit) versiota, koska 32-bit
@@ -53,11 +54,11 @@
           oletus asetukset päällä.
         </p>
         <img
-          src="../images/first/vm-asetukset.png"
+          src="../images/pre/vm-asetukset.png"
           alt="Virtual Machine configuration"
         />
         <img
-          src="../images/first/vm-asetukset-2.png"
+          src="../images/pre/vm-asetukset-2.png"
           alt="Virtual Machine hardware configuration"
         />
 
@@ -73,7 +74,7 @@
           kovalevylle.
         </p>
         <img
-          src="../images/first/vm-boot-menu.png"
+          src="../images/pre/vm-boot-menu.png"
           alt="Virtual Machine boot menu"
         />
 
@@ -86,9 +87,9 @@
           virtuaalikoneen välillä onnistuu, ja että virtuaalikoneen työpöydän
           resoluutio on suurempi.
         </p>
-        <img src="../images/first/vm-booted.png" alt="Virtual Machine booted" />
+        <img src="../images/pre/vm-booted.png" alt="Virtual Machine booted" />
 
-        <h2>b) VPS</h2>
+        <h2 id="vps">b) VPS</h2>
         <p>
           Vuokrataan virtuaalinen yksityispalvelin. Aion käyttää UpCloudia tällä
           kertaa, koska Linux palvelimet kurssilla käytin Linode palvelua.
@@ -104,14 +105,14 @@
           puolen 5e/kk versiota.
         </p>
 
-        <img src="../images/first/vps-plan.png" />
+        <img src="../images/pre/vps-plan.png" />
 
         <p>
           Käyttöjärjestelmäksi valitsin Debian 13 version, jota käytetään
           kurssilla.
         </p>
 
-        <img src="../images/first/vps-os.png" />
+        <img src="../images/pre/vps-os.png" />
 
         <p>
           Sisäänkirjautumis metodiksi valitsin SSH avaimella kirjautumisen ja
@@ -120,18 +121,18 @@
           Upcloudin VPS palvelimelle.
         </p>
 
-        <img src="../images/first/vps-login-method.png" />
-        <img src="../images/first/vps-ssh-keys.png" />
+        <img src="../images/pre/vps-login-method.png" />
+        <img src="../images/pre/vps-ssh-keys.png" />
 
         <p>
           Tässä näkyy lopputulos kun palvelin on päällä ja yhteys saatu host
           koneelta siihen.
         </p>
 
-        <img src="../images/first/vps-final.png" />
-        <img src="../images/first/vps-connection-with-host-machine.png" />
+        <img src="../images/pre/vps-final.png" />
+        <img src="../images/pre/vps-connection-with-host-machine.png" />
 
-        <h2>c) Alkutoimet</h2>
+        <h2 id="alkutoimet">c) Alkutoimet</h2>
 
         <p>
           Tehdään sudo käyttäjä virtuaali palvelimelle. Teen nämä asiat
@@ -141,7 +142,7 @@
         </p>
 
         <img
-          src="../images/first/starters-user-creation.png"
+          src="../images/pre/starters-user-creation.png"
           alt="Sudo user creation"
         />
 
@@ -150,7 +151,7 @@
           koska käyttäjää luodessa käyttänyt -d flagia.
         </p>
 
-        <img src="../images/first/starters-home-directory.png" />
+        <img src="../images/pre/starters-home-directory.png" />
 
         <p>
           Kopioin vielä ssh avaimet root käyttäjältä aleksi käyttäjälle, jotta
@@ -160,7 +161,7 @@
           käyttäjälle.
         </p>
 
-        <img src="../images/first/starters-ssh-copy.png" />
+        <img src="../images/pre/starters-ssh-copy.png" />
 
         <p>
           Päivitetään tässä vaiheessa ohjelmat ja asennetaan palomuuri (ufw).
@@ -169,10 +170,10 @@
           kannata laittaa päälle ennenkuin portti 22 on aukaistu.
         </p>
 
-        <img src="../images/first/starters-update.png" />
-        <img src="../images/first/starters-ufw-ssh.png" />
+        <img src="../images/pre/starters-update.png" />
+        <img src="../images/pre/starters-ufw-ssh.png" />
 
-        <h2>d) Weppipalvelin</h2>
+        <h2 id="weppi-palvelin">d) Weppipalvelin</h2>
 
         <p>
           Asennetaan Nginx. Se onnistuukin helposti komennolla
@@ -182,7 +183,7 @@
           komentoa olisi tarvinnut antaa.
         </p>
 
-        <img src="../images/first/webserver-nginx-install.png" />
+        <img src="../images/pre/webserver-nginx-install.png" />
 
         <p>
           Nyt voimme myös testata näkyykö nginx oletus webbisivu osoitteessa
@@ -190,7 +191,7 @@
         </p>
 
         <img
-          src="../images/first/webserver-nginx-running.png"
+          src="../images/pre/webserver-nginx-running.png"
           alt="Nginx default web site"
         />
 
@@ -225,7 +226,7 @@
           </li>
         </ul>
 
-        <h2>Tehtävänanto</h2>
+        <h2 id="tehtavananto">Tehtävänanto</h2>
         <ul>
           <li>
             x) Lue ja tiivistä. (Tässä x-alakohdassa ei tarvitse tehdä testejä
