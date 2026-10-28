@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../styles.css" />
+    <title>Harjoitus 1</title>
+  </head>
+
+  <body>
+    <div id="left">
+      <ul>
+        <li>Palvelinten hallinta harjoitukset</li>
+        <li><a href="pre-task.html">Harjoitus 0 raportti</a></li>
+        <li><a href="first-week.html">Harjoitus 1 raportti</a></li>
+      </ul>
+    </div>
+    <div id="center">
+      <main>
+        <h4>Host laitteisto</h4>
+        <ul>
+          <li>Prosessori: AMD Ryzen 9 5900x 12-Core</li>
+          <li>Keskusmuisti: 32GB DDR4</li>
+          <li>Näytönohjain: NVIDIA GeForce RTX 3080</li>
+          <li>OS: Linux 7.2.11-1-cachyos x86-64</li>
+        </ul>
+
+        <h1>Harjoitus 1: Hei Ansiblen maailma (Karvinen 2026a)</h1>
+
+        <h2>x) Tiivistelmä</h2>
+        <h4>Karvinen 2026: SSH public key (Karvinen 2026b)</h4>
+        <ul>
+          <li>
+            SSH on johtava menetelmä turvallisesti palvelimille kirjautumisessa
+          </li>
+          <li>
+            SSH julkisen avaimen avulla sinun ei tarvitse kirjoittaa salasanaa
+            koko ajan
+          </li>
+          <li>
+            SSH yhteys saadaan helposti komennolla
+            <i>ssh [käyttäjänimi]@[host osoite]</i>, esimerkiksi
+            aleksi@localhost
+          </li>
+          <li>SSH avaimet generoidaan komennolla <i>ssh-keygen</i></li>
+          <li>
+            Julkisen SSH avaimen voi kopioida komennolla
+            <i>ssh-copy-id [host osoite]</i>, esimerkiksi
+            <i>ssh-copy-id localhost</i>
+          </li>
+          <li>Oma pohdinta: Mitkä ovat SSH heikkoudet?</li>
+        </ul>
+
+        <h4>Karvinen 2026: Hello Ansible (Karvinen 2026c)</h4>
+        <ul>
+          <li>Infrastructure-as-code, IaaS</li>
+          <li>Hallitsee montaa eri laitetta helposti</li>
+          <li>
+            Ansible tarvitsee SSHn sekä Pythonin client/slave koneella. Ansible
+            tarvitaan vain host/master koneella
+          </li>
+          <li>
+            Ansible asennetaan komennolla <i>sudo apt-get install ansible</i>
+          </li>
+          <li>
+            Ansible kansio pitää tehdä käyttäjän juureen/koti kansioon, jonne
+            tehdään ansible konfiguraatio tiedostot
+          </li>
+          <li>
+            <i>hosts.ini</i> tiedostossa on hostit, joita ansiblella halutaan
+            kontrolloida. Hostit voidaan ryhmitellä kategorioittain, esim
+            <i>web</i> ja <i>db</i>
+          </li>
+          <li>
+            Helppo testi komento on <i>ansible all -a 'uptime' -i hosts.ini</i>
+          </li>
+          <li>
+            Python versio voidaan pakottaa tiettyyn versioon, jolloin Ansible
+            lopettaa varoituksen siitä, komennolla
+            <i>[all:vars] ansible_python_interpreter=/usr/bin/python3</i>
+            hosts.ini tiedoston alimpana
+          </li>
+          <li>
+            Myös <i>-i hosts.ini</i> komento voidaan lopettaa, kun lisätään
+            komento <i>[defaults] \n inventory = hosts.ini</i> tiedostoon
+            <i>ansible.cfg</i>
+          </li>
+          <li>
+            Komento <i>display_args_to_stdout = true</i> defaults kohdan alla
+            tulostaa mitä ansible playbook tekee
+          </li>
+          <li>Tietokoneiden roolit määrätään tiedostossa <i>site.yml</i></li>
+          <li>
+            Roolit määritellään
+            <i>roles/[roolin nimi]/tasks/main.yml</i> tiedostossa. Voidaan
+            esimerkiksi kopioida tiedosto lisäämällä main.yml tiedostoon
+            <i
+              >- copy: \n dest: /tmp/hello-ansible \n content: "See you at
+              TeroKarvinen.com!\n"</i
+            >
+          </li>
+          <li>Oma pohdinta: Ansiblen heikkoudet?</li>
+        </ul>
+
+        <h2>a) Paikallista</h2>
+        <p>
+          Asennetaan Debian 13 paikalliselle koneelle virtuaalikoneeksi. Tein
+          tämän jo h0 kohdassa edellisessä tehtävässä (Partanen 2026), josta sen
+          voi käydä katsomassa. TLDR; Asensin Debian 13 Oraclen VirtualBoxiin.
+        </p>
+        <img
+          src="../images/first/vm-asetukset.png"
+          alt="Virtual Machine configuration"
+        />
+        <img
+          src="../images/first/vm-asetukset-2.png"
+          alt="Virtual Machine hardware configuration"
+        />
+
+        <p>
+          Virtuaalikone saatiin tehtyä. Nyt onkin sitten vuorossa Debianin
+          asennus virtuaalikoneelle. Aloitan asennuksen valitsemalla
+          <i>Start installer</i>. Asennuksen aikana valitsin kieleksi
+          <i>English</i>, lokaatioksi <i>Finland</i> ja koska en löytänyt Suomea
+          paikallisasennuksista, valitsin paikallisasetukseksi
+          <i>United Kingdom</i>. Näppäimistöksi valitsin <i>Finnish</i>. Asetin
+          root-käyttäjän salasanan sekä tein <i>aleksi</i> käyttäjän. Kovalevyt
+          asensin oletus valinnoilla. GRUB loaderin asensin ainoalle
+          kovalevylle.
+        </p>
+        <img
+          src="../images/first/vm-boot-menu.png"
+          alt="Virtual Machine boot menu"
+        />
+
+        <p>
+          Asennus onnistui ja Debian toimii normaalisti. Lisäsin
+          <i>aleksi</i> käyttäjän sudoers ryhmään. Päivitin Debianin komennolla
+          <i>sudo apt-get update</i>. Latasin myös <i>tree</i>, <i>ssh</i> ja
+          <i>vim</i>, jotta työskentely helpottuu tulevaisuudessa. Asensin myös
+          Guest Additionit (Karvinen 2021), että kopiointi host koneen ja
+          virtuaalikoneen välillä onnistuu, ja että virtuaalikoneen työpöydän
+          resoluutio on suurempi.
+        </p>
+        <img src="../images/first/vm-booted.png" alt="Virtual Machine booted" />
+
+        <h2>b) VPS</h2>
+        <p>
+          Vuokrataan virtuaalinen yksityispalvelin. Aion käyttää UpCloudia tällä
+          kertaa, koska Linux palvelimet kurssilla käytin Linode palvelua.
+        </p>
+        <p>
+          Aloitetaan tekemällä tunnukset Upcloud palveluun. Se onnistui helposti
+          ja pankkikortti piti liittää tiliin. Sain 500 euroa käyttöön
+          ensimmäiseksi kuukaudeksi jotta pääsen kokeilemaan asioita. Haluan
+          kuitenkin ottaa käyttöön vain sellaisen VPS palvelun, joka ei ole
+          hirveän kallis ja riittää kurssin käyttötarpeeseen. Päätin valita
+          Upcloudin 1cpu/2GB ram/20GB version, joka maksaa 6e kuukaudessa.
+          Todennäköisesti 3e versiokin olisi riittänyt ja mietin myös premium
+          puolen 5e/kk versiota.
+        </p>
+
+        <img src="../images/first/vps-plan.png" />
+
+        <p>
+          Käyttöjärjestelmäksi valitsin Debian 13 version, jota käytetään
+          kurssilla.
+        </p>
+
+        <img src="../images/first/vps-os.png" />
+
+        <p>
+          Sisäänkirjautumis metodiksi valitsin SSH avaimella kirjautumisen ja
+          lisäsinkin host koneen julkisen avaimen palvelimelle palvelimen teon
+          yhteydessä. Myöhemmin lisäsin vielä virtuaalikoneen SSH avaimen myös
+          Upcloudin VPS palvelimelle.
+        </p>
+
+        <img src="../images/first/vps-login-method.png" />
+        <img src="../images/first/vps-ssh-keys.png" />
+
+        <p>
+          Tässä näkyy lopputulos kun palvelin on päällä ja yhteys saatu host
+          koneelta siihen.
+        </p>
+
+        <img src="../images/first/vps-final.png" />
+        <img src="../images/first/vps-connection-with-host-machine.png" />
+
+        <h2>c) Alkutoimet</h2>
+
+        <p>
+          Tehdään sudo käyttäjä virtuaali palvelimelle. Teen nämä asiat
+          ottamalla yhteyttä omalla koneella olevaltani virtuaalikoneelta. Tein
+          <i>aleksi</i> käyttäjän <i>root</i> käyttäjällä virtuaali
+          palvelimelle.
+        </p>
+
+        <img
+          src="../images/first/starters-user-creation.png"
+          alt="Sudo user creation"
+        />
+
+        <p>
+          Jouduin tekemään kotihakemiston <i>aleksi</i> käyttäjälle myöhemmin,
+          koska käyttäjää luodessa käyttänyt -d flagia.
+        </p>
+
+        <img src="../images/first/starters-home-directory.png" />
+
+        <p>
+          Kopioin vielä ssh avaimet root käyttäjältä aleksi käyttäjälle, jotta
+          voin jatkossa ottaa yhteyden myös aleksi käyttäjälle koneiltani.
+          Tiedoston omistajaksi piti vielä muokata <i>chmod</i> komennolla
+          <i>aleksi</i> käyttäjä. Tämän jälkeen ssh yhteys toimii myös aleksi
+          käyttäjälle.
+        </p>
+
+        <img src="../images/first/starters-ssh-copy.png" />
+
+        <p>
+          Päivitetään tässä vaiheessa ohjelmat ja asennetaan palomuuri (ufw).
+          Palomuuriin tehdään reikä ssh:lle porttiin 22, jonka jälkeen laitetaan
+          palomuuri päälle. Aiemmasta kokemuksesta muistan ettei palomuuria
+          kannata laittaa päälle ennenkuin portti 22 on aukaistu.
+        </p>
+
+        <img src="../images/first/starters-update.png" />
+        <img src="../images/first/starters-ufw-ssh.png" />
+
+        <h2>d) Weppipalvelin</h2>
+
+        <p>
+          Asennetaan Nginx. Se onnistuukin helposti komennolla
+          <i>sudo apt-get install nginx</i>. Sen jälkeen voidaankin varkistaa
+          nginx tila komennolla <i>sudo systemctl status nginx</i>. Nginx
+          taisikin olla jo asentamisen jälkeen automaattisesti päällä eikä start
+          komentoa olisi tarvinnut antaa.
+        </p>
+
+        <img src="../images/first/webserver-nginx-install.png" />
+
+        <p>
+          Nyt voimme myös testata näkyykö nginx oletus webbisivu osoitteessa
+          <i>http://localhost:80</i>, ja näkyyhän se.
+        </p>
+
+        <img
+          src="../images/first/webserver-nginx-running.png"
+          alt="Nginx default web site"
+        />
+
+        <h2>Lähteet</h2>
+        <ul>
+          <li>
+            Karvinen, Tero 2026a. h1 Hei Ansiblen maailma. Luettavissa:
+            <a
+              href="https://terokarvinen.com/palvelinten-hallinta/#h1-hei-ansiblen-maailma"
+              >https://terokarvinen.com/palvelinten-hallinta/#h1-hei-ansiblen-maailma</a
+            >. Luettu: 28.10.2026
+          </li>
+          <li>
+            Karvinen, Tero 2026b. SSH public key - Login without password.
+            Luettavissa:
+            <a
+              href="https://terokarvinen.com/ssh-public-key-login-without-password/"
+              >https://terokarvinen.com/ssh-public-key-login-without-password/</a
+            >. Luettu: 28.10.2026
+          </li>
+          <li>
+            Karvinen, Tero 2026c. Hello Ansible. Luettavissa:
+            <a href="https://terokarvinen.com/hello-ansible/"
+              >https://terokarvinen.com/hello-ansible/</a
+            >. Luettu: 28.10.2026
+          </li>
+          <li>
+            Partanen, Aleksi 2026. Harjoitus 0: Oikeasti netissä. a)
+            Paikallista. Luettavissa:
+            <a
+              href="https://partanennn.github.io/server-management/practices/pre-task.html#paikallista"
+              >https://partanennn.github.io/server-management/practices/pre-task.html#paikallista</a
+            >. Luettu: 28.10.2026
+          </li>
+        </ul>
+
+        <h2>Tehtävänanto</h2>
+        <ul>
+          <li>
+            x) Lue ja tiivistä. (Tässä x-alakohdassa ei tarvitse tehdä testejä
+            tietokoneella, vain lukeminen tai kuunteleminen ja tiivistelmä
+            riittää. Tiivistämiseen riittää muutama ranskalainen viiva. Ei siis
+            vaadita pitkää eikä essee-muotoista tiivistelmää. Lisää kuhunkin
+            jokin oma kysymys tai huomio. Paljon komentoja sisältävistä
+            dokumenteista kannattaa nostaa mukaan keskeiset komennot ja
+            valinnat. Sisältöä, ei vain metatekstiä tai kuvailua.) Niemi 2025:
+            H4 Tehtävät Partanen 2025: Harjoitus 5: Nimekäs: a) Nimi (Vain
+            a-kohta.)
+          </li>
+          <li>
+            a) Paikallista. Asenna Debian 13 paikallisesti virtuaalikoneeseen.
+            Voit käyttää esimerkiksi VirtualBoxia. (Tätä käytetään myös
+            tuntiharjoituksiin.)
+          </li>
+          <li>b) VPS. Vuokraa virtuaalinen yksityispalvelin.</li>
+          <li>
+            c) Alkutoimet. Tee virtuaalipalvelimellesi sudo-käyttäjä omalla
+            nimellä (ei root). Asenna tulimuuri - ensin reikä ssh:lle. Päivitä
+            kaikki ohjelmat ja boottaa tarvittaessa.
+          </li>
+          <li>
+            d) Weppipalvelin. Asenna koneellesi weppipalvelin, kuten Apache tai
+            Nginx.
+          </li>
+          <li>
+            e) Vapaaehtoinen: Nimi. Aseta domain-nimi osoittamaan palvelimesi
+            IP-osoitteeseen. (Tämä tehtävä saattaa myöhemmin tulla varsinaiseksi
+            tehtäväksi)
+          </li>
+        </ul>
+      </main>
+
+      <footer>
+        <p><a href="../../linux-servers/index.html">Linux Harjoitukset</a></p>
+        <p><a href="../index.html">Palvelinten hallinta harjoitukset</a></p>
+        <p><a href="../../index.html">Etusivu</a></p>
+        <p>Aleksi Partanen &#169;2026</p>
+      </footer>
+    </div>
+    <div id="right"></div>
+  </body>
+</html>
