@@ -24,6 +24,13 @@
           <li>Näytönohjain: NVIDIA GeForce RTX 3080</li>
           <li>OS: Linux 7.2.11-1-cachyos x86-64</li>
         </ul>
+        <h4>Virtuaalikone</h4>
+        <ul>
+          <li>1 CPU</li>
+          <li>2GB RAM</li>
+          <li>20GB</li>
+          <li>Debian 13</li>
+        </ul>
 
         <h1>Harjoitus 1: Hei Ansiblen maailma (Karvinen 2026a)</h1>
 
@@ -102,152 +109,142 @@
           <li>Oma pohdinta: Ansiblen heikkoudet?</li>
         </ul>
 
-        <h2>a) Paikallista</h2>
+        <h2 id="paikallista">a) Paikallista (Karvinen 2026a)</h2>
         <p>
           Asennetaan Debian 13 paikalliselle koneelle virtuaalikoneeksi. Tein
           tämän jo h0 kohdassa edellisessä tehtävässä (Partanen 2026), josta sen
           voi käydä katsomassa. TLDR; Asensin Debian 13 Oraclen VirtualBoxiin.
         </p>
-        <img
-          src="../images/first/vm-asetukset.png"
-          alt="Virtual Machine configuration"
-        />
-        <img
-          src="../images/first/vm-asetukset-2.png"
-          alt="Virtual Machine hardware configuration"
-        />
 
+        <h2 id="sshecrets">
+          b) Sshecrets (Karvinen 2026a) ja c) Pubkey (Karvinen 2026a)
+        </h2>
         <p>
-          Virtuaalikone saatiin tehtyä. Nyt onkin sitten vuorossa Debianin
-          asennus virtuaalikoneelle. Aloitan asennuksen valitsemalla
-          <i>Start installer</i>. Asennuksen aikana valitsin kieleksi
-          <i>English</i>, lokaatioksi <i>Finland</i> ja koska en löytänyt Suomea
-          paikallisasennuksista, valitsin paikallisasetukseksi
-          <i>United Kingdom</i>. Näppäimistöksi valitsin <i>Finnish</i>. Asetin
-          root-käyttäjän salasanan sekä tein <i>aleksi</i> käyttäjän. Kovalevyt
-          asensin oletus valinnoilla. GRUB loaderin asensin ainoalle
-          kovalevylle.
-        </p>
-        <img
-          src="../images/first/vm-boot-menu.png"
-          alt="Virtual Machine boot menu"
-        />
-
-        <p>
-          Asennus onnistui ja Debian toimii normaalisti. Lisäsin
-          <i>aleksi</i> käyttäjän sudoers ryhmään. Päivitin Debianin komennolla
-          <i>sudo apt-get update</i>. Latasin myös <i>tree</i>, <i>ssh</i> ja
-          <i>vim</i>, jotta työskentely helpottuu tulevaisuudessa. Asensin myös
-          Guest Additionit (Karvinen 2021), että kopiointi host koneen ja
-          virtuaalikoneen välillä onnistuu, ja että virtuaalikoneen työpöydän
-          resoluutio on suurempi.
-        </p>
-        <img src="../images/first/vm-booted.png" alt="Virtual Machine booted" />
-
-        <h2>b) VPS</h2>
-        <p>
-          Vuokrataan virtuaalinen yksityispalvelin. Aion käyttää UpCloudia tällä
-          kertaa, koska Linux palvelimet kurssilla käytin Linode palvelua.
+          Joudun käyttämään virtuaali palvelinta, koska jostain syystä
+          virtuaalikone windows sekä linux (cachyos) koneilla ei halunnut
+          toimia. Virtuaalikone jäätyy sisäänkirjautumisen aikana, eikä edes
+          uuden virtuaalikoneen asennus auttanut. Todennäköisesti syynä on
+          mahdollisesti kernel päivitys, jonka tein edellisenä päivänä. Pitää
+          yrittää ensi kerraksi saada lokaali virtuaalikone toimimaan. Saan
+          tehtävät kuitenkin tehtyä virtuaali palvelimella.
         </p>
         <p>
-          Aloitetaan tekemällä tunnukset Upcloud palveluun. Se onnistui helposti
-          ja pankkikortti piti liittää tiliin. Sain 500 euroa käyttöön
-          ensimmäiseksi kuukaudeksi jotta pääsen kokeilemaan asioita. Haluan
-          kuitenkin ottaa käyttöön vain sellaisen VPS palvelun, joka ei ole
-          hirveän kallis ja riittää kurssin käyttötarpeeseen. Päätin valita
-          Upcloudin 1cpu/2GB ram/20GB version, joka maksaa 6e kuukaudessa.
-          Todennäköisesti 3e versiokin olisi riittänyt ja mietin myös premium
-          puolen 5e/kk versiota.
+          Mutta itse tehtävän pariin. Otan ensiksi yhteyden virtuaali
+          palvelimelle SSH yhteydellä.
         </p>
 
-        <img src="../images/first/vps-plan.png" />
+        <img src="../images/first/ssh-login.png" alt="Login to VPS via SSH" />
 
         <p>
-          Käyttöjärjestelmäksi valitsin Debian 13 version, jota käytetään
-          kurssilla.
-        </p>
-
-        <img src="../images/first/vps-os.png" />
-
-        <p>
-          Sisäänkirjautumis metodiksi valitsin SSH avaimella kirjautumisen ja
-          lisäsinkin host koneen julkisen avaimen palvelimelle palvelimen teon
-          yhteydessä. Myöhemmin lisäsin vielä virtuaalikoneen SSH avaimen myös
-          Upcloudin VPS palvelimelle.
-        </p>
-
-        <img src="../images/first/vps-login-method.png" />
-        <img src="../images/first/vps-ssh-keys.png" />
-
-        <p>
-          Tässä näkyy lopputulos kun palvelin on päällä ja yhteys saatu host
-          koneelta siihen.
-        </p>
-
-        <img src="../images/first/vps-final.png" />
-        <img src="../images/first/vps-connection-with-host-machine.png" />
-
-        <h2>c) Alkutoimet</h2>
-
-        <p>
-          Tehdään sudo käyttäjä virtuaali palvelimelle. Teen nämä asiat
-          ottamalla yhteyttä omalla koneella olevaltani virtuaalikoneelta. Tein
-          <i>aleksi</i> käyttäjän <i>root</i> käyttäjällä virtuaali
-          palvelimelle.
+          Sitten asennan SSH demonin virtuaali palvelimelle komennolla
+          <i>sudo apt-get -y install ssh</i>. Olinkin tehny tämän jo aiemmin,
+          joten tarkistin vielä että SSH demoni on käynnissä.
         </p>
 
         <img
-          src="../images/first/starters-user-creation.png"
-          alt="Sudo user creation"
+          src="../images/first/ssh-install.png"
+          alt="SSH install confirmation"
         />
 
         <p>
-          Jouduin tekemään kotihakemiston <i>aleksi</i> käyttäjälle myöhemmin,
-          koska käyttäjää luodessa käyttänyt -d flagia.
-        </p>
-
-        <img src="../images/first/starters-home-directory.png" />
-
-        <p>
-          Kopioin vielä ssh avaimet root käyttäjältä aleksi käyttäjälle, jotta
-          voin jatkossa ottaa yhteyden myös aleksi käyttäjälle koneiltani.
-          Tiedoston omistajaksi piti vielä muokata <i>chmod</i> komennolla
-          <i>aleksi</i> käyttäjä. Tämän jälkeen ssh yhteys toimii myös aleksi
-          käyttäjälle.
-        </p>
-
-        <img src="../images/first/starters-ssh-copy.png" />
-
-        <p>
-          Päivitetään tässä vaiheessa ohjelmat ja asennetaan palomuuri (ufw).
-          Palomuuriin tehdään reikä ssh:lle porttiin 22, jonka jälkeen laitetaan
-          palomuuri päälle. Aiemmasta kokemuksesta muistan ettei palomuuria
-          kannata laittaa päälle ennenkuin portti 22 on aukaistu.
-        </p>
-
-        <img src="../images/first/starters-update.png" />
-        <img src="../images/first/starters-ufw-ssh.png" />
-
-        <h2>d) Weppipalvelin</h2>
-
-        <p>
-          Asennetaan Nginx. Se onnistuukin helposti komennolla
-          <i>sudo apt-get install nginx</i>. Sen jälkeen voidaankin varkistaa
-          nginx tila komennolla <i>sudo systemctl status nginx</i>. Nginx
-          taisikin olla jo asentamisen jälkeen automaattisesti päällä eikä start
-          komentoa olisi tarvinnut antaa.
-        </p>
-
-        <img src="../images/first/webserver-nginx-install.png" />
-
-        <p>
-          Nyt voimme myös testata näkyykö nginx oletus webbisivu osoitteessa
-          <i>http://localhost:80</i>, ja näkyyhän se.
+          Jotta localhostiin kirjautuminen onnistuu SSH:lla, jouduin lisäämään
+          virtuaali palvelimen julkisen avaimen authorized_keys tiedostoon.
+          Tiedostossa näkyvät myös lokaalin virtuaalikoneen sekä host koneen
+          julkiset avaimet.
         </p>
 
         <img
-          src="../images/first/webserver-nginx-running.png"
-          alt="Nginx default web site"
+          src="../images/first/ssh-keys.png"
+          alt="Public authorized SSH keys"
+        />
+
+        <p>
+          Kirjaudun nyt SSH avulla localhostiin ja yhteys onnistuu. Varmistan
+          vielä <i>w</i> komennolla, että molemmat istuntoni näkyvät.
+        </p>
+
+        <img
+          src="../images/first/ssh-localhost-login.png"
+          alt="Login to localhost via SSH"
+        />
+
+        <h2 id="hei-ansible">d) Hei Ansible (Karvinen 2026a)</h2>
+
+        <p>
+          Tehdään hei maailma Ansiblen avulla. Edellisessä kohdassa jo
+          kokeiltiin ssh yhteys localhostiin. Kokeilin sitä vielä uudestaan ja
+          se toimi edelleen.
+        </p>
+
+        <img
+          src="../images/first/ssh-login-2.png"
+          alt="Login again to localhost via SSH"
+        />
+
+        <p>
+          Asennetaan seuraavaksi ansible, vim, bash-completion sekä tree
+          demonit. Olen itse jonkin verran käyttänyt vimiä, joten siksi se
+          teksti editoriksi. Bash-completion nopeuttaa komentojen
+          kirjoittamista, mutta jonkin takia en sitä vielä saanut toimimaan.
+          Katsotaan jos sen saisi myöhemmin toimintaan. Tree näyttää kansio
+          rakenteen paremmin kuin esim. pelkkä <i>ls -la</i>. Käytin
+          asentamiseen komentoa
+          <i>sudo apt-get -y install ansible vim bash-completion tree</i>.
+        </p>
+
+        <p>
+          Seuraavaksi tein <i>ansible</i> kansion, jonne tulen laittamaan
+          ansibleen liittyvät tiedostot. Tein sinne tiedostot <i>hosts.ini</i>,
+          <i>ansible.cfg</i> sekä <i>site.yml</i>. Lisäsin tiedostoon hosts.ini
+          rivit localhost sekä [all:vars] rivin alle rivin
+          <i>ansible_python_interpreter=/usr/bin/python3</i>, jonka avulla
+          python varoitus saadaan pois. Kokeilin myös ansiblea jo tässä
+          vaiheessa komennolla <i>ansible all -a 'uptime' -i hosts.ini</i>, ja
+          sain oikeanlaisen tulostuksen. Tässä vaiheessa vasta hosts.ini
+          tiedostossa on koodia.
+        </p>
+
+        <img
+          src="../images/first/ansible-init.png"
+          alt="Ansible folder structure and first ansible command"
+        />
+
+        <p>
+          Seuraavaksi lisään tarvittavat koodit <i>ansible.cfg</i> ja
+          <i>site.yml</i> tiedostoihin. Teen myös ensimmäisen roolin.
+          Ansible.cfg tiedostoon lisään rivit <i>[defaults]</i> ja
+          <i>inventory = hosts.ini</i>. inventory = hosts.ini tarkoittaa, että
+          ansible käyttää oletuksena <i>hosts.ini</i> tiedostoa inventorinaan,
+          ja sitä ei tarvitse joka kerta kertoa komennossa. Nyt komento lyhenee
+          muotoon <i>ansible all - 'uptime'</i>.
+        </p>
+
+        <img
+          src="../images/first/ansible-cfg.png"
+          alt="Ansible.cfg file and testing ansible all -a 'umptime' command"
+        />
+
+        <p>
+          Seuraavaksi lisään roolin hello jokaiselle hostille. Se tapahtuu
+          <i>site.yml</i> tiedostoon. Jotta rooli toimii, pitää myös tehdä
+          roolille oma kansio sekä tasks/main.yml tiedosto. Roolit lisätään
+          polkuun <i>ansible/roles</i> ja kansioon lisätään jokaiselle roolille
+          oma kansio (Karvinen 2026c). Lisään <i>hello</i> roolin kansioon ja
+          sille <i>tasks/main.yml</i> tiedoston. Tiedostoon lisään helpon
+          komennon, jolla kopioidaan slave koneelle tiedosto tmp kansioon ja
+          lisätään tiedostoon yksi rivi tekstiä. Testataan vielä aluksi
+          komennolla <i>ls -la /tmp</i> ettei tmp kansiossa ole jo valmiiksi
+          hello-ansible tiedostoa, jonka jälkeen ajetaan ansible playbook
+          komento. Komennon ajun jälkeen huomataan, että
+          <i>PLAY RECAP</i> osiossa on <i>changed=1</i>, joka kertoo, että yksi
+          asia on muutettu slave koneella. Teen tarkistuksen komennoilla
+          <i>ls -la /tmp</i> ja <i>cat /tmp/hello-ansible</i>, ja huomaan että
+          testi on onnistunut.
+        </p>
+
+        <img
+          src="../images/first/ansible-command.png"
+          alt="Ansible command outcome"
         />
 
         <h2>Lähteet</h2>
