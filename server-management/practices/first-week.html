@@ -292,30 +292,33 @@
             riittää. Tiivistämiseen riittää muutama ranskalainen viiva. Ei siis
             vaadita pitkää eikä essee-muotoista tiivistelmää. Lisää kuhunkin
             jokin oma kysymys tai huomio. Paljon komentoja sisältävistä
-            dokumenteista kannattaa nostaa mukaan keskeiset komennot ja
-            valinnat. Sisältöä, ei vain metatekstiä tai kuvailua.) Niemi 2025:
-            H4 Tehtävät Partanen 2025: Harjoitus 5: Nimekäs: a) Nimi (Vain
-            a-kohta.)
+            dokumenteista kannattaa nostaa mukaan keskeiset komennot ja selittää
+            ne.)
           </li>
           <li>
-            a) Paikallista. Asenna Debian 13 paikallisesti virtuaalikoneeseen.
-            Voit käyttää esimerkiksi VirtualBoxia. (Tätä käytetään myös
-            tuntiharjoituksiin.)
-          </li>
-          <li>b) VPS. Vuokraa virtuaalinen yksityispalvelin.</li>
-          <li>
-            c) Alkutoimet. Tee virtuaalipalvelimellesi sudo-käyttäjä omalla
-            nimellä (ei root). Asenna tulimuuri - ensin reikä ssh:lle. Päivitä
-            kaikki ohjelmat ja boottaa tarvittaessa.
+            Paikallista. Asenna Debian 13 paikallisesti virtuaalikoneeseen. Voit
+            käyttää esimerkiksi VirtualBoxia. (Tätä käytetään myös
+            tuntiharjoituksiin. Jos raportoit tämän jo h0 yhteydessä, pelkkä
+            linkki raporttiin riittää. Suppea raportointi tässä alakohdassa:
+            mikäli ongelmia ei tullut, pelkkä luettelo tehdyistä valinnoista
+            riittää. Jos ongelmia, yksityiskohtainen, toistettava raportti.)
           </li>
           <li>
-            d) Weppipalvelin. Asenna koneellesi weppipalvelin, kuten Apache tai
-            Nginx.
+            b) Sshecrets. Asenna SSH-demoni käsin ja testaa se kirjautumalla
+            SSH:lla. (localhost kelpaa)
           </li>
           <li>
-            e) Vapaaehtoinen: Nimi. Aseta domain-nimi osoittamaan palvelimesi
-            IP-osoitteeseen. (Tämä tehtävä saattaa myöhemmin tulla varsinaiseksi
-            tehtäväksi)
+            c) Pubkey. Automatisoi ssh-kirjautuminen julkisella avaimella.
+            (localhost kelpaa)
+          </li>
+          <li>
+            d) Hei Ansible. Tee hei maailma ansiblella ja kokeile sitä SSH:n
+            yli. (localhost kelpaa)
+          </li>
+          <li>
+            e) Vapaaehtoinen bonus: kokeile Ansiblella jokin näista asetuksista:
+            paketin asennus, asetustiedosto /etc/ alle, käynnistä jokin demoni,
+            tee uusi käyttäjä. Tarvitset todennäköisesti sudoa, become: true.
           </li>
         </ul>
       </main>
