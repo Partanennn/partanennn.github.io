@@ -38,23 +38,122 @@
         <h2>x) Tiivistelmä</h2>
         <h4>Karvinen 2026: Sudo without password (Karvinen 2026b)</h4>
         <ul>
-          <li></li>
+          <li>
+            Raportissa käydään läpi kuinka käyttäjä tehdään, lisätään ryhmään ja
+            kuinka ryhmälle lisätään
+          </li>
+          <li>
+            Tehdään käyttäjä, jos sitä ei ole vielä olemassa (sudo adduser
+            antero)
+          </li>
+          <li>
+            Lisätään uusi ryhmä, joka lisätään käyttäjälle (sudo groupadd
+            sudoless; sudo adduser antero sudoless)
+          </li>
+          <li>
+            <i>/etc/sudoers.d/sudoless</i> lisätään rivi
+            <i>%sudoless ALL = (ALL) NOPASSWD: ALL</i>, joka lisää ryhmään
+            sudoless(%sudoless), kaikille koneille(ALL), ei kysytä käyttäjältä
+            salasanaa millekkään sudo komennolle (NOPASSWD: ALL)
+          </li>
+          <li>
+            Voidaan testata kirjautumalla käyttäjällä koneelle, unohtamalla
+            aiemmat kredentiaalit komennolla <i>sudo -k</i> ja ajamalla
+            esimerkiksi komento echo sudolla. Jos salasaana ei kysytä enää, on
+            muutokset onnistuneet.
+          </li>
         </ul>
 
         <h4>Munroe 2006: xkcd149: Sandwich (Munroe 2026)</h4>
         <ul>
-          <li></li>
+          <li>Sarjakuvassa kuvataan, miten voimakas komento sudo on</li>
         </ul>
 
         <h4>Karvinen 2026: Passwordless Sudo with Ansible (Karvinen 2026c)</h4>
+        <ul>
+          <li>Käyttäjälle lisätään master koneen julkinen avain</li>
+          <li>
+            Ansiblella voidaan lisätä käyttäjälle salasanattomat sudo komennot
+            kopioimalla agentti koneen <i>/etc/sudoers.d/sudoless</i> tiedostoon
+            rivi
+            <i>%sudoless ALL = (ALL) NOPASSWD: ALL\n</i>
+          </li>
+          <li>
+            Lisäämällä <i>become: true</i> site.yaml tiedostoon saadaan ansible
+            kokeilemaan sudo oikeuksia.
+          </li>
+          <li>
+            Lisäämällä ansible-playbook komentoon liput -K tai
+            --ask-become-password, kysyy ansible salasanaa sudolle.
+          </li>
+        </ul>
+
+        <h4>ansible-doc (Ansible Community Documentation)</h4>
         <ul>
           <li></li>
         </ul>
 
         <h2 id="sudoless">a) Sudoless (Karvinen 2026a)</h2>
-        <p></p>
+        <p>
+          Aloitetaan tekemällä tunnus ansiblea varten. Päätän nimetä ansible
+          käyttäjän anssiksi, jolle teen ryhmän sudoless, joka voi käyttää sudoa
+          ilman salasanaa. Lisään myös oman käyttäjäni, aleksi, sudoless
+          ryhmään. Sudoless ryhmä olikin jo tehtynä, todennäköisesti tein sen
+          luennon (29.10.2026) aikana kun seurasin Karvisen opetusta ja kokeilin
+          samoja asioita.
+        </p>
 
-        <img src="../images/second/ssh-login.png" alt="" />
+        <img
+          src="../images/second/sudoless-user-group.png"
+          alt="No password sudo user creation"
+        />
+
+        <p>SSH sekä sudo on automatisoituja käyttäjälle Anssi.</p>
+
+        <img
+          src="../images/second/sudoless-user-automated.png"
+          alt="Automated ansible user for ssh and sudo"
+        />
+
+        <h2>Tehtävänanto (Karvinen 2026a)</h2>
+        <ul>
+          <li>
+            x) Lue ja tiivistä. (Tässä x-alakohdassa ei tarvitse tehdä testejä
+            tietokoneella, vain lukeminen tai kuunteleminen ja tiivistelmä
+            riittää. Tiivistämiseen riittää muutama ranskalainen viiva. Ei siis
+            vaadita pitkää eikä essee-muotoista tiivistelmää. Lisää kuhunkin
+            jokin oma kysymys tai huomio. Paljon komentoja sisältävistä
+            dokumenteista kannattaa nostaa mukaan keskeiset komennot ja
+            valinnat. Sisältöä, ei vain metatekstiä tai kuvailua.) Niemi 2025:
+            H4 Tehtävät Partanen 2025: Harjoitus 5: Nimekäs: a) Nimi (Vain
+            a-kohta.)
+          </li>
+          <li>
+            a) Sudoless. Tee ansiblea varten tunnus, jolla voi käyttää sudoa
+            ilman salasanaa. Sekä ssh-kirjautuminen että sudon käyttö tulee olla
+            ansbilea varten automatisoitu.
+          </li>
+          <li>
+            b) Antero. Tee salasanaton, automaattisesti ssh:lla kirjautuva
+            tunnus Ansiblella.
+          </li>
+          <li>c) Package. Asenna kaksi pakettia ansiblella.</li>
+          <li>
+            d) File. Kirjoita orjalle useamman rivin mittainen tiedosto
+            Ansiblella. Määrittele sen omistaja, omistava ryhmä ja oikeudet.
+            Käytä oikeuksille oktaalinumeroa, esim. "0600". Kerro, mitä oikeudet
+            ovat symbolisessa muodossa, esim. "-rwxr--r--". Selitä, mitä kukin
+            käyttäjä saa tehdä tuolle tiedostolle.
+          </li>
+          <li>
+            e) Jotain muuta. Näytä esimerkki ansiblen käskystä, jota ei ole
+            vielä käsitelty kurssilla tai kotitehtävissä. Voit ottaa jonkun muun
+            modulin kuin apt, file, copy, user tai authorized_key. Tai voit
+            käyttää ominaisuutta, jota ei vielä ole demonstroitu. Jos
+            tiivistystehtävässä x on mainittu ominaisuuksia, joita ei tunneilla
+            tai läksyissä kokeiltu, nekin kelpaavat.
+          </li>
+        </ul>
 
         <h2>Lähteet</h2>
         <ul>
@@ -81,41 +180,12 @@
               >https://terokarvinen.com/passwordless-sudo-with-ansible/</a
             >. Luettu: 29.10.2026
           </li>
-          <li>ansible-doc. Luettu: 29.10.2026</li>
-        </ul>
-
-        <h2>Tehtävänanto</h2>
-        <ul>
           <li>
-            x) Lue ja tiivistä. (Tässä x-alakohdassa ei tarvitse tehdä testejä
-            tietokoneella, vain lukeminen tai kuunteleminen ja tiivistelmä
-            riittää. Tiivistämiseen riittää muutama ranskalainen viiva. Ei siis
-            vaadita pitkää eikä essee-muotoista tiivistelmää. Lisää kuhunkin
-            jokin oma kysymys tai huomio. Paljon komentoja sisältävistä
-            dokumenteista kannattaa nostaa mukaan keskeiset komennot ja
-            valinnat. Sisältöä, ei vain metatekstiä tai kuvailua.) Niemi 2025:
-            H4 Tehtävät Partanen 2025: Harjoitus 5: Nimekäs: a) Nimi (Vain
-            a-kohta.)
-          </li>
-          <li>
-            a) Paikallista. Asenna Debian 13 paikallisesti virtuaalikoneeseen.
-            Voit käyttää esimerkiksi VirtualBoxia. (Tätä käytetään myös
-            tuntiharjoituksiin.)
-          </li>
-          <li>b) VPS. Vuokraa virtuaalinen yksityispalvelin.</li>
-          <li>
-            c) Alkutoimet. Tee virtuaalipalvelimellesi sudo-käyttäjä omalla
-            nimellä (ei root). Asenna tulimuuri - ensin reikä ssh:lle. Päivitä
-            kaikki ohjelmat ja boottaa tarvittaessa.
-          </li>
-          <li>
-            d) Weppipalvelin. Asenna koneellesi weppipalvelin, kuten Apache tai
-            Nginx.
-          </li>
-          <li>
-            e) Vapaaehtoinen: Nimi. Aseta domain-nimi osoittamaan palvelimesi
-            IP-osoitteeseen. (Tämä tehtävä saattaa myöhemmin tulla varsinaiseksi
-            tehtäväksi)
+            Ansible Community Documentation, ansible-doc. Luettavissa:
+            <a
+              href="https://docs.ansible.com/projects/ansible/latest/cli/ansible-doc.html"
+              >https://docs.ansible.com/projects/ansible/latest/cli/ansible-doc.html</a
+            >. Luettu: 30.10.2026
           </li>
         </ul>
       </main>
