@@ -89,8 +89,139 @@
         </ul>
 
         <h4>ansible-doc (Ansible Community Documentation)</h4>
+        <p><b>copy</b></p>
         <ul>
-          <li></li>
+          <li>
+            Kopioi tiedoston tai kansion rakenteen paikalliselta koneelta
+            etäkoneelle.
+          </li>
+          <li>
+            <i>content</i> vaihtoehto kertoo mitä tiedostoon kirjoitetaan.
+            Vaatii <i>'dest'</i> vaihtoehdon olemaan jokin tiedosto.
+          </li>
+          <li>
+            <i>dest</i> vaihtoehto kertoo absoluuttisen polun, johon tiedosto
+            kopioidaan. Jos kansiota ei ole olemassa, johon tiedostoa ollaan
+            kopioimassa, dest epäonnistuu.
+          </li>
+          <li>
+            <i>src</i> vaihtoehto kertoo lokaalin polun tiedostoon, joka
+            halutaan kopioida etäpalvelimelle. Voi olla absoluuttinen tai
+            suhteellinen (relative). Jos polku on kansio, se kopioidaan
+            rekursiivisesti. Jos polku loppuu <i>'/'</i> merkkiin, niin vain
+            kansion sisällä olevat asiat kopioidaan, mutta ei itse kansiota.
+          </li>
+          <li>
+            <i>owner</i> vaihotehdolla määritellään käyttäjä, joka syötetään
+            <i>chown</i> komentoon tiedostojen ja kansioiden luonnin yhteydessä.
+            Älä käytä numeerista käyttäjänimeä, silloin sen katsotaan olevan
+            käyttäjän ID.
+          </li>
+          <li>
+            <i>group</i> vaihtoehto toimii kuten <i>owner</i>, mutta ryhmälle.
+          </li>
+          <li>
+            <i>mode</i> vaihtoehdolla määritellään kohde tiedoston tai kansion
+            oikeudet. Käytettävä edessä nollaa, esim. '0644', tai käytettävä
+            quoteja `'644'`.
+          </li>
+        </ul>
+        <p><b>apt</b></p>
+        <ul>
+          <li>
+            <i>name</i> vaihtoehdossa annetaan lista pakettien nimiä, kuten
+            vim,tree. Nimen perään voidaan lisätä tietty tai haluttu raja
+            versionumerolle, esimerkiksi vim=9.1 tai vim>=9. Myös villiäkorttia
+            voidaan käyttää, vim=9.* tai apt*
+          </li>
+          <li>
+            <i>state</i> vaihtehto kuvaa haluttua paketin tilaa. Esimerkiksi
+            <i>latest</i> varmistaa että viimeisin versio on asennettu ja
+            <i>present</i> varmistaa että paketti on olemassa.
+          </li>
+          <li>
+            <i>update_cache</i> vaihtoehto on sama kuin <i>apt-get update.</i>
+          </li>
+        </ul>
+        <p><b>file</b></p>
+        <ul>
+          <li>
+            <i>path</i> vaihtoehto kertoo polun tiedostoon jota halutaan muokata
+          </li>
+          <li>
+            <i>recurse</i> vaihtoehto asettaa rekursiivisesti spesifioidut
+            tiedosto atribuutit kansion sisältöihin. Toimii vain kun
+            <i>state</i> on määritelty arvoon <i>directory.</i>
+          </li>
+          <li>
+            <i>src</i> vaihtoehdolla määritellään tiedoston polku johon se
+            linkittyy. Toimii vain state=link ja state=hard arvoilla.
+          </li>
+          <li>
+            <i>state</i> vaihtoehdolla on useampi eri vaihtoehto. Arvolla
+            <i>absent</i> kansiot poistetaan rekursiivisesti. Arvo
+            <i>directory</i> alikansiot luodaan jos niitä ei vielä ole.
+          </li>
+          <li>
+            <i>owner</i> vaihtoehdolla määritellään käyttäjä joka omistaa
+            tiedostojärjestelmän objektit.
+          </li>
+          <li>
+            <i>group</i> vaihtoehto toimii samoin kuin <i>copy</i> metodin
+            <i>group</i>
+            vaihtoehto. Group määrittelee mikä ryhmä omistaa tiedostot ja
+            kansiot.
+          </li>
+          <li>
+            <i>mode</i> vaihtoehto toimii samoin kuin <i>copy</i> metodin
+            <i>mode</i> vaihtoehto. Määrittelee mitä <i>chmod</i> arvoa
+            käytetään tiedostoihin ja kansioihin.
+          </li>
+        </ul>
+        <p><b>user</b></p>
+        <ul>
+          <li>
+            <i>name</i> vaihtoehto määrittelee nimen käyttäjälle, joka luodaan,
+            poistetaan tai jota muokataan.
+          </li>
+          <li>
+            <i>create_home</i> vaihtoehto on oletuksena <i>true</i>. Jos se
+            asetetaan <i>false</i> arvoon, käyttäjälle ei määritellä koti
+            hakemistoa.
+          </li>
+          <li>
+            <i>comment</i> vaihtoehto määrittelee kuvaus kentän käyttäjälle.
+          </li>
+          <li>
+            <i>groups</i> vaihtoehto määrittelee käyttäjän ryhmät listassa. Jos
+            jätetään tyhjäksi, käyttäjä listään vain pääryhmään.
+          </li>
+          <li>
+            <i>shell</i> vaihtoehdolla määritellään käyttäjän käyttämä
+            komentotulkki (shell).
+          </li>
+          <li>
+            <i>state</i> vaihtoehdolla määritellään onko käyttäjä olemassa vai
+            ei. Joko arvo <i>absent</i> tai <i>present</i>.
+          </li>
+          <li>
+            <i>system</i> vaihtoehdolla tehdään uudesta käyttäjästä
+            järjestelmätili. Toimii vain jos account vaihtoehto on state=present
+            ja käyttäjä ei ole vielä olemassa.
+          </li>
+        </ul>
+        <p><b>authorized_key</b></p>
+        <ul>
+          <li>Asettaa tai poistaa SSH avaimet käyttäjille.</li>
+          <li>
+            <i>user</i> vaihtoehdolla määritellään käyttäjä jonka
+            <i>authorized_key</i> tiedostoa muokataan.
+          </li>
+          <li>
+            <i>key</i> vaihtoehto määrittelee julkisen avaimen tai avaimet jotka
+            tallennetaan <i>authorized_key</i> tiedostoon. Voi olla Ansible 1.9
+            version jälkeen myös url. Voidaan myös käyttää
+          </li>
         </ul>
 
         <h2 id="sudoless">a) Sudoless (Karvinen 2026a)</h2>
@@ -183,9 +314,9 @@
           <li>
             Ansible Community Documentation, ansible-doc. Luettavissa:
             <a
-              href="https://docs.ansible.com/projects/ansible/latest/cli/ansible-doc.html"
-              >https://docs.ansible.com/projects/ansible/latest/cli/ansible-doc.html</a
-            >. Luettu: 30.10.2026
+              href="https://docs.ansible.com/projects/ansible/latest/index.html"
+              >https://docs.ansible.com/projects/ansible/latest/index.html</a
+            >. Luettu: 31.10.2026
           </li>
         </ul>
       </main>
