@@ -246,6 +246,48 @@
           alt="Automated ansible user for ssh and sudo"
         />
 
+        <h2>b) Antero (Karvinen 2026a)</h2>
+        <p>
+          Tehdään Ansiblella käyttäjä Antero, joka on salasanaton ja
+          automaattisesti SSH:lla kirjautuva. Käytin tunnilla tehtyä
+          <i>sudoless</i> roolia, jossa määritellään <i>sudoless</i> ryhmä,
+          <i>antero</i> käyttäjä, jolle annetaan ryhmät <i>sudoless</i>,
+          <i>sudo</i> ja <i>adm</i>. Laitetaan host koneen julkinen avain myös
+          antero käyttäjän .ssh/authorized_keys tiedostoon moduulin
+          <i>authorized_key</i> avulla. Lisätään ansiblella myös
+          <i>%sudoless ALL = (ALL) NOPASSWD: ALL\n</i> rivi tiedostoon
+          <i>/etc/sudoers.d/sudoless</i>. Ansible-playbook komento meni läpi
+          normaalisti ja tällä kertaa oli 2 muutosta, uusi käyttäjä ja SSH
+          avaimen lisääminen uuden käyttäjän kotihakemistoon. Sudoless
+          tiedostoon ei lisätty uutta sisältöä, koska se oli lisätty sinne jo
+          aiemmin. Tarkistin vielä <i>antero</i> käyttäjän kotihakemistosta,
+          että ssh avain on lisätty sinne. Tarkistin myös että käyttäjä on
+          olemassa komennolla <i>getent passwd | grep home</i>.
+        </p>
+
+        <img
+          src="../images/second/antero-all.png"
+          alt="Ansible sudoless code"
+        />
+
+        <h2>c) Package (Karvinen 2026a)</h2>
+        <p>
+          Aion lisätä agentille 2 pakettia, <i>vim</i> sekä <i>htop</i>. Käytän
+          roolia <i>favorites</i>. Htoppia ei vielä ole virtuaalikoneella joten
+          se todennäköisesti tulee olemaan ainut muutos kun ansible-playbook
+          komento ajetaan. Ja niin olikin. Lisään paketit metodilla
+          <i>apt</i> ja käytän sen optioneita <i>name</i> pakettien lisäämiseksi
+          ja määritän pakettien versioiksi viimeisimmät versiot optionilla
+          <i>state: latest</i>. Htop asennuksen tarkistin komennolla
+          <i>htop --v</i> ja vim asennuksen tarkistin komennolla <i>vim --v</i>.
+        </p>
+
+        <img src="../images/second/package-files.png" alt="Files for " />
+        <img
+          src="../images/second/package-confirmation.png"
+          alt="Htop and vim versions"
+        />
+
         <h2>Tehtävänanto (Karvinen 2026a)</h2>
         <ul>
           <li>
