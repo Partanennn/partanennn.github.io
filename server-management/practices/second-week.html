@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../styles.css" />
+    <title>Harjoitus 2</title>
+  </head>
+
+  <body>
+    <div id="left">
+      <ul>
+        <li>Palvelinten hallinta harjoitukset</li>
+        <li><a href="pre-task.html">Harjoitus 0 raportti</a></li>
+        <li><a href="first-week.html">Harjoitus 1 raportti</a></li>
+        <li><a href="second-week.html">Harjoitus 2 raportti</a></li>
+      </ul>
+    </div>
+    <div id="center">
+      <main>
+        <h4>Host laitteisto</h4>
+        <ul>
+          <li>Prosessori: AMD Ryzen 9 5900x 12-Core</li>
+          <li>Keskusmuisti: 32GB DDR4</li>
+          <li>Näytönohjain: NVIDIA GeForce RTX 3080</li>
+          <li>OS: Linux 7.2.11-1-cachyos x86-64</li>
+        </ul>
+        <h4>Virtuaalikone, local</h4>
+        <ul>
+          <li>4 CPU</li>
+          <li>6GB RAM</li>
+          <li>20GB</li>
+          <li>Debian 13, 64-bit</li>
+        </ul>
+
+        <h1>Harjoitus 2: Voileipä (Karvinen 2026a)</h1>
+
+        <h2>x) Tiivistelmä</h2>
+        <h4>Karvinen 2026: Sudo without password (Karvinen 2026b)</h4>
+        <ul>
+          <li>
+            Raportissa käydään läpi kuinka käyttäjä tehdään, lisätään ryhmään ja
+            kuinka ryhmälle lisätään
+          </li>
+          <li>
+            Tehdään käyttäjä, jos sitä ei ole vielä olemassa (sudo adduser
+            antero)
+          </li>
+          <li>
+            Lisätään uusi ryhmä, joka lisätään käyttäjälle (sudo groupadd
+            sudoless; sudo adduser antero sudoless)
+          </li>
+          <li>
+            <i>/etc/sudoers.d/sudoless</i> lisätään rivi
+            <i>%sudoless ALL = (ALL) NOPASSWD: ALL</i>, joka lisää ryhmään
+            sudoless(%sudoless), kaikille koneille(ALL), ei kysytä käyttäjältä
+            salasanaa millekkään sudo komennolle (NOPASSWD: ALL)
+          </li>
+          <li>
+            Voidaan testata kirjautumalla käyttäjällä koneelle, unohtamalla
+            aiemmat kredentiaalit komennolla <i>sudo -k</i> ja ajamalla
+            esimerkiksi komento echo sudolla. Jos salasaana ei kysytä enää, on
+            muutokset onnistuneet.
+          </li>
+        </ul>
+
+        <h4>Munroe 2006: xkcd149: Sandwich (Munroe 2026)</h4>
+        <ul>
+          <li>Sarjakuvassa kuvataan, miten voimakas komento sudo on</li>
+        </ul>
+
+        <h4>Karvinen 2026: Passwordless Sudo with Ansible (Karvinen 2026c)</h4>
+        <ul>
+          <li>Käyttäjälle lisätään master koneen julkinen avain</li>
+          <li>
+            Ansiblella voidaan lisätä käyttäjälle salasanattomat sudo komennot
+            kopioimalla agentti koneen <i>/etc/sudoers.d/sudoless</i> tiedostoon
+            rivi
+            <i>%sudoless ALL = (ALL) NOPASSWD: ALL\n</i>
+          </li>
+          <li>
+            Lisäämällä <i>become: true</i> site.yaml tiedostoon saadaan ansible
+            kokeilemaan sudo oikeuksia.
+          </li>
+          <li>
+            Lisäämällä ansible-playbook komentoon liput -K tai
+            --ask-become-password, kysyy ansible salasanaa sudolle.
+          </li>
+        </ul>
+
+        <h4>ansible-doc (Ansible Community Documentation)</h4>
+        <p><b>copy</b></p>
+        <ul>
+          <li>
+            Kopioi tiedoston tai kansion rakenteen paikalliselta koneelta
+            etäkoneelle.
+          </li>
+          <li>
+            <i>content</i> vaihtoehto kertoo mitä tiedostoon kirjoitetaan.
+            Vaatii <i>'dest'</i> vaihtoehdon olemaan jokin tiedosto.
+          </li>
+          <li>
+            <i>dest</i> vaihtoehto kertoo absoluuttisen polun, johon tiedosto
+            kopioidaan. Jos kansiota ei ole olemassa, johon tiedostoa ollaan
+            kopioimassa, dest epäonnistuu.
+          </li>
+          <li>
+            <i>src</i> vaihtoehto kertoo lokaalin polun tiedostoon, joka
+            halutaan kopioida etäpalvelimelle. Voi olla absoluuttinen tai
+            suhteellinen (relative). Jos polku on kansio, se kopioidaan
+            rekursiivisesti. Jos polku loppuu <i>'/'</i> merkkiin, niin vain
+            kansion sisällä olevat asiat kopioidaan, mutta ei itse kansiota.
+          </li>
+          <li>
+            <i>owner</i> vaihotehdolla määritellään käyttäjä, joka syötetään
+            <i>chown</i> komentoon tiedostojen ja kansioiden luonnin yhteydessä.
+            Älä käytä numeerista käyttäjänimeä, silloin sen katsotaan olevan
+            käyttäjän ID.
+          </li>
+          <li>
+            <i>group</i> vaihtoehto toimii kuten <i>owner</i>, mutta ryhmälle.
+          </li>
+          <li>
+            <i>mode</i> vaihtoehdolla määritellään kohde tiedoston tai kansion
+            oikeudet. Käytettävä edessä nollaa, esim. '0644', tai käytettävä
+            quoteja `'644'`.
+          </li>
+        </ul>
+        <p><b>apt</b></p>
+        <ul>
+          <li>
+            <i>name</i> vaihtoehdossa annetaan lista pakettien nimiä, kuten
+            vim,tree. Nimen perään voidaan lisätä tietty tai haluttu raja
+            versionumerolle, esimerkiksi vim=9.1 tai vim>=9. Myös villiäkorttia
+            voidaan käyttää, vim=9.* tai apt*
+          </li>
+          <li>
+            <i>state</i> vaihtehto kuvaa haluttua paketin tilaa. Esimerkiksi
+            <i>latest</i> varmistaa että viimeisin versio on asennettu ja
+            <i>present</i> varmistaa että paketti on olemassa.
+          </li>
+          <li>
+            <i>update_cache</i> vaihtoehto on sama kuin <i>apt-get update.</i>
+          </li>
+        </ul>
+        <p><b>file</b></p>
+        <ul>
+          <li>
+            <i>path</i> vaihtoehto kertoo polun tiedostoon jota halutaan muokata
+          </li>
+          <li>
+            <i>recurse</i> vaihtoehto asettaa rekursiivisesti spesifioidut
+            tiedosto atribuutit kansion sisältöihin. Toimii vain kun
+            <i>state</i> on määritelty arvoon <i>directory.</i>
+          </li>
+          <li>
+            <i>src</i> vaihtoehdolla määritellään tiedoston polku johon se
+            linkittyy. Toimii vain state=link ja state=hard arvoilla.
+          </li>
+          <li>
+            <i>state</i> vaihtoehdolla on useampi eri vaihtoehto. Arvolla
+            <i>absent</i> kansiot poistetaan rekursiivisesti. Arvo
+            <i>directory</i> alikansiot luodaan jos niitä ei vielä ole.
+          </li>
+          <li>
+            <i>owner</i> vaihtoehdolla määritellään käyttäjä joka omistaa
+            tiedostojärjestelmän objektit.
+          </li>
+          <li>
+            <i>group</i> vaihtoehto toimii samoin kuin <i>copy</i> metodin
+            <i>group</i>
+            vaihtoehto. Group määrittelee mikä ryhmä omistaa tiedostot ja
+            kansiot.
+          </li>
+          <li>
+            <i>mode</i> vaihtoehto toimii samoin kuin <i>copy</i> metodin
+            <i>mode</i> vaihtoehto. Määrittelee mitä <i>chmod</i> arvoa
+            käytetään tiedostoihin ja kansioihin.
+          </li>
+        </ul>
+        <p><b>user</b></p>
+        <ul>
+          <li>
+            <i>name</i> vaihtoehto määrittelee nimen käyttäjälle, joka luodaan,
+            poistetaan tai jota muokataan.
+          </li>
+          <li>
+            <i>create_home</i> vaihtoehto on oletuksena <i>true</i>. Jos se
+            asetetaan <i>false</i> arvoon, käyttäjälle ei määritellä koti
+            hakemistoa.
+          </li>
+          <li>
+            <i>comment</i> vaihtoehto määrittelee kuvaus kentän käyttäjälle.
+          </li>
+          <li>
+            <i>groups</i> vaihtoehto määrittelee käyttäjän ryhmät listassa. Jos
+            jätetään tyhjäksi, käyttäjä listään vain pääryhmään.
+          </li>
+          <li>
+            <i>shell</i> vaihtoehdolla määritellään käyttäjän käyttämä
+            komentotulkki (shell).
+          </li>
+          <li>
+            <i>state</i> vaihtoehdolla määritellään onko käyttäjä olemassa vai
+            ei. Joko arvo <i>absent</i> tai <i>present</i>.
+          </li>
+          <li>
+            <i>system</i> vaihtoehdolla tehdään uudesta käyttäjästä
+            järjestelmätili. Toimii vain jos account vaihtoehto on state=present
+            ja käyttäjä ei ole vielä olemassa.
+          </li>
+        </ul>
+        <p><b>authorized_key</b></p>
+        <ul>
+          <li>Asettaa tai poistaa SSH avaimet käyttäjille.</li>
+          <li>
+            <i>user</i> vaihtoehdolla määritellään käyttäjä jonka
+            <i>authorized_key</i> tiedostoa muokataan.
+          </li>
+          <li>
+            <i>key</i> vaihtoehto määrittelee julkisen avaimen tai avaimet jotka
+            tallennetaan <i>authorized_key</i> tiedostoon. Voi olla Ansible 1.9
+            version jälkeen myös url. Voidaan myös käyttää
+          </li>
+        </ul>
+
+        <h2 id="sudoless">a) Sudoless (Karvinen 2026a)</h2>
+        <p>
+          Aloitetaan tekemällä tunnus ansiblea varten. Päätän nimetä ansible
+          käyttäjän anssiksi, jolle teen ryhmän sudoless, joka voi käyttää sudoa
+          ilman salasanaa. Lisään myös oman käyttäjäni, aleksi, sudoless
+          ryhmään. Sudoless ryhmä olikin jo tehtynä, todennäköisesti tein sen
+          luennon (29.10.2026) aikana kun seurasin Karvisen opetusta ja kokeilin
+          samoja asioita.
+        </p>
+
+        <img
+          src="../images/second/sudoless-user-group.png"
+          alt="No password sudo user creation"
+        />
+
+        <p>SSH sekä sudo on automatisoituja käyttäjälle Anssi.</p>
+
+        <img
+          src="../images/second/sudoless-user-automated.png"
+          alt="Automated ansible user for ssh and sudo"
+        />
+
+        <h2>b) Antero (Karvinen 2026a)</h2>
+        <p>
+          Tehdään Ansiblella käyttäjä Antero, joka on salasanaton ja
+          automaattisesti SSH:lla kirjautuva. Käytin tunnilla tehtyä
+          <i>sudoless</i> roolia, jossa määritellään <i>sudoless</i> ryhmä,
+          <i>antero</i> käyttäjä, jolle annetaan ryhmät <i>sudoless</i>,
+          <i>sudo</i> ja <i>adm</i>. Laitetaan host koneen julkinen avain myös
+          antero käyttäjän .ssh/authorized_keys tiedostoon moduulin
+          <i>authorized_key</i> avulla (Karvinen 2026c). Lisätään ansiblella
+          myös <i>%sudoless ALL = (ALL) NOPASSWD: ALL\n</i> rivi tiedostoon
+          <i>/etc/sudoers.d/sudoless</i> (Karvinen 2026c). Ansible-playbook
+          komento meni läpi normaalisti ja tällä kertaa oli 2 muutosta, uusi
+          käyttäjä ja SSH avaimen lisääminen uuden käyttäjän kotihakemistoon.
+          Sudoless tiedostoon ei lisätty uutta sisältöä, koska se oli lisätty
+          sinne jo aiemmin. Tarkistin vielä <i>antero</i> käyttäjän
+          kotihakemistosta, että ssh avain on lisätty sinne. Tarkistin myös että
+          käyttäjä on olemassa komennolla <i>getent passwd | grep home</i> (EEAA
+          2012).
+        </p>
+
+        <img
+          src="../images/second/antero-all.png"
+          alt="Ansible sudoless code"
+        />
+
+        <h2>c) Package (Karvinen 2026a)</h2>
+        <p>
+          Aion lisätä agentille 2 pakettia, <i>vim</i> sekä <i>htop</i>. Käytän
+          roolia <i>favorites</i>. Htoppia ei vielä ole virtuaalikoneella joten
+          se todennäköisesti tulee olemaan ainut muutos kun ansible-playbook
+          komento ajetaan. Ja niin olikin. Lisään paketit metodilla
+          <i>apt</i> ja käytän sen optioneita <i>name</i> pakettien lisäämiseksi
+          ja määritän pakettien versioiksi viimeisimmät versiot optionilla
+          <i>state: latest</i>. Htop asennuksen tarkistin komennolla
+          <i>htop --v</i> ja vim asennuksen tarkistin komennolla <i>vim --v</i>.
+        </p>
+
+        <img src="../images/second/package-files.png" alt="Files for " />
+        <img
+          src="../images/second/package-confirmation.png"
+          alt="Htop and vim versions"
+        />
+
+        <h2>d) File (Karvinen 2026a)</h2>
+        <p>
+          Tehdään tiedosto ansiblella, jolle määritellään omistaja, omistava
+          ryhmä sekä oikeudet. Aloitan tekemällä uuden roolin <i>file</i> sekä
+          kansion <i>file/tasks/</i> <i>roles</i> kansioon. Kansioon lisään
+          vielä <i>main.yml</i> tiedoston metodeja varten. Lisään roolin
+          <i>file</i> <i>site.yml</i> tiedostoon.
+        </p>
+
+        <img src="../images/second/file-structure.png" alt="File structure" />
+
+        <p>
+          Lisään file-roolin <i>tasks/main.yml</i> tiedostoon metodin
+          <i>copy</i>, jolle määritän lokaation, sisällön tiedostolle,
+          omistajan, omistaja ryhmän sekä oikeudet. Aion lisätä uuden tiedoston
+          <i>antero</i> käyttäjän kotihakemistoon. Tiedoston nimeksi laitan
+          <i>text-file.txt</i>. Sisällöksi laitan kaksi riviä tekstiä. Löysin
+          ansiblen dokumentaatiosta kohdasta
+          <i>YAML Syntax (Ansible Community Documentation, Yaml Syntax)</i>,
+          josta löytyi neuvo kuinka monen rivin sisältö voidaan määrittää YAML
+          tiedostossa. Omistajaksi määrittelen <i>antero</i> sekä ryhmäksi
+          määritän <i>antero</i>. Oikeudet laitan muotoon <i>0640</i>, missä
+          numero 6 tarkoittaa luku- sekä kirjoitusoikeuksia tiedoston
+          omistavalle käyttäjälle. Numero 4 tarkoittaa luku oikeutta tiedoston
+          omistavalle ryhmälle. Viimeinen luku 0 tarkoittaa, ettei muilla
+          käyttäjillä ole mitään oikeuksia kyseiseen tiedostoon. Symbolisessa
+          muodossa oikeudet ovat <i>-rw-r-----</i>.
+        </p>
+
+        <img src="../images/second/file-main-yml.png" alt="Main yml file" />
+
+        <p>
+          Ajetaan lopuksi ansible-playbook komento. Ansible tekee yhden
+          muutoksen ja se on taskissa [file : copy], kuten pitääkin. Tehdään
+          vielä lopuksi tarkistus että uudessa tiedostossa on sisällä mitä
+          pitääkin ja että sillä on haluamamme oikeudet.
+        </p>
+
+        <img src="../images/second/file-final.png" alt="Final result" />
+
+        <h2>Lähteet</h2>
+        <ul>
+          <li>
+            Karvinen, Tero 2026a. h2 Voileipä. Luettavissa:
+            <a href="https://terokarvinen.com/palvelinten-hallinta/#h2-voileipa"
+              >https://terokarvinen.com/palvelinten-hallinta/#h2-voileipa</a
+            >. Luettu: 29.10.2026
+          </li>
+          <li>
+            Karvinen, Tero 2026b. Sudo without password. Luettavissa:
+            <a href="https://terokarvinen.com/passwordless-sudo/"
+              >https://terokarvinen.com/passwordless-sudo/</a
+            >. Luettu: 29.10.2026
+          </li>
+          <li>
+            Munroe, 2026. Sandwich. Luettavissa:
+            <a href="https://xkcd.com/149/">https://xkcd.com/149/</a>. Luettu:
+            29.10.2026
+          </li>
+          <li>
+            Karvinen, Tero 2026c. Passwordless Sudo with Ansible. Luettavissa:
+            <a href="https://terokarvinen.com/passwordless-sudo-with-ansible/"
+              >https://terokarvinen.com/passwordless-sudo-with-ansible/</a
+            >. Luettu: 29.10.2026
+          </li>
+          <li>
+            Ansible Community Documentation. Ansible Documentation. Luettavissa:
+            <a
+              href="https://docs.ansible.com/projects/ansible/latest/index.html"
+              >https://docs.ansible.com/projects/ansible/latest/index.html</a
+            >. Luettu: 31.10.2026
+          </li>
+          <li>
+            EEAA, 31.1.2012. Show all users and their groups/vice versa. Server
+            Fault. Luettavissa:
+            <a
+              href="https://serverfault.com/questions/355292/show-all-users-and-their-groups-vice-versa"
+              >https://serverfault.com/questions/355292/show-all-users-and-their-groups-vice-versa</a
+            >. Luettu: 1.11.2026.
+          </li>
+          <li>
+            Ansible Community Documentation. Yaml Syntax. Luettavissa:
+            <a
+              href="https://docs.ansible.com/projects/ansible/latest/reference_appendices/YAMLSyntax.html"
+              >https://docs.ansible.com/projects/ansible/latest/reference_appendices/YAMLSyntax.html</a
+            >. Luettu: 1.11.2026.
+          </li>
+        </ul>
+
+        <h2>Tehtävänanto (Karvinen 2026a)</h2>
+        <ul>
+          <li>
+            x) Lue ja tiivistä. (Tässä x-alakohdassa ei tarvitse tehdä testejä
+            tietokoneella, vain lukeminen tai kuunteleminen ja tiivistelmä
+            riittää. Tiivistämiseen riittää muutama ranskalainen viiva. Ei siis
+            vaadita pitkää eikä essee-muotoista tiivistelmää. Lisää kuhunkin
+            jokin oma kysymys tai huomio. Paljon komentoja sisältävistä
+            dokumenteista kannattaa nostaa mukaan keskeiset komennot ja
+            valinnat. Sisältöä, ei vain metatekstiä tai kuvailua.) Niemi 2025:
+            H4 Tehtävät Partanen 2025: Harjoitus 5: Nimekäs: a) Nimi (Vain
+            a-kohta.)
+          </li>
+          <li>
+            a) Sudoless. Tee ansiblea varten tunnus, jolla voi käyttää sudoa
+            ilman salasanaa. Sekä ssh-kirjautuminen että sudon käyttö tulee olla
+            ansbilea varten automatisoitu.
+          </li>
+          <li>
+            b) Antero. Tee salasanaton, automaattisesti ssh:lla kirjautuva
+            tunnus Ansiblella.
+          </li>
+          <li>c) Package. Asenna kaksi pakettia ansiblella.</li>
+          <li>
+            d) File. Kirjoita orjalle useamman rivin mittainen tiedosto
+            Ansiblella. Määrittele sen omistaja, omistava ryhmä ja oikeudet.
+            Käytä oikeuksille oktaalinumeroa, esim. "0600". Kerro, mitä oikeudet
+            ovat symbolisessa muodossa, esim. "-rwxr--r--". Selitä, mitä kukin
+            käyttäjä saa tehdä tuolle tiedostolle.
+          </li>
+          <li>
+            e) Jotain muuta. Näytä esimerkki ansiblen käskystä, jota ei ole
+            vielä käsitelty kurssilla tai kotitehtävissä. Voit ottaa jonkun muun
+            modulin kuin apt, file, copy, user tai authorized_key. Tai voit
+            käyttää ominaisuutta, jota ei vielä ole demonstroitu. Jos
+            tiivistystehtävässä x on mainittu ominaisuuksia, joita ei tunneilla
+            tai läksyissä kokeiltu, nekin kelpaavat.
+          </li>
+        </ul>
+      </main>
+
+      <footer>
+        <p><a href="../../linux-servers/index.html">Linux Harjoitukset</a></p>
+        <p><a href="../index.html">Palvelinten hallinta harjoitukset</a></p>
+        <p><a href="../../index.html">Etusivu</a></p>
+        <p>Aleksi Partanen &#169;2026</p>
+      </footer>
+    </div>
+    <div id="right"></div>
+  </body>
+</html>
