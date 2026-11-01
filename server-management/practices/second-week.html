@@ -254,15 +254,16 @@
           <i>antero</i> käyttäjä, jolle annetaan ryhmät <i>sudoless</i>,
           <i>sudo</i> ja <i>adm</i>. Laitetaan host koneen julkinen avain myös
           antero käyttäjän .ssh/authorized_keys tiedostoon moduulin
-          <i>authorized_key</i> avulla. Lisätään ansiblella myös
-          <i>%sudoless ALL = (ALL) NOPASSWD: ALL\n</i> rivi tiedostoon
-          <i>/etc/sudoers.d/sudoless</i>. Ansible-playbook komento meni läpi
-          normaalisti ja tällä kertaa oli 2 muutosta, uusi käyttäjä ja SSH
-          avaimen lisääminen uuden käyttäjän kotihakemistoon. Sudoless
-          tiedostoon ei lisätty uutta sisältöä, koska se oli lisätty sinne jo
-          aiemmin. Tarkistin vielä <i>antero</i> käyttäjän kotihakemistosta,
-          että ssh avain on lisätty sinne. Tarkistin myös että käyttäjä on
-          olemassa komennolla <i>getent passwd | grep home</i>.
+          <i>authorized_key</i> avulla (Karvinen 2026c). Lisätään ansiblella
+          myös <i>%sudoless ALL = (ALL) NOPASSWD: ALL\n</i> rivi tiedostoon
+          <i>/etc/sudoers.d/sudoless</i> (Karvinen 2026c). Ansible-playbook
+          komento meni läpi normaalisti ja tällä kertaa oli 2 muutosta, uusi
+          käyttäjä ja SSH avaimen lisääminen uuden käyttäjän kotihakemistoon.
+          Sudoless tiedostoon ei lisätty uutta sisältöä, koska se oli lisätty
+          sinne jo aiemmin. Tarkistin vielä <i>antero</i> käyttäjän
+          kotihakemistosta, että ssh avain on lisätty sinne. Tarkistin myös että
+          käyttäjä on olemassa komennolla <i>getent passwd | grep home</i> (EEAA
+          2012).
         </p>
 
         <img
@@ -287,6 +288,95 @@
           src="../images/second/package-confirmation.png"
           alt="Htop and vim versions"
         />
+
+        <h2>d) File (Karvinen 2026a)</h2>
+        <p>
+          Tehdään tiedosto ansiblella, jolle määritellään omistaja, omistava
+          ryhmä sekä oikeudet. Aloitan tekemällä uuden roolin <i>file</i> sekä
+          kansion <i>file/tasks/</i> <i>roles</i> kansioon. Kansioon lisään
+          vielä <i>main.yml</i> tiedoston metodeja varten. Lisään roolin
+          <i>file</i> <i>site.yml</i> tiedostoon.
+        </p>
+
+        <img src="../images/second/file-structure.png" alt="File structure" />
+
+        <p>
+          Lisään file-roolin <i>tasks/main.yml</i> tiedostoon metodin
+          <i>copy</i>, jolle määritän lokaation, sisällön tiedostolle,
+          omistajan, omistaja ryhmän sekä oikeudet. Aion lisätä uuden tiedoston
+          <i>antero</i> käyttäjän kotihakemistoon. Tiedoston nimeksi laitan
+          <i>text-file.txt</i>. Sisällöksi laitan kaksi riviä tekstiä. Löysin
+          ansiblen dokumentaatiosta kohdasta
+          <i>YAML Syntax (Ansible Community Documentation, Yaml Syntax)</i>,
+          josta löytyi neuvo kuinka monen rivin sisältö voidaan määrittää YAML
+          tiedostossa. Omistajaksi määrittelen <i>antero</i> sekä ryhmäksi
+          määritän <i>antero</i>. Oikeudet laitan muotoon <i>0640</i>, missä
+          numero 6 tarkoittaa luku- sekä kirjoitusoikeuksia tiedoston
+          omistavalle käyttäjälle. Numero 4 tarkoittaa luku oikeutta tiedoston
+          omistavalle ryhmälle. Viimeinen luku 0 tarkoittaa, ettei muilla
+          käyttäjillä ole mitään oikeuksia kyseiseen tiedostoon. Symbolisessa
+          muodossa oikeudet ovat <i>-rw-r-----</i>.
+        </p>
+
+        <img src="../images/second/file-main-yml.png" alt="Main yml file" />
+
+        <p>
+          Ajetaan lopuksi ansible-playbook komento. Ansible tekee yhden
+          muutoksen ja se on taskissa [file : copy], kuten pitääkin. Tehdään
+          vielä lopuksi tarkistus että uudessa tiedostossa on sisällä mitä
+          pitääkin ja että sillä on haluamamme oikeudet.
+        </p>
+
+        <img src="../images/second/file-final.png" alt="Final result" />
+
+        <h2>Lähteet</h2>
+        <ul>
+          <li>
+            Karvinen, Tero 2026a. h2 Voileipä. Luettavissa:
+            <a href="https://terokarvinen.com/palvelinten-hallinta/#h2-voileipa"
+              >https://terokarvinen.com/palvelinten-hallinta/#h2-voileipa</a
+            >. Luettu: 29.10.2026
+          </li>
+          <li>
+            Karvinen, Tero 2026b. Sudo without password. Luettavissa:
+            <a href="https://terokarvinen.com/passwordless-sudo/"
+              >https://terokarvinen.com/passwordless-sudo/</a
+            >. Luettu: 29.10.2026
+          </li>
+          <li>
+            Munroe, 2026. Sandwich. Luettavissa:
+            <a href="https://xkcd.com/149/">https://xkcd.com/149/</a>. Luettu:
+            29.10.2026
+          </li>
+          <li>
+            Karvinen, Tero 2026c. Passwordless Sudo with Ansible. Luettavissa:
+            <a href="https://terokarvinen.com/passwordless-sudo-with-ansible/"
+              >https://terokarvinen.com/passwordless-sudo-with-ansible/</a
+            >. Luettu: 29.10.2026
+          </li>
+          <li>
+            Ansible Community Documentation. Ansible Documentation. Luettavissa:
+            <a
+              href="https://docs.ansible.com/projects/ansible/latest/index.html"
+              >https://docs.ansible.com/projects/ansible/latest/index.html</a
+            >. Luettu: 31.10.2026
+          </li>
+          <li>
+            EEAA, 31.1.2012. Show all users and their groups/vice versa. Server
+            Fault. Luettavissa:
+            <a
+              href="https://serverfault.com/questions/355292/show-all-users-and-their-groups-vice-versa"
+              >https://serverfault.com/questions/355292/show-all-users-and-their-groups-vice-versa</a
+            >. Luettu: 1.11.2026.
+          </li>
+          <li>
+            Ansible Community Documentation. Yaml Syntax. Luettavissa:
+            <a
+              href="https://docs.ansible.com/projects/ansible/latest/reference_appendices/YAMLSyntax.html"
+              >https://docs.ansible.com/projects/ansible/latest/reference_appendices/YAMLSyntax.html</a
+            >. Luettu: 1.11.2026.
+          </li>
+        </ul>
 
         <h2>Tehtävänanto (Karvinen 2026a)</h2>
         <ul>
@@ -325,40 +415,6 @@
             käyttää ominaisuutta, jota ei vielä ole demonstroitu. Jos
             tiivistystehtävässä x on mainittu ominaisuuksia, joita ei tunneilla
             tai läksyissä kokeiltu, nekin kelpaavat.
-          </li>
-        </ul>
-
-        <h2>Lähteet</h2>
-        <ul>
-          <li>
-            Karvinen, Tero 2026a. h2 Voileipä. Luettavissa:
-            <a href="https://terokarvinen.com/palvelinten-hallinta/#h2-voileipa"
-              >https://terokarvinen.com/palvelinten-hallinta/#h2-voileipa</a
-            >. Luettu: 29.10.2026
-          </li>
-          <li>
-            Karvinen, Tero 2026b. Sudo without password. Luettavissa:
-            <a href="https://terokarvinen.com/passwordless-sudo/"
-              >https://terokarvinen.com/passwordless-sudo/</a
-            >. Luettu: 29.10.2026
-          </li>
-          <li>
-            Munroe, 2026. Sandwich. Luettavissa:
-            <a href="https://xkcd.com/149/">https://xkcd.com/149/</a>. Luettu:
-            29.10.2026
-          </li>
-          <li>
-            Karvinen, Tero 2026c. Passwordless Sudo with Ansible. Luettavissa:
-            <a href="https://terokarvinen.com/passwordless-sudo-with-ansible/"
-              >https://terokarvinen.com/passwordless-sudo-with-ansible/</a
-            >. Luettu: 29.10.2026
-          </li>
-          <li>
-            Ansible Community Documentation, ansible-doc. Luettavissa:
-            <a
-              href="https://docs.ansible.com/projects/ansible/latest/index.html"
-              >https://docs.ansible.com/projects/ansible/latest/index.html</a
-            >. Luettu: 31.10.2026
           </li>
         </ul>
       </main>
