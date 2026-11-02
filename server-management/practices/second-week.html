@@ -329,6 +329,44 @@
 
         <img src="../images/second/file-final.png" alt="Final result" />
 
+        <h2>e) Jotain muuta (Karvinen 2026a)</h2>
+        <p>
+          Päätän kokeilla hostname moduulia. Yksinkertainen moduuli, joka
+          muuttaa agentti koneen hostnamen (Ansible Community Documentation,
+          ansible.builtin.hostname module - Manage hostname).
+          Kokeiluympäristössäni ei ole vielä muita koneita, kuin localhost,
+          joten virtuaalikoneeni hostname muuttuu kun tätä moduulia käytetään.
+        </p>
+
+        <p>
+          Moduuli ei tarvitse kuin vain <i>name</i> vaihtoehdon (option) ja
+          asetan arvoksi <i>debianagent</i>. Lisään moduulin uuteen rooliin
+          <i>hostname</i>, jolle teen oman taas oman
+          <i>roles/hostname/tasks/main.yml</i> tiedoston, jonne teen
+          <i>hostname</i> määritykset. Lisäsin roolin myös
+          <i>site.yml</i> tiedostoon.
+        </p>
+
+        <img src="../images/second/something-files.png" alt="File contents" />
+
+        <p>
+          Nyt kun kaikki on valmista, voin ajaa
+          <i>ansible-playbook site.yml -K</i> komennon. Uusia muutoksia tuli
+          yksi, <i>TASK [hostname : hostname]</i>. Nämä muutokset kuitenkin
+          nähdään vasta kun käynnistetään uusi komentokehote, tai komennolla
+          <a>hostname -s</a>. Löysin komennon <i>hostname --help</i> komennolla.
+        </p>
+
+        <img
+          src="../images/second/something-playbook.png"
+          alt="Ansible playbook results after adding hostname role"
+        />
+
+        <img
+          src="../images/second/something-hostname-changed.png"
+          alt="Hostname changed"
+        />
+
         <h2>Tehtävänanto (Karvinen 2026a)</h2>
         <ul>
           <li>
@@ -415,6 +453,15 @@
               href="https://docs.ansible.com/projects/ansible/latest/reference_appendices/YAMLSyntax.html"
               >https://docs.ansible.com/projects/ansible/latest/reference_appendices/YAMLSyntax.html</a
             >. Luettu: 1.11.2026.
+          </li>
+          <li>
+            Ansible Community Documentation. ansible.builtin.hostname module -
+            Manage hostname. Luettavissa:
+            <a
+              href="https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/hostname_module.html#ansible-collections-ansible-builtin-hostname-module"
+            >
+              https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/hostname_module.html#ansible-collections-ansible-builtin-hostname-module </a
+            >. Luettu: 2.11.2026
           </li>
         </ul>
       </main>
