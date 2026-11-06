@@ -23,7 +23,26 @@ footer {
 main {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
+}
+
+code {
+    font-family: "JetBrains Mono", monospace;
+    background-color: #303030;
+    color: white;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+path {
+    font-style: italic;
+    color: #C0392B;
+}
+
+reference {
+    font-style: italic;
+    color: #666666;
 }
 
 ul {
@@ -39,7 +58,7 @@ li.deeper {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    text-align: center;
+    text-align: left;
 }
 
 img {

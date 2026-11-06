@@ -14,6 +14,7 @@
         <li><a href="pre-task.html">Harjoitus 0 raportti</a></li>
         <li><a href="first-week.html">Harjoitus 1 raportti</a></li>
         <li><a href="second-week.html">Harjoitus 2 raportti</a></li>
+        <li><a href="third-week.html">Harjoitus 3 raportti</a></li>
       </ul>
     </div>
     <div id="center">
@@ -246,7 +247,7 @@
           alt="Automated ansible user for ssh and sudo"
         />
 
-        <h2>b) Antero (Karvinen 2026a)</h2>
+        <h2 id="antero">b) Antero (Karvinen 2026a)</h2>
         <p>
           Tehdään Ansiblella käyttäjä Antero, joka on salasanaton ja
           automaattisesti SSH:lla kirjautuva. Käytin tunnilla tehtyä
@@ -271,7 +272,7 @@
           alt="Ansible sudoless code"
         />
 
-        <h2>c) Package (Karvinen 2026a)</h2>
+        <h2 id="package">c) Package (Karvinen 2026a)</h2>
         <p>
           Aion lisätä agentille 2 pakettia, <i>vim</i> sekä <i>htop</i>. Käytän
           roolia <i>favorites</i>. Htoppia ei vielä ole virtuaalikoneella joten
@@ -289,7 +290,7 @@
           alt="Htop and vim versions"
         />
 
-        <h2>d) File (Karvinen 2026a)</h2>
+        <h2 id="file">d) File (Karvinen 2026a)</h2>
         <p>
           Tehdään tiedosto ansiblella, jolle määritellään omistaja, omistava
           ryhmä sekä oikeudet. Aloitan tekemällä uuden roolin <i>file</i> sekä
@@ -329,12 +330,14 @@
 
         <img src="../images/second/file-final.png" alt="Final result" />
 
-        <h2>e) Jotain muuta (Karvinen 2026a)</h2>
+        <h2 id="jotain-muuta">e) Jotain muuta (Karvinen 2026a)</h2>
         <p>
           Päätän kokeilla hostname moduulia. Yksinkertainen moduuli, joka
-          muuttaa agentti koneen hostnamen (Ansible Community Documentation,
-          ansible.builtin.hostname module - Manage hostname).
-          Kokeiluympäristössäni ei ole vielä muita koneita, kuin localhost,
+          muuttaa agentti koneen hostnamen
+          <reference
+            >(Ansible Community Documentation, ansible.builtin.hostname module -
+            Manage hostname)</reference
+          >. Kokeiluympäristössäni ei ole vielä muita koneita, kuin localhost,
           joten virtuaalikoneeni hostname muuttuu kun tätä moduulia käytetään.
         </p>
 
@@ -342,19 +345,19 @@
           Moduuli ei tarvitse kuin vain <i>name</i> vaihtoehdon (option) ja
           asetan arvoksi <i>debianagent</i>. Lisään moduulin uuteen rooliin
           <i>hostname</i>, jolle teen oman taas oman
-          <i>roles/hostname/tasks/main.yml</i> tiedoston, jonne teen
+          <path>roles/hostname/tasks/main.yml</path> tiedoston, jonne teen
           <i>hostname</i> määritykset. Lisäsin roolin myös
-          <i>site.yml</i> tiedostoon.
+          <path>site.yml</path> tiedostoon.
         </p>
 
         <img src="../images/second/something-files.png" alt="File contents" />
 
         <p>
           Nyt kun kaikki on valmista, voin ajaa
-          <i>ansible-playbook site.yml -K</i> komennon. Uusia muutoksia tuli
-          yksi, <i>TASK [hostname : hostname]</i>. Nämä muutokset kuitenkin
+          <code>ansible-playbook site.yml -K</code> komennon. Uusia muutoksia
+          tuli yksi, <i>TASK [hostname : hostname]</i>. Nämä muutokset kuitenkin
           nähdään vasta kun käynnistetään uusi komentokehote, tai komennolla
-          <a>hostname -s</a>. Löysin komennon <i>hostname --help</i> komennolla.
+          hostname -s. Löysin komennon <code>hostname --help</code> komennolla.
         </p>
 
         <img
@@ -367,7 +370,7 @@
           alt="Hostname changed"
         />
 
-        <h2>Tehtävänanto (Karvinen 2026a)</h2>
+        <h2 id="assignments">Tehtävänanto (Karvinen 2026a)</h2>
         <ul>
           <li>
             x) Lue ja tiivistä. (Tässä x-alakohdassa ei tarvitse tehdä testejä
@@ -407,7 +410,7 @@
           </li>
         </ul>
 
-        <h2>Lähteet</h2>
+        <h2 id="sources">Lähteet</h2>
         <ul>
           <li>
             Karvinen, Tero 2026a. h2 Voileipä. Luettavissa:
