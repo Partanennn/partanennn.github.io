@@ -39,7 +39,21 @@
         <h2 id="summary">x) Tiivistelmä</h2>
         <h4>Karvinen 2026: Apache installed with Ansible (Karvinen 2026b)</h4>
         <ul>
-          <li></li>
+          <li>
+            Package-file-service pattern: Install daemon, change configuration,
+            start it
+          </li>
+          <li>Configuration file lives under /etc/{service-name}</li>
+          <li>
+            Service can be restarted with ie.
+            <code>sudo systemctl restart apache2</code>
+          </li>
+          <li>Changes take place only after daemon is restarted</li>
+          <li>
+            Within ansible, you usually need
+            <path>roles/{rolename}/files</path> for config files etc. Handlers
+            folder is also needed to restart daemons.
+          </li>
         </ul>
 
         <h4>
@@ -47,25 +61,216 @@
           change (Ansible Community Documentation)
         </h4>
         <ul>
-          <li></li>
+          <li>Handlers are used to run tasks only if changes are made</li>
+          <li>Usually to restart service/daemon</li>
+          <li>Are used with <i>notify</i> keyword</li>
+          <li>Notify can take list of handler names</li>
+          <li>
+            Handlers are executed in the order they are in the handers section,
+            not in the order they are listed in notify
+          </li>
         </ul>
 
         <h4>'ansible-doc service'</h4>
         <ul>
-          <li></li>
+          <li>Controls services on remote hosts</li>
+          <li>Acts as proxy to underlying service manager module</li>
+          <li>Enabled: If service should start on boot</li>
+          <li>Name: Name of the service</li>
+          <li>
+            State: Either state or enabled are required. Started, stopped only
+            runs if necessary. Restarted always bounce service. Reloaded always
+            reloads service.
+          </li>
         </ul>
 
         <h2 id="apassi">a) Apassi (Karvinen 2026a)</h2>
-        <p></p>
+        <p>
+          Asennetaan Apache käsin. Käytän tähän apuna Karvisen
+          <i>Apache installed with Ansible - quick notes</i> (Karvinen 2026b)
+          sivua, vaikka se onkin tarkoitettu ansiblelle. Aloitan asentamalla
+          apachen komennolla <code>sudo apt-get -y install apache2</code>.
+          Tarkistan vielä komennolla
+          <code>sudo systemctl status apache2</code> että apache on asennettu ja
+          päällä. Tarkistan myös että apache kansio löytyy osoitteesta
+          <path>/etc/apache2</path>.
+        </p>
+        <img
+          src="../images/third/apache-running.png"
+          alt="Apache installed and running"
+        />
+        <p>
+          Seuraavaksi tarkistin mitä <code>curl localhost</code> tulostaa. Se
+          tulostaa tekstin <i>Default web site!</i>. Se jäi luennon aikaisilta
+          caddy kokeiluilta tiedostoon <path>/var/www/html/index.html</path>,
+          jonka varmistin komennolla <code>cat /var/www/html/index.html</code>.
+        </p>
+        <img
+          src="../images/third/apache-check-default-web-site.png"
+          alt="Check localhost and default web site location"
+        />
+        <p>
+          Seuraavaksi muokkasin apachen oletus konfiguraatiota oletus sivulle
+          lokaatiossa
+          <path>/etc/apache2/sites-available/000-default.conf</path>. Muokkasin
+          tiedostoa niin, että tiedostot webbi servulle löytyy osoitteesta
+          <path>/home/aleksi/publicwww</path>. Olen myös lisännyt
+          <path>/home/aleksi/publicwww</path> kansioon tiedoston
+          <i>index.html</i>, jonne lisäsin tekstin <i>Aleksi's web site!</i>,
+          joten on helppoa nähdä kun sivu toimii ja sen erottaa oletus sivusta.
+          Muokkasin myös kansioiden ja tiedostojen oikeuksia niin, että
+          <path>/home/aleksi/publicwww</path> polun jokaisella kansiolla on
+          <i>others</i> kohdassa <i>execute</i> oikeudet ja tiedostolle
+          <path>index.html</path> annoin <i>read</i> oikeudet others kohtaan.
+          Potkaisin apachea komennolla
+          <code>sudo systemctl restart apache2</code>, tarkistin että apache on
+          varmasti käynnistynyt uudestaan komennolla
+          <code>sudo systemctl status apache2</code>, ja näemme rivin
+          <i>Active: </i> lopusta, että demoni on ollut käynnissä 5 sekuntia.
+          Apache on siis käynnistynyt uudestaan ja uudet konffaukset on otettu
+          käyttöön. Tarkistin nyt verkkosivun komennolla
+          <code>curl localhost</code>. Sain 403 forbidden.
+        </p>
+        <img
+          src="../images/third/apache-changes.png"
+          alt="Apache config changes and 403 forbidden error"
+        />
+        <p>
+          Lähdin tarkistamaan Karvisen ohjeista (Karvinen 2026b), mille hänen
+          <i>*.conf</i> tiedostonsa näytti, ja huomaan että itseltäni on
+          unohtunut <i>require all granted</i> pois konfiguraatio tiedostosta.
+          Lisäsin kohdan konfiguraatio tiedostoon, käynnistin apachen uudelleen
+          ja kokeilin hakea webbisivua taas curl-komennolla. Tällä kertaa
+          webbisivu tulostuu oikein.
+        </p>
+        <img
+          src="../images/third/apache-working.png"
+          alt="Apache works for user web site"
+        />
 
         <h2 id="moottorix">b) Moottorix (Karvinen 2026a)</h2>
-        <p></p>
+        <p>
+          Ensiksi sammutin apache palvelun komennolla
+          <code>sudo systemctl stop apache2</code>. Nginx latasin komennolla
+          <code>sudo apt-get -y install nginx</code>. Tarkistin meneekö nginx
+          päälle samantien asentamisen jälkeen kuten <i>apache</i> komennolla
+          <code>sudo systemctl status nginx</code> ja huomasin että nginx on
+          päällä. Tarkistin verkkosivun komennolla
+          <code>curl localhost</code> ja sieltä tulikin oletussivun tuloste.
+        </p>
+        <img
+          src="../images/third/nginx-installed-and-running.png"
+          alt="Nginx installed and running"
+        />
+        <p>
+          Nginx tiedosto rakenne toimii hyvin samalla tavalla kuin
+          <i>apache</i>lla. Konfiguraatio tiedostot löytyvät
+          <path>/etc/nginx</path> kansiosta ja
+          <path>/etc/nginx/sites-available</path> on määritelty sivustot.
+          Muokkasin tiedostoa
+          <path>/etc/nginx/sites-available/default</path> lukemaan webbisivun
+          tiedostot samasta paikasta kuin <i>apache</i>, aleksi-käyttäjän
+          kotihakemiston <i>publicwww</i> kansiosta. Käynnistin
+          <i>nginx</i>-palvelun uudestaan komennolla
+          <code>sudo systemctl restart nginx</code>, jotta muokkaukset otetaan
+          käyttöön. Tarkistin ja vahvistin uudelleenkäynnistyksen
+          <code>sudo systemctl status nginx</code> komennolla.
+          <code>curl localhost</code> komennolla tarkistin, että verkkosivu
+          näyttää nyt aleksi-käyttäjän webbisivun, eikä oletus webbisivua.
+        </p>
+        <img
+          src="../images/third/nginx-user-site-running.png"
+          alt="Nginx user site running"
+        />
+        <p>
+          Huomasin, että <i>nginx</i> oli hieman <i>apachea</i> helpompi ottaa
+          käyttöön. Nginx:lle riittää, että kansioilla ja tiedostoilla on oikeat
+          oikeudet määriteltynä <i>others</i> kohtaan. Apache vaati
+          <i>require all granted</i>-tekstin konfiguraatio tiedostoonsa.
+        </p>
 
         <h2 id="automoottorix">c) Automoottorix (Karvinen 2026a)</h2>
-        <p></p>
+        <p>
+          Automatisoidaan <i>Nginx</i> asennus Ansiblella. Ensiksi tein tiedosto
+          rakenteen kuntoon, eli tein <path>roles/</path> kansioon kansion
+          <i>nginx</i>, jonka alle tein <i>handlers</i>, <i>files</i> sekä
+          <i>tasks</i> kansiot. <i>Files</i> kansio sisältää tiedostot, jotka
+          viedään oikeisiin paikkoihin ansiblen ajon aikana, tässä tapauksessa
+          nginx konfiguraatio-tiedosto sekä kotisivun html-tiedosto.
+          <i>Handlers</i>-kansiossa on vain main.yml, jossa on määritelty nginx
+          uudelleenkäynnistys. <i>Tasks</i> kansiossa on jo tutut komennot,
+          joita ajetaan ansiblen toimesta ajon aikana.
+        </p>
+        <img
+          src="../images/third/autoginx-file-structure.png"
+          alt="Nginx ansible file structure"
+        />
+        <p>
+          Tein myös muutoksia <i>hosts.ini</i>-tiedostoon. Lisäsin
+          <i>web</i> sekä <i>users</i>-hostit. Aiemmin tehdyn anssin lisäsin
+          <i>users</i>-hostin alle ja lisäsin uuden käyttäjän, <i>webbisivu</i>,
+          ryhmään <i>web</i>. Webbisivu käyttäjä tehdään <i>nginx</i> roolissa.
+          Muokkasin myös site.yml tiedostoa ja annoin järkevät roolit hosteille.
+        </p>
+        <img
+          src="../images/third/autoginx-config-files.png"
+          alt="Ansible files"
+        />
+        <p>
+          Files kansion <i>default</i> tiedosto on yksinkertainen konfiguraatio
+          tiedosto, jossa määritellään verkkosivun tiedostojen sijainniksi
+          <i>webbisivu</i>-käyttäjän kotihakemistossa oleva
+          <path>publicsite</path>-kansio. <i>index.html</i>-tiedostossa on vain
+          yhden rivin teksti, joka kertoo että Webbisivu käyttäjän webbisivu on
+          käytössä.
+        </p>
+        <img
+          src="../images/third/autoginx-role-files.png"
+          alt="Role Nginx Files folder files"
+        />
+        <p>Handler tiedosto käynnistää nginx:n uudelleen.</p>
+        <img src="../images/third/autoginx-handler.png" alt="Handler file" />
+        <p>
+          Ajoin ansiblen nyt komennolla
+          <code>ansible-playbook site.yml -K</code>. Törmään kuitenkin
+          vihreilmoitukseen, ettei nginx voitu käynnistää.
+        </p>
+        <img
+          src="../images/third/autoginx-error.png"
+          alt="Nginx was unable to start"
+        />
+        <p>
+          Katson tarkemman virheilmoituksen komennolla
+          <code>sudo journalctl -xeu nginx.service</code>. Sieltä löydänkin,
+          että jokin muu käyttää jo porttia 80. Arvelen, että se on Apache, joka
+          on käynnistynyt virtuaalikoneen uudelleenkäynnistyksen yhteydessä,
+          koska se on ollut <i>enabled</i> tilassa. Komennolla
+          <code>systemctl status apache2</code> varmistan epäilyn todeksi.
+          Laitan apachen tilaan, ettei se enää käynnisty uudelleenkäynnistyksen
+          yhteydessä, komennolla <code>sudo systemctl disable apache2</code> ja
+          pysäytin apachen komennolla <code>sudo systemctl stop apache2</code>.
+        </p>
+        <img
+          src="../images/third/autoginx-apache-running.png"
+          alt="Detailed nginx error and apache running"
+        />
+        <p>
+          Lisään <path>roles/nginx/files/default</path> tiedostoon välilyönnin,
+          jotta ansible huomaa, että se on muuttunut ja käynnistää nginx
+          demonin. Tässä kohtaa olisin voinut myös vain käynnistää nginx käsin
+          ja se olisi hakenut <i>webbisivu</i>-käyttäjän verkkosivun
+          näytettäväksi, koska <path>default</path> tiedosto on muokattu jo
+          aiemmalla kerralla. Ajan ansible-playbook komennon uudestaan ja tällä
+          kertaa se toimii. Handleri toimii kuten pitääkin ja http://localhost
+          tulostaa Webbisivu-käyttäjän kotisivun.
+        </p>
+        <img
+          src="../images/third/autoginx-final-result.png"
+          alt="Final result"
+        />
 
         <h2 id="bonus">d) Vapaaehtoinen bonus: Osiris-T (Karvinen 2026a)</h2>
-        <p></p>
+        <p>En tällä kertaa tee vapaaehtoista tehtävää ainakaan vielä</p>
 
         <h2 id="assignments">Tehtävänanto (Karvinen 2026a)</h2>
         <ul>

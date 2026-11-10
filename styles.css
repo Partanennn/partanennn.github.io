@@ -37,7 +37,7 @@ code {
 
 path {
     font-style: italic;
-    color: #C0392B;
+    text-decoration: underline;
 }
 
 reference {
