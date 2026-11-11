@@ -40,19 +40,25 @@
         <h4>Karvinen 2026: Apache installed with Ansible (Karvinen 2026b)</h4>
         <ul>
           <li>
-            Package-file-service pattern: Install daemon, change configuration,
-            start it
+            Paketti-tiedosto-palvelu malli: Lataa demoni, muuta konfiguraatiota,
+            käynnistä se
           </li>
-          <li>Configuration file lives under /etc/{service-name}</li>
           <li>
-            Service can be restarted with ie.
+            Konfiguraatio tiedosto elää yleensä polussa
+            <path>/etc/{palvelun-nimi}</path>
+          </li>
+          <li>
+            Palvelu voidaan käynnistää uudestaan esim.
             <code>sudo systemctl restart apache2</code>
           </li>
-          <li>Changes take place only after daemon is restarted</li>
           <li>
-            Within ansible, you usually need
-            <path>roles/{rolename}/files</path> for config files etc. Handlers
-            folder is also needed to restart daemons.
+            Muutokset astuvat voimaan vasta kun demoni on käynnistetty uudestaan
+          </li>
+          <li>
+            Ansiblella yleensä tarvitset
+            <path>roles/{rolename}/files</path> kansion erilaisia konfiguraatio
+            tiedostoja varten, kuten <i>handler</i>-kansio demonien uudelleen
+            käynnistystä varten
           </li>
         </ul>
 
@@ -61,26 +67,25 @@
           change (Ansible Community Documentation)
         </h4>
         <ul>
-          <li>Handlers are used to run tasks only if changes are made</li>
-          <li>Usually to restart service/daemon</li>
-          <li>Are used with <i>notify</i> keyword</li>
-          <li>Notify can take list of handler names</li>
+          <li>Handlerit ajetaan vain jos jotain muutoksia tapahtuu</li>
+          <li>Yleensä käytetään palvelujen/demonien uudelleen käynnistämiseen</li>
+          <li>Käytetään <i>notify</i>-avainsanan kanssa</li>
+          <li><i>notify</i> ottaa listan handlerien nimiä</li>
           <li>
-            Handlers are executed in the order they are in the handers section,
-            not in the order they are listed in notify
+            Handlerit suoritetaan siinä järjestyksessä kuin ne ovat handlers tiedostossa,
+            ei siinä järjestyksessä kuin ne ovat listattuna <i>notify</i> komennossa
           </li>
         </ul>
 
         <h4>'ansible-doc service'</h4>
         <ul>
-          <li>Controls services on remote hosts</li>
-          <li>Acts as proxy to underlying service manager module</li>
-          <li>Enabled: If service should start on boot</li>
-          <li>Name: Name of the service</li>
+          <li><i>service</i> kontrolloi palveluja etä koneilla</li>
+          <li>Toimii välittäjänä palvelu manager moduulille</li>
+          <li>Enabled: Pitääkö palvelun käynnistyä järjestelmän käynnistyksen yhteydessä</li>
+          <li>Name: Palvelun nimi</li>
           <li>
-            State: Either state or enabled are required. Started, stopped only
-            runs if necessary. Restarted always bounce service. Reloaded always
-            reloads service.
+            State: Jompi kumpi, state tai enabled, on pakollinen. Started, stopped ajaa palvelun vain jos on pakko. 
+            Restarted aina uudelleenkäynnistää palvelun. Reloaded aina lataa uudestaan palvelun.
           </li>
         </ul>
 
