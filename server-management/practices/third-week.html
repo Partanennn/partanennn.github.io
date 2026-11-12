@@ -68,12 +68,15 @@
         </h4>
         <ul>
           <li>Handlerit ajetaan vain jos jotain muutoksia tapahtuu</li>
-          <li>Yleensä käytetään palvelujen/demonien uudelleen käynnistämiseen</li>
+          <li>
+            Yleensä käytetään palvelujen/demonien uudelleen käynnistämiseen
+          </li>
           <li>Käytetään <i>notify</i>-avainsanan kanssa</li>
           <li><i>notify</i> ottaa listan handlerien nimiä</li>
           <li>
-            Handlerit suoritetaan siinä järjestyksessä kuin ne ovat handlers tiedostossa,
-            ei siinä järjestyksessä kuin ne ovat listattuna <i>notify</i> komennossa
+            Handlerit suoritetaan siinä järjestyksessä kuin ne ovat handlers
+            tiedostossa, ei siinä järjestyksessä kuin ne ovat listattuna
+            <i>notify</i> komennossa
           </li>
         </ul>
 
@@ -81,11 +84,16 @@
         <ul>
           <li><i>service</i> kontrolloi palveluja etä koneilla</li>
           <li>Toimii välittäjänä palvelu manager moduulille</li>
-          <li>Enabled: Pitääkö palvelun käynnistyä järjestelmän käynnistyksen yhteydessä</li>
+          <li>
+            Enabled: Pitääkö palvelun käynnistyä järjestelmän käynnistyksen
+            yhteydessä
+          </li>
           <li>Name: Palvelun nimi</li>
           <li>
-            State: Jompi kumpi, state tai enabled, on pakollinen. Started, stopped ajaa palvelun vain jos on pakko. 
-            Restarted aina uudelleenkäynnistää palvelun. Reloaded aina lataa uudestaan palvelun.
+            State: Jompi kumpi, state tai enabled, on pakollinen. Started,
+            stopped ajaa palvelun vain jos on pakko. Restarted aina
+            uudelleenkäynnistää palvelun. Reloaded aina lataa uudestaan
+            palvelun.
           </li>
         </ul>
 
@@ -235,6 +243,19 @@
         />
         <p>Handler tiedosto käynnistää nginx:n uudelleen.</p>
         <img src="../images/third/autoginx-handler.png" alt="Handler file" />
+        <p>
+          Tasks tiedosto toimii ajotiedostona. Tein <i>webbisivu</i>-käyttäjän,
+          jonka verkkosivuja näytetään nginx:llä. Apt:in avulla varmistetaan
+          että nginx on olemassa. Kopioidaan metdilla <i>copy</i> nginx:n
+          konfiguraatio tiedosto oikeaan kansioon ja uudelleen käynnistetään
+          nginx, koska konfiguraatiotiedostoa on muutettu. Sitten annettaan
+          oikeuksia kansioille ja tiedostoille. Kansioille annetaan oikeudet
+          oikeudet <i>0755</i>, käyttäjä voi kirjoittaa, muokata sekä suorittaa
+          kansioiden sisältöä, ryhmä ja muut voivat lukea ja suorittaa.
+          Verkkosivu tiedostoon käyttäjällä on samat oikeudet kuin kansioihin,
+          mutta ryhmä ja muut voivat vain lukea tiedostoa.
+        </p>
+        <img src="../images/third/autoginx-tasks-file.png" alt="Tasks file" />
         <p>
           Ajoin ansiblen nyt komennolla
           <code>ansible-playbook site.yml -K</code>. Törmään kuitenkin
