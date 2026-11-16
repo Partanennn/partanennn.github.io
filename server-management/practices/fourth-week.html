@@ -42,70 +42,91 @@
           Karvinen 2023: Configuration Management of Distributed Systems over
           Unreliable and Hostile Networks (Karvinen 2023)
         </h4>
-        <h5>4.12.1 Size and Complexity of Some DSLs
+        <h5>4.12.1 Size and Complexity of Some DSLs</h5>
         <ul>
           <li>
-            Salt työkalu sisältää 510 eri funktiota, joilla voi muokata agentti koneiden
-            tilaa.
+            Salt työkalu sisältää 510 eri funktiota, joilla voi muokata agentti
+            koneiden tilaa.
           </li>
           <li>
-            Salt työkalun dokumentaatiossa on yli 20 000 riviä ja yli 75 000 sanaa.
+            Salt työkalun dokumentaatiossa on yli 20 000 riviä ja yli 75 000
+            sanaa.
           </li>
+          <li>Puppet työkalu sisältää 113 funktiota.</li>
+        </ul>
+        <h5>4.12.2 Use of DSL: Functions in Case Configuration</h5>
+        <ul>
+          <li>
+            Puppetin funktioista vain neljää(file, package, exec, service) on
+            oikeasti käytetty Mozillan konfiguraatien hallinta tiedostoissa.
+          </li>
+          <li>
+            Exec komentoa käyttäessä, pitää varmistaa, että sen tila on aina
+            idempotentti, lopputulos on aina sama samalla komennolla.
+          </li>
+          <li>
+            United States Government Configuration Baseline-dokumentissa samojen
+            neljän Puppet-funktion lisäksi augeas-komento löytyy 13 eniten
+            käytetyn kutsun listalta.
+          </li>
+        </ul>
+        <h5>4.12.3.1 Dependencies Between Main Functions</h5>
+        <ul>
+          <li></li>
         </ul>
 
         <h2 id="assignments">Tehtävänanto (Karvinen 2026a)</h2>
         <ul>
           <li>
             x) Lue ja tiivistä. (Tässä x-alakohdassa ei tarvitse tehdä testejä
-            tietokoneella, vain lukeminen tai kuunteleminen ja tiivistelmä riittää.
-            Tiivistämiseen riittää muutama ranskalainen viiva. Ei siis vaadita
-            pitkää eikä essee-muotoista tiivistelmää. Lisää kuhunkin jokin oma
-            kysymys tai huomio.)
-              - Karvinen 2023: Configuration Management of Distributed Systems
-              over Unreliable and Hostile Networks (pdf, ̣mirrors: local, archive.org),
-              vain nämä kohdat:
-                - 4.12.1 Size and Complexity of Some DSLs (112. Ominaisuuksien määrä.)
-                - 4.12.2 Use of DSL Functions in Case Configuration (112-115. Mitä
-                oikeasti käytetään.)
-                - 4.12.3.1 Dependencies Between Main Functions (115-117. Tärkeimmät
-                rakennuspalikat.)
+            tietokoneella, vain lukeminen tai kuunteleminen ja tiivistelmä
+            riittää. Tiivistämiseen riittää muutama ranskalainen viiva. Ei siis
+            vaadita pitkää eikä essee-muotoista tiivistelmää. Lisää kuhunkin
+            jokin oma kysymys tai huomio.) - Karvinen 2023: Configuration
+            Management of Distributed Systems over Unreliable and Hostile
+            Networks (pdf, ̣mirrors: local, archive.org), vain nämä kohdat: -
+            4.12.1 Size and Complexity of Some DSLs (112. Ominaisuuksien määrä.)
+            - 4.12.2 Use of DSL Functions in Case Configuration (112-115. Mitä
+            oikeasti käytetään.) - 4.12.3.1 Dependencies Between Main Functions
+            (115-117. Tärkeimmät rakennuspalikat.)
           </li>
           <li>
-            a) Räpylä. Asenna itse valitsemasi demoni käsin. Jokin muu kuin tunnilla
-            tai kotitehtävissä aiemmin asennettu, eli ei apache, ngninx eikä
-            openssh-server. Kuten aina, testaa lopputulos.
+            a) Räpylä. Asenna itse valitsemasi demoni käsin. Jokin muu kuin
+            tunnilla tai kotitehtävissä aiemmin asennettu, eli ei apache, ngninx
+            eikä openssh-server. Kuten aina, testaa lopputulos.
           </li>
           <li>
-            b) Automaatti. Automatisoi valitsemasi demonin asennus Ansiblella.   
+            b) Automaatti. Automatisoi valitsemasi demonin asennus Ansiblella.
           </li>
           <li>
             c) Asetus. Muuta asetustiedostoa herralla (master, "control node")
             ja aja ansible uudestaan. Osoita, että asetukset tulivat käyttöön.
           </li>
           <li>
-            d) Paikka remonttiin. Riko jotain asetuksia. Voit esimerkiksi poistaa
-            demonin 'sudo apt-get purge foobar' (purge poistaa myös asetustiedostoja),
-            poistaa asennuksen yhteydessä tulevan kansion (sudo rm -r /etc/foobar/ # vaarallista)
-            tms. Ja sitten ajaa ansible-roolisi uudestaan ja todeta, että se korjaa
-            tilanteen.
+            d) Paikka remonttiin. Riko jotain asetuksia. Voit esimerkiksi
+            poistaa demonin 'sudo apt-get purge foobar' (purge poistaa myös
+            asetustiedostoja), poistaa asennuksen yhteydessä tulevan kansion
+            (sudo rm -r /etc/foobar/ # vaarallista) tms. Ja sitten ajaa
+            ansible-roolisi uudestaan ja todeta, että se korjaa tilanteen.
           </li>
-          <li>
-            e) Idempotentti. Osoita, että tilasi on idempotentti.
-          </li>
+          <li>e) Idempotentti. Osoita, että tilasi on idempotentti.</li>
         </ul>
 
         <h2 id="sources">Lähteet</h2>
         <ul>
           <li>
             Karvinen, Tero 2026a. h4 Pizza Fantasia. Luettavissa:
-            <a href="https://terokarvinen.com/palvelinten-hallinta/#h4-pizza-fantasia"
+            <a
+              href="https://terokarvinen.com/palvelinten-hallinta/#h4-pizza-fantasia"
               >https://terokarvinen.com/palvelinten-hallinta/#h4-pizza-fantasia</a
             >. Luettu: 14.11.2026
           </li>
           <li>
             Karvinen, Tero 2023: Configuration Management of Distributed Systems
             over Unreliable and Hostile Networks. Luettavissa:
-            <a href="https://westminsterresearch.westminster.ac.uk/download/4cc417566aa9af60fe3826d690719e390abdb7a3c8672f3d51b1eb4ca75e7624/1427236/karvinen-2023-configuration-management-of-distributed-systems.pdf">
+            <a
+              href="https://westminsterresearch.westminster.ac.uk/download/4cc417566aa9af60fe3826d690719e390abdb7a3c8672f3d51b1eb4ca75e7624/1427236/karvinen-2023-configuration-management-of-distributed-systems.pdf"
+            >
               . Luettu: 14.11.2026
             </a>
           </li>
