@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../styles.css" />
+    <title>Harjoitus 4</title>
+  </head>
+
+  <body>
+    <div id="left">
+      <ul>
+        <li>Palvelinten hallinta harjoitukset</li>
+        <li><a href="pre-task.html">Harjoitus 0 raportti</a></li>
+        <li><a href="first-week.html">Harjoitus 1 raportti</a></li>
+        <li><a href="second-week.html">Harjoitus 2 raportti</a></li>
+        <li><a href="third-week.html">Harjoitus 3 raportti</a></li>
+        <li><a href="fourth-week.html">Harjoitus 4 raportti</a></li>
+      </ul>
+    </div>
+    <div id="center">
+      <main>
+        <h4>Host laitteisto</h4>
+        <ul>
+          <li>Prosessori: AMD Ryzen 9 5900x 12-Core</li>
+          <li>Keskusmuisti: 32GB DDR4</li>
+          <li>Näytönohjain: NVIDIA GeForce RTX 3080</li>
+          <li>OS: Linux 7.2.11-1-cachyos x86-64</li>
+        </ul>
+        <h4>Virtuaalikone, local</h4>
+        <ul>
+          <li>4 CPU</li>
+          <li>6GB RAM</li>
+          <li>20GB</li>
+          <li>Debian 13, 64-bit</li>
+        </ul>
+
+        <h1>Harjoitus 4: Pizza Fantasia (Karvinen 2026a)</h1>
+
+        <h2 id="summary">x) Tiivistelmä</h2>
+        <h4>
+          Karvinen 2023: Configuration Management of Distributed Systems over
+          Unreliable and Hostile Networks (Karvinen 2023)
+        </h4>
+        <h5>4.12.1 Size and Complexity of Some DSLs</h5>
+        <ul>
+          <li>
+            Salt työkalu sisältää 510 eri funktiota, joilla voi muokata agentti
+            koneiden tilaa.
+          </li>
+          <li>
+            Salt työkalun dokumentaatiossa on yli 20 000 riviä ja yli 75 000
+            sanaa.
+          </li>
+          <li>Puppet työkalu sisältää 113 funktiota.</li>
+        </ul>
+        <h5>4.12.2 Use of DSL: Functions in Case Configuration</h5>
+        <ul>
+          <li>
+            Puppetin funktioista vain neljää(file, package, exec, service) on
+            oikeasti käytetty Mozillan konfiguraatien hallinta tiedostoissa.
+          </li>
+          <li>
+            Exec komentoa käyttäessä, pitää varmistaa, että sen tila on aina
+            idempotentti, lopputulos on aina sama samalla komennolla.
+          </li>
+          <li>
+            United States Government Configuration Baseline-dokumentissa samojen
+            neljän Puppet-funktion lisäksi augeas-komento löytyy 13 eniten
+            käytetyn kutsun listalta.
+          </li>
+        </ul>
+        <h5>4.12.3.1 Dependencies Between Main Functions</h5>
+        <ul>
+          <li>
+            Yleisimpiä käyttötapauksia on neljä, Daemonin asennus, sovelluksen
+            asennus, käyttäjän hallinta ja tiedoston muokkaus.
+          </li>
+          <li>
+            Daemonin asentamiseen tarvitsee package, file sekä service
+            funktioneita.
+          </li>
+          <li>Käyttäjän hallintaan tarvitaan user ja group funktioneita.</li>
+          <li>
+            Tiedoston hallintaan ja muokkaamiseen tarvitaan file, directory sekä
+            symlink funktioita.
+          </li>
+        </ul>
+
+        <h2 id="rapyla">a) Räpylä (Karvinen 2026a)</h2>
+        <p>
+          Päätän asentaa MySQL tietokannan virtuaalikoneelle. Aloitan
+          päivittämällä paketit komennolla <code>sudo apt-get update</code>.
+          Asennan MySQL:n komennolla
+          <code>sudo apt-get install mysql-server</code>(MySQL Documentation).
+          Löysin neuvoja suoraan MySQL dokumentaatiosta.
+        </p>
+        <img
+          src="../images/fourth/manual-mysql-problems.png"
+          alt="Problem installing MySQL server"
+        />
+        <p>
+          Mielenkiintoista. Käytän samaa komentoa kuin MySQL dokumentaatiossa
+          APT asennusohjeessa, mutta se antaa virheilmoituksen, ettei
+          <i>mysql-server</i> olisi saatavilla ja ehottaa
+          <i>mariadb-server</i> asentamista. Kysyin ChatGPT-6 kielimallilta
+          syötteellä
+          <code>Why I cant install mysql-server through apt currently?</code> ja
+          se antoi lähteeksi Stackrig blogin (Stackrig 2026). Sieltä käy ilmi,
+          että Debian 13 ja 12 versioiden oletus APT arkistoista eivät anna
+          MySQL:lle lataus ehdokkaita, vaan ehdottaa, että mariadb
+          asennettaisiin sen sijaan. Kysymys heräsi, että miksi näin on, joten
+          tutkin hieman asiaa ja huomasin, että molemmat ovat avoimen
+          lähdekoodin tietokantoja, mutta Oracle osti MySQL:n vuonna 2009, jonka
+          jälkeen MySQL alkuperäiset tekijät perustivat MariaDB:n ja jatkoivat
+          sen kehittämistä omaan suuntaansa (One.com 2026). Ehkä tässä vaiheessa
+          helpointa on vaihtaa MariaDB:n asentamiseen MySQL sijaan.
+        </p>
+        <p>
+          Siirryn nyt lukemaan MariaDB:n asennus dokumentaatiota (MariaDB
+          Documentation). Käytän asentamiseen komentoa
+          <code>sudo apt install mariadb-server mariadb-client</code>, koska ne
+          tarvitse Galera clusteria, ja jätän <code>galera-4</code> komennon
+          pois. Huomaan latauksen aikan kuitenkin, että Galera asennetaan, joten
+          sen pois jättämisellä ei ollutkaan mitään väliä. Tarkistan asennuksen
+          jälkeen että mariadb on käynnissä komennolla
+          <code>systemctl status mariadb</code>.
+        </p>
+        <img
+          src="../images/fourth/manual-mariadb-running.png"
+          alt="MariaDB running"
+        />
+        <p>
+          MariaDB on nyt käynnissä. Yritän mennä sisäälle MariaDB:hen, mutta se
+          ei onnistu komennolla <code>mariadb -u root -p</code> eikä
+          <code>mariadb -u root -p</code>.
+        </p>
+        <img
+          src="../images/fourth/manual-problem-login.png"
+          alt="MariaDB problem logging in"
+        />
+        <p>
+          Teen <code>sudo mariadb-secure-installation</code> komennon, jolla
+          pääsee asettamaan root-käyttäjän salasanan. Muihin kohtiin vastasin
+          <i>n</i>. Nyt pääsen sisälle komennolla
+          <code>mariadb -u root -p</code>.
+        </p>
+        <img src="../images/fourth/manual-inside.png" alt="Inside MariaDB" />
+        <p>Tein testinä tietokannan nimeltä <i>testi</i>.</p>
+        <img
+          src="../images/fourth/manual-hello-world.png"
+          alt="MariaDB database creation"
+        />
+
+        <h2 id="automaatti">b) Automaatti (Karvien 2026a)</h2>
+        <p>
+          Automatisoidaan demonin asennus ansiblella. Teen Ansible-roolin
+          <i>mariadb</i> ja lisään sen <i>site.yml</i> tiedostoon
+          <i>db</i> hostien alle.
+        </p>
+        <img
+          src="../images/fourth/automated-structure.png"
+          alt="Ansible structure"
+        />
+        <p>Handlereissä ei ole kuin mariadb palvelun uudelleenkäynnistys.</p>
+        <img
+          src="../images/fourth/automated-mariadb-handler.png"
+          alt="MariaDB handler"
+        />
+        <p>
+          Käytän <i>apt</i> metodia pakettien tarkistamiseen ja
+          <i>copy</i> metodia MariaDB:n konfiguraatio tiedoston luomiseen.
+        </p>
+        <p>
+          Päätän tehdä uuden käyttäjän ja sille saman nimisen tietokannan ja
+          pöydän MariaDB:ssä, jossa on kolumnit <i>Hello</i> sekä <i>World</i>.
+          Nämä onnistuvat ansiblen <i>command</i> metodilla. Käytän vaihtoehtoa
+          <i>cmd</i> ja komentoa
+          <code
+            >mariadb -e "create user if not exists anssi; create database if not
+            exists anssidb; use anssidb; create table if not exists
+            anssitable(hello varchar(10), world varchar(10));"</code
+          >
+          käyttäjän, tietokannan ja pöydän luomiseen.
+        </p>
+        <img src="../images/fourth/automated-tasks.png" alt="Task file" />
+        <p>
+          Ajan nyt pelikirjan komennolla
+          <code>ansible-playbook site.yml</code> ja 4 taskia tekevät muutoksia.
+        </p>
+        <img src="../images/fourth/automated-playbook-run.png" />
+        <p>
+          Ajo onnistui. Tarkistan vielä että tietokanta <i>anssidb</i>, pöytä
+          <i>anssitable</i> sekä kolumnit <i>hello</i> ja <i>world</i> löytyvät.
+          Käytin komentoa
+          <code
+            >sudo mariadb -e "use anssidb; show columns from anssitable;"</code
+          >
+        </p>
+        <img src="../images/fourth/automated-db-check.png" />
+
+        <h2 id="asetus">c) Asetus (Karvinen 2026a)</h2>
+        <p>
+          Tarkistin ensin MariaDB:n konffitiedoston, jota muokkasin
+          herralla/hallinta solmulla, komennolla
+          <code>cat /etc/mysql/mariadb.conf.d/50-server.cnf</code>, jonka
+          jälkeen ajoin Ansiblen pelikirjan komennolla
+          <code>ansible-playbook site.yml</code>, jonka jälkeen taas tarkistin
+          tiedoston sisällön samalla komennolla kuin aiemmin.
+        </p>
+        <img src="../images/fourth/setting.png" />
+
+        <h2 id="paikka-remonttiin">d) Paikka remonttiin (Karvinen 2026a)</h2>
+        <p>
+          Poistan MariaDB asennukset komennolla<code
+            >sudo apt-get purge mariadb-server mariadb-client</code
+          >
+          ja ajan ansiblen pelikirjan sen jälkeen.
+        </p>
+        <img src="../images/fourth/things-broke.png" />
+
+        <h2 id="idempotentti">e) Idempotentti (Karvien 2026a)</h2>
+        <p>
+          En saanut tehtävää idempotentiksi, koska en saanut
+          <i>stdout</i> tulostukseen mitään, josta olisin saanut tietoon,
+          milloin tietokanta ja pöytä ollaan tehty ja milloin niitä ei ole
+          tehty. Pitää tutkia jos löydän ratkaisun ensi viikon tunnille.
+        </p>
+
+        <h2 id="assignments">Tehtävänanto (Karvinen 2026a)</h2>
+        <ul>
+          <li>
+            x) Lue ja tiivistä. (Tässä x-alakohdassa ei tarvitse tehdä testejä
+            tietokoneella, vain lukeminen tai kuunteleminen ja tiivistelmä
+            riittää. Tiivistämiseen riittää muutama ranskalainen viiva. Ei siis
+            vaadita pitkää eikä essee-muotoista tiivistelmää. Lisää kuhunkin
+            jokin oma kysymys tai huomio.) - Karvinen 2023: Configuration
+            Management of Distributed Systems over Unreliable and Hostile
+            Networks (pdf, ̣mirrors: local, archive.org), vain nämä kohdat: -
+            4.12.1 Size and Complexity of Some DSLs (112. Ominaisuuksien määrä.)
+            - 4.12.2 Use of DSL Functions in Case Configuration (112-115. Mitä
+            oikeasti käytetään.) - 4.12.3.1 Dependencies Between Main Functions
+            (115-117. Tärkeimmät rakennuspalikat.)
+          </li>
+          <li>
+            a) Räpylä. Asenna itse valitsemasi demoni käsin. Jokin muu kuin
+            tunnilla tai kotitehtävissä aiemmin asennettu, eli ei apache, ngninx
+            eikä openssh-server. Kuten aina, testaa lopputulos.
+          </li>
+          <li>
+            b) Automaatti. Automatisoi valitsemasi demonin asennus Ansiblella.
+          </li>
+          <li>
+            c) Asetus. Muuta asetustiedostoa herralla (master, "control node")
+            ja aja ansible uudestaan. Osoita, että asetukset tulivat käyttöön.
+          </li>
+          <li>
+            d) Paikka remonttiin. Riko jotain asetuksia. Voit esimerkiksi
+            poistaa demonin 'sudo apt-get purge foobar' (purge poistaa myös
+            asetustiedostoja), poistaa asennuksen yhteydessä tulevan kansion
+            (sudo rm -r /etc/foobar/ # vaarallista) tms. Ja sitten ajaa
+            ansible-roolisi uudestaan ja todeta, että se korjaa tilanteen.
+          </li>
+          <li>e) Idempotentti. Osoita, että tilasi on idempotentti.</li>
+        </ul>
+
+        <h2 id="sources">Lähteet</h2>
+        <ul>
+          <li>
+            Karvinen, Tero 2026a. h4 Pizza Fantasia. Luettavissa:
+            <a
+              href="https://terokarvinen.com/palvelinten-hallinta/#h4-pizza-fantasia"
+              >https://terokarvinen.com/palvelinten-hallinta/#h4-pizza-fantasia</a
+            >. Luettu: 14.11.2026
+          </li>
+          <li>
+            Karvinen, Tero 2023. Configuration Management of Distributed Systems
+            over Unreliable and Hostile Networks. Luettavissa:
+            <a
+              href="https://westminsterresearch.westminster.ac.uk/download/4cc417566aa9af60fe3826d690719e390abdb7a3c8672f3d51b1eb4ca75e7624/1427236/karvinen-2023-configuration-management-of-distributed-systems.pdf"
+            >
+              . Luettu: 14.11.2026
+            </a>
+          </li>
+          <li>
+            MySQL Documentation. 2.5.2 Installing MySQL on Linux Using the MySQL
+            APT Repository. Luettavissa:
+            <a
+              href="https://dev.mysql.com/doc/refman/9.7/en/linux-installation-apt-repo.html"
+              >https://dev.mysql.com/doc/refman/9.7/en/linux-installation-apt-repo.html</a
+            >. Luettu: 17.11.2026
+          </li>
+          <li>
+            Stackrig, 9.10.2026. Package 'mysql-server' has no installation
+            candidate on Debian 13. Luettavissa:
+            <a
+              href="https://stackrig.dev/blog/mysql-server-has-no-installation-candidate"
+              >https://stackrig.dev/blog/mysql-server-has-no-installation-candidate</a
+            >. Luettu: 17.11.2026
+          </li>
+          <li>
+            One.com, 10.11.2026. MariaDB vs MySQL - miten ne eroavat
+            toisistaan?. Luettavissa:
+            <a href="https://www.one.com/fi-fi/academy/mariadb-vs-mysql/"
+              >https://www.one.com/fi-fi/academy/mariadb-vs-mysql/</a
+            >. Luettu: 17.11.2026
+          </li>
+          <li>
+            MariaDB Documentation. Installing MariaDB Server Guide. Luettavissa:
+            <a
+              href="https://mariadb.com/docs/server/mariadb-quickstart-guides/installing-mariadb-server-guide"
+              >https://mariadb.com/docs/server/mariadb-quickstart-guides/installing-mariadb-server-guide</a
+            >. Luettu: 17.11.2026
+          </li>
+        </ul>
+      </main>
+
+      <footer>
+        <p><a href="../../linux-servers/index.html">Linux Harjoitukset</a></p>
+        <p><a href="../index.html">Palvelinten hallinta harjoitukset</a></p>
+        <p><a href="../../index.html">Etusivu</a></p>
+        <p>Aleksi Partanen &#169;2026</p>
+      </footer>
+    </div>
+    <div id="right"></div>
+  </body>
+</html>
