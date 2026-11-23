@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../styles.css" />
+    <title>Harjoitus 4</title>
+  </head>
+
+  <body>
+    <div id="left">
+      <ul>
+        <li>Palvelinten hallinta harjoitukset</li>
+        <li><a href="pre-task.html">Harjoitus 0 raportti</a></li>
+        <li><a href="first-week.html">Harjoitus 1 raportti</a></li>
+        <li><a href="second-week.html">Harjoitus 2 raportti</a></li>
+        <li><a href="third-week.html">Harjoitus 3 raportti</a></li>
+        <li><a href="fourth-week.html">Harjoitus 4 raportti</a></li>
+        <li><a href="fifth-week.html">Harjoitus 5 raportti</a></li>
+      </ul>
+    </div>
+    <div id="center">
+      <main>
+        <h4>Host laitteisto</h4>
+        <ul>
+          <li>Prosessori: AMD Ryzen 9 5900x 12-Core</li>
+          <li>Keskusmuisti: 32GB DDR4</li>
+          <li>Näytönohjain: NVIDIA GeForce RTX 3080</li>
+          <li>OS: Linux 7.2.11-1-cachyos x86-64</li>
+        </ul>
+        <h4>Virtuaalikone, local</h4>
+        <ul>
+          <li>4 CPU</li>
+          <li>6GB RAM</li>
+          <li>20GB</li>
+          <li>Debian 13, 64-bit</li>
+        </ul>
+
+        <h1>Harjoitus 5: Gitar Hero (Karvinen 2026a)</h1>
+
+        <h2 id="summary">x) Tiivistelmä</h2>
+        <h2>Chacon and Straub 2014 (Chacon and Straub 2014)</h2>
+        <ul>
+          <li>
+            Git tallentaa tilannekuvia(snapshots) tiedostoista ja niiden
+            tilasta.
+          </li>
+          <li>
+            Git ei tallenna tiedostoa uudestaan, vaan tekee linkkauksen
+            tiedostoon, jos tiedostossa ei ole uusia muutoksia.
+          </li>
+          <li>Git ajattelee dataa tilannekuvien virtana.</li>
+          <li>Suurin osa Gitin operaatioista tapahtuu paikallisesti.</li>
+          <li>
+            SHA-1 tiivistetä käytetään Gitin tarkistussummana. Tämän avulla Git
+            tietää aina kaikista muutoksista tiedostoissa, eikä niitä voi
+            muokata ilman että Git huomaa sen.
+          </li>
+          <li>
+            Git pääasiallisesti vain lisää dataa, hyvin harvoin poistaa mitään.
+          </li>
+        </ul>
+
+        <h2 id="online">a) Online (Karvinen 2026a)</h2>
+        <p>
+          Tein uuden varaston Githubiin nimellä
+          <a href="https://github.com/Partanennn/server-management-sunshine"
+            >server-management-sunshine</a
+          >
+          ja valitsin
+          <i>GNU General Public License v3.0</i> lisenssin.
+        </p>
+        <img src="../images/fifth/new-repo.png" alt="New repository on" />
+
+        <h2 id="dolly">b) Dolly (Karvien 2026a)</h2>
+        <p>Kloonasin varaston koneelleni.</p>
+        <img src="../images/fifth/dolly-cloned.png" alt="Cloning repository" />
+        <p>
+          Tein varastoon kansion <i>Ansible</i>, lisäsin tiedoston
+          <i>.gitkeep</i> ja puskin ne remoteen.
+        </p>
+        <img src="../images/fifth/dolly-folder.png" alt="New folder" />
+        <img src="../images/fifth/dolly-remote-changes.png" />
+
+        <h2 id="doh">c) Doh! (Karvinen 2026a)</h2>
+        2ff1619fb6442c5494a2d327f1f90ee417e68dfaa
+        <p>
+          58cfb2113e38b06e41fca597cb913bc36bfa3233 Lisäsin teksti tiedoston
+          gittiin komennoilla <code>touch tyhmä_tiedosto.txt</code> ja
+          <code>git add .</code>. Tiedosto näkyi lisättynä komennolla
+          <code>git status</code>. <code>git reset --hard</code>(Karvinen 2026a)
+          poisti kaikki gittiin lisätyt muutokset, tässä tapauksessa uuden
+          tiedoston. Komentoa ei saa peruttua.
+        </p>
+        <img src="../images/fifth/dolly-reset-hard.png" />
+
+        <h2 id="tukki">d) Tukki (Karvinen 2026a)</h2>
+        <p>
+          Komennolla <code>git log</code> näkee jokaisen commitin. Commitista
+          näkee mm. kuka sen on tehnyt, milloin ja mitä commitille on lisätty
+          lisätietoihin. Komennolla myös näkee, että missä commitissa
+          etä(remote) version haarat ovat menossa ja mikä on paikallisen gitin
+          valittu haara, ja missä commitissa se on menossa.
+        </p>
+        <img src="../images/fifth/tukki-log.png" />
+        <p>
+          Huomasin myös, että nimenä oli Github käyttäjätunnus, eikä nimeni.
+          Muutin gitin käyttämään oletuksena nimenäni oikeaa nimeäni komennolla
+          <code>git clone --global user.name "Aleksi Partanen"</code>.
+        </p>
+        <img src="../images/fifth/tukki-nimi.png" />
+
+        <h2 id="gitanbile">e) Gitanbile (Karvinen 2026a)</h2>
+        <p>
+          Tein <i>Ansible</i>-kansion jo aiemmin. Lisäsin sinne
+          <i>hosts.ini</i>, <i>site.yml</i> sekä <i>ansible.cfg</i> tiedostot.
+          Lisäsin myös <i>test</i> roolin. Älysin myös tässä vaiheessa, että
+          näiden ajamista varten tarvitsin Ansiblen, joten siirryin
+          virtuaalikoneeseen. Siellä oli jo valmiiksi <i>anssi</i>-käyttäjä,
+          jota käytin <i>hosts.ini</i> tiedostossa käyttäjänä.
+        </p>
+        <img src="../images/fifth/gitanible.png" />
+
+        <h2 id="hae-pari">f) Hae pari projektiin (Karvinen 2026a)</h2>
+        <p>
+          Löysin Moodlesta parin haku ilmoituksen, josta löysin itselleni parin
+          projektityöhön.
+        </p>
+
+        <h2 id="assignments">Tehtävänanto (Karvinen 2026a)</h2>
+        <ul>
+          <li>
+            x) Lue ja tiivistä. (Tässä x-alakohdassa ei tarvitse tehdä testejä
+            tietokoneella, vain lukeminen tai kuunteleminen ja tiivistelmä
+            riittää. Tiivistämiseen riittää muutama ranskalainen viiva.
+            Kannattaa lisätä mukaan myös jokin oma havainto, idea tai kysymys.)
+            <ul>
+              <li>
+                Chacon and Straub 2014: Pro Git, 2ed: 1.3 Getting Started - What
+                is Git?.
+              </li>
+              <li>
+                Gitin käyttö on lähinnä 'git add --all && git commit; git pull
+                && git push'. Selitä tuon komennon jokainen osa. Käytä apuna
+                itse valitsemiasi lähteitä ja viittaa niihin.
+              </li>
+            </ul>
+          </li>
+          <li>
+            a) Online. Tee uusi varasto GitHubiin (tai Gitlabiin tai mihin vain
+            vastaavaan palveluun). Varaston nimessä ja lyhyessä kuvauksessa
+            tulee olla sana "sunshine". Aiemmin tehty varasto ei kelpaa. (Muista
+            tehdä varastoon tiedostoja luomisvaiheessa, esim README.md ja GNU
+            General Public License 3) Edistyneemmille voi olla hauskaa etsiä ja
+            kokeilla jokin muu palvelu kuin Github.
+          </li>
+          <li>
+            b) Dolly. Kloonaa edellisessä kohdassa tehty uusi varasto itsellesi,
+            tee muutoksia omalla koneella, puske ne palvelimelle, ja näytä, että
+            ne ilmestyvät weppiliittymään.
+          </li>
+          <li>
+            c) Doh! Tee tyhmä muutos gittiin, älä tee commit:tia. Tuhoa huonot
+            muutokset ‘git reset --hard’. Huomaa, että tässä toiminnossa ei ole
+            peruutusnappia.
+          </li>
+          <li>
+            d) Tukki. Tarkastele ja selitä varastosi lokia. Näytä myös, mitä
+            muutoksia tiedostoihin on tehty. Tarkista, että nimesi ja
+            sähköpostiosoitteesi näkyy haluamallasi tavalla ja korjaa
+            tarvittaessa.
+          </li>
+          <li>
+            e) Gitanbile. Laita Ansible-kansio versionhallintaan. Tee jokin
+            muutos, aja ansiblella, tallenna versio (commit).
+          </li>
+          <li>
+            f) Hae pari projektiin Moodlen keskustelusta. (Tästä alakohdasta f
+            ei tarvitse tehdä vaiheittaista teknistä raporttia, riittää kun
+            toteat, että pari on hankittu. Pasilan ryhmä haki parin jo
+            edellisessä tehtävässä, joten tämä on online-ryhmälle -3017.)
+          </li>
+          <li>
+            g) Vapaaehtoinen: Se toinen järjestelmä: kokeile Gittiä eri
+            käyttöjärjestelmällä kuin sillä, millä teit muut harjoitukset.
+            Selitä niin, että kyseistä järjestelmää osaamatonkin onnistuu.
+            Mahdollisuuksia on runsaasti: Debian, Fedora, Windows, OSX...
+          </li>
+          <li>
+            h) Vapaaehtoinen: yhteistyötä: anna kaverillesi (tai alter egollesi)
+            oikeus kirjoittaa varastoosi (commit access). Tehkää molemmat
+            muutoksia varastoon gitillä.
+          </li>
+        </ul>
+
+        <h2 id="sources">Lähteet</h2>
+        <ul>
+          <li>
+            Karvinen, Tero 2026a. h5 Gitar Hero. Luettavissa:
+            <a
+              href="https://terokarvinen.com/palvelinten-hallinta/#h5-gitar-hero"
+              >https://terokarvinen.com/palvelinten-hallinta/#h5-gitar-hero</a
+            >. Luettu: 23.11.2026
+          </li>
+          <li>
+            Chacon and Straub, 2014. Pro Git, 2ed: 1.3 Getting Started - What is
+            Git? Luettavissa:
+            <a
+              href="https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F"
+              >https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F</a
+            >. Luettu: 23.11.2026
+          </li>
+        </ul>
+      </main>
+
+      <footer>
+        <p><a href="../../linux-servers/index.html">Linux Harjoitukset</a></p>
+        <p><a href="../index.html">Palvelinten hallinta harjoitukset</a></p>
+        <p><a href="../../index.html">Etusivu</a></p>
+        <p>Aleksi Partanen &#169;2026</p>
+      </footer>
+    </div>
+    <div id="right"></div>
+  </body>
+</html>
